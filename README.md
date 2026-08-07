@@ -62,6 +62,21 @@ Mac Catalyst and Intel Macs are not supported.
 
 Connect the Mac or Windows PC running Eagle and the device running Eagle Inbox to the same trusted local network.
 
+## Network and Eagle Web API
+
+Eagle Inbox communicates directly with the [Eagle Web API v2](https://developer.eagle.cool/web-api) running in the Eagle desktop app. The connection uses `http://<host>:<port>/api/v2/...` over the local network—currently HTTP, not HTTPS/TLS. The usual port is `41595`, and an API token, when configured, is included in the URL query parameters.
+
+Files and metadata are sent directly from Eagle Inbox to the computer running Eagle. They are not relayed through an Eagle Inbox server.
+
+```mermaid
+flowchart LR
+    Sources["Photos, Files, Safari,<br/>and other apps"] -->|"Item selection or<br/>iOS share sheet"| Inbox["iPhone or iPad<br/>Eagle Inbox"]
+    Inbox -->|"Local network<br/>HTTP · TCP 41595<br/>Eagle Web API v2"| Eagle["Mac or Windows PC<br/>Eagle desktop app"]
+    Eagle --> Library["Currently open<br/>Eagle library"]
+```
+
+Because HTTP does not encrypt the API token or uploaded content in transit, use Eagle Inbox only on a trusted private network. Do not expose the Eagle API port to the internet or use it over public Wi-Fi. iOS may ask for Local Network permission before the first connection.
+
 ## Library Mismatch
 
 Each connection stores the name of the Eagle library that was open when the connection was tested.
@@ -78,7 +93,7 @@ Each connection stores the name of the Eagle library that was open when the conn
 
 API tokens are stored in Keychain. The app includes no third-party advertising, analytics, or tracking SDKs.
 
-The Eagle Web API uses HTTP and sends the API token as a URL query parameter. Use Eagle Inbox only on a trusted local network, never on public Wi-Fi or through a port exposed to the internet.
+The Eagle Web API connection uses HTTP and sends the API token as a URL query parameter. See [Network and Eagle Web API](#network-and-eagle-web-api) for the communication path and network precautions.
 
 ## Developer Documentation
 
