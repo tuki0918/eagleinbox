@@ -122,7 +122,7 @@ struct UploadView: View {
                             startUpload(confirming: mismatch)
                         }
                     } message: { mismatch in
-                        Text(mismatch.warningMessage)
+                        Text(mismatch.uploadConfirmationMessage)
                     }
                     .toolbar {
                         ToolbarItem(placement: .primaryAction) {

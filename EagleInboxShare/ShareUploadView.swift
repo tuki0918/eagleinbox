@@ -151,7 +151,7 @@ struct ShareUploadView: View {
                     }
                 }
                 .alert(
-                    "Different Eagle Library",
+                    "Library Mismatch",
                     isPresented: Binding(
                         get: { model.pendingUploadLibraryMismatch != nil },
                         set: { isPresented in
@@ -169,7 +169,7 @@ struct ShareUploadView: View {
                         startUpload(confirming: mismatch)
                     }
                 } message: { mismatch in
-                    Text(mismatch.warningMessage)
+                    Text(mismatch.uploadConfirmationMessage)
                 }
             }
         }

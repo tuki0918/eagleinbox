@@ -414,12 +414,17 @@ final class ConnectionsNavigationUITests: XCTestCase {
         )
         XCTAssertTrue(alert.buttons["Cancel"].exists)
         XCTAssertTrue(alert.buttons["Send"].exists)
-        let warning = alert.staticTexts.matching(
-            NSPredicate(format: "label CONTAINS %@", "Library mismatch.")
+        let message = alert.staticTexts.matching(
+            NSPredicate(format: "label CONTAINS %@", "Expected")
         ).firstMatch
-        XCTAssertTrue(warning.exists)
-        XCTAssertTrue(warning.label.contains("Design"))
-        XCTAssertTrue(warning.label.contains("Reference"))
+        XCTAssertTrue(message.exists)
+        XCTAssertTrue(message.label.contains("Design"))
+        XCTAssertTrue(message.label.contains("Reference"))
+        XCTAssertFalse(
+            message.label.localizedCaseInsensitiveContains(
+                "Library mismatch."
+            )
+        )
         attachScreenshot(named: "library-mismatch-send-confirmation")
     }
 

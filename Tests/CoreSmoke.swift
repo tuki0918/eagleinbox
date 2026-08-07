@@ -340,6 +340,10 @@ enum CoreSmoke {
             mismatch.warningMessage
                 == "Library mismatch.\nExpected “Design Library”, but “Reference Library” is open."
         )
+        precondition(
+            mismatch.uploadConfirmationMessage
+                == "Expected “Design Library”, but “Reference Library” is open."
+        )
         precondition(mismatch.libraryUpdateConfirmationMessage.contains("Update it to use “Reference Library”?"))
 
         // A changed library is proposed to the editor; applying and saving it

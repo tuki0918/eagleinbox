@@ -155,6 +155,10 @@ struct EagleLibraryMismatch: Identifiable, Equatable, Sendable {
         "Library mismatch.\nExpected “\(expectedLibraryName)”, but “\(actualLibraryName)” is open."
     }
 
+    var uploadConfirmationMessage: String {
+        "Expected “\(expectedLibraryName)”, but “\(actualLibraryName)” is open."
+    }
+
     var libraryUpdateConfirmationMessage: String {
         "This connection is saved for “\(expectedLibraryName)”, but “\(actualLibraryName)” is open.\n\nUpdate it to use “\(actualLibraryName)”?"
     }
