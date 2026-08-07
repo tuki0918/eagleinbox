@@ -90,6 +90,14 @@ struct EagleInboxApp: App {
             if arguments.contains("--ui-testing-seeded-upload-queue") {
                 model.queue = Self.makeScreenshotUploadQueue()
             }
+            if arguments.contains(
+                "--ui-testing-seeded-upload-library-mismatch-dialog"
+            ) {
+                model.seedUploadLibraryMismatchConfirmationForUITesting(
+                    expectedLibraryName: "Design",
+                    actualLibraryName: "Reference"
+                )
+            }
             return model
         }
 #endif

@@ -109,6 +109,19 @@ final class AppModel: ObservableObject {
         )
         connectionTestStates[profile.id] = .warning(mismatch.warningMessage)
     }
+
+    func seedUploadLibraryMismatchConfirmationForUITesting(
+        expectedLibraryName: String,
+        actualLibraryName: String
+    ) {
+        guard let profile = selectedProfile else { return }
+        let mismatch = EagleLibraryMismatch(
+            expectedLibraryName: expectedLibraryName,
+            actualLibraryName: actualLibraryName
+        )
+        connectionTestStates[profile.id] = .warning(mismatch.warningMessage)
+        pendingUploadLibraryMismatch = mismatch
+    }
 #endif
 
     func reloadProfiles() {

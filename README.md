@@ -66,9 +66,9 @@ Connect the Mac or Windows PC running Eagle and the device running Eagle Inbox t
 
 Each connection stores the name of the Eagle library that was open when the connection was tested.
 
-<p align="center">
-  <img src="./Docs/Screenshots/library-mismatch.png" alt="Library mismatch warning on the upload screen" width="420">
-</p>
+| Mismatch warning | Confirmation before sending |
+| --- | --- |
+| ![Library mismatch warning on the upload screen](./Docs/Screenshots/library-mismatch.png) | ![Confirmation shown after tapping Send to Eagle while another library is open](./Docs/Screenshots/library-mismatch-send-confirmation.png) |
 
 - The main screen displays `Library mismatch.` when another library is open.
 - During an upload, you can confirm that you want to use the currently open library for that upload only.

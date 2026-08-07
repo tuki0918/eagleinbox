@@ -388,6 +388,29 @@ final class ConnectionsNavigationUITests: XCTestCase {
         attachScreenshot(named: "library-mismatch")
     }
 
+    func testReadmeUploadLibraryMismatchConfirmationScreenshot() {
+        launchApp(
+            seedConnection: true,
+            seedUploadQueue: true,
+            seedUploadLibraryMismatchDialog: true
+        )
+
+        let alert = app.alerts["Library Mismatch"]
+        XCTAssertTrue(
+            alert.waitForExistence(timeout: Self.waitTimeout),
+            app.debugDescription
+        )
+        XCTAssertTrue(alert.buttons["Cancel"].exists)
+        XCTAssertTrue(alert.buttons["Send"].exists)
+        let warning = alert.staticTexts.matching(
+            NSPredicate(format: "label CONTAINS %@", "Library mismatch.")
+        ).firstMatch
+        XCTAssertTrue(warning.exists)
+        XCTAssertTrue(warning.label.contains("Design"))
+        XCTAssertTrue(warning.label.contains("Reference"))
+        attachScreenshot(named: "library-mismatch-send-confirmation")
+    }
+
     func testTagSelectionSupportsSuggestionsAndNewTags() {
         launchApp(seedConnection: true, seedTags: true)
 
@@ -572,7 +595,8 @@ final class ConnectionsNavigationUITests: XCTestCase {
         seedUploadQueue: Bool = false,
         seedTags: Bool = false,
         seedFolders: Bool = false,
-        seedLibraryMismatch: Bool = false
+        seedLibraryMismatch: Bool = false,
+        seedUploadLibraryMismatchDialog: Bool = false
     ) {
         XCUIDevice.shared.press(.home)
         app = XCUIApplication()
@@ -591,6 +615,11 @@ final class ConnectionsNavigationUITests: XCTestCase {
         }
         if seedLibraryMismatch {
             app.launchArguments.append("--ui-testing-seeded-library-mismatch")
+        }
+        if seedUploadLibraryMismatchDialog {
+            app.launchArguments.append(
+                "--ui-testing-seeded-upload-library-mismatch-dialog"
+            )
         }
         app.launch()
     }
