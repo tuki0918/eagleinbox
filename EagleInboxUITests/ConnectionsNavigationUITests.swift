@@ -308,6 +308,18 @@ final class ConnectionsNavigationUITests: XCTestCase {
         app.terminate()
         launchApp(seedConnection: true)
 
+        let connectionStatusButton = app.buttons["Test Connection"]
+        XCTAssertTrue(
+            connectionStatusButton.waitForExistence(
+                timeout: Self.waitTimeout
+            ),
+            app.debugDescription
+        )
+        XCTAssertEqual(
+            connectionStatusButton.value as? String,
+            "Verified"
+        )
+
         let metadataButton = app.buttons["Metadata"]
         XCTAssertTrue(
             metadataButton.waitForExistence(timeout: Self.waitTimeout),
