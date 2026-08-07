@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1260, initial-scale=1">
+  <title>Eagle Inbox App Store Screenshots</title>
+  <style>
+    @font-face {
+      font-family: "Zen Maru Gothic";
+      src: url("./Fonts/ZenMaruGothic-Black.ttf") format("truetype");
+      font-weight: 900;
+    }
+
+    @font-face {
+      font-family: "Zen Maru Gothic";
+      src: url("./Fonts/ZenMaruGothic-Bold.ttf") format("truetype");
+      font-weight: 700;
+    }
+
+    :root {
+      color-scheme: light;
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      font-synthesis: none;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 1260px;
+      height: 2736px;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    body {
+      --bg-a: #e9fff9;
+      --bg-b: #d8edf7;
+      --bg-c: #e6e2ff;
+      --ink: #0c2844;
+      --accent: #0f766e;
+      background: linear-gradient(148deg, var(--bg-a) 0%, var(--bg-b) 57%, var(--bg-c) 100%);
+      color: var(--ink);
+    }
+
+    body[data-theme="ocean"] {
+      --bg-a: #effbff;
+      --bg-b: #dfeaff;
+      --bg-c: #e9e2ff;
+      --accent: #2563a7;
+    }
+
+    body[data-theme="warm"] {
+      --bg-a: #fff8ea;
+      --bg-b: #fdece8;
+      --bg-c: #e9f7f2;
+      --accent: #c15d3c;
+    }
+
+    body[data-theme="sky"] {
+      --bg-a: #e9fbff;
+      --bg-b: #e1efff;
+      --bg-c: #ece6ff;
+      --accent: #4057a6;
+    }
+
+    .canvas {
+      position: relative;
+      width: 1260px;
+      height: 2736px;
+      isolation: isolate;
+    }
+
+    .canvas::before {
+      content: "";
+      position: absolute;
+      z-index: -2;
+      top: -170px;
+      right: -230px;
+      width: 820px;
+      height: 820px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.56);
+      filter: blur(6px);
+    }
+
+    .canvas::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      opacity: 0.22;
+      background-image:
+        radial-gradient(circle at 16% 23%, rgba(255, 255, 255, 0.92) 0 5px, transparent 6px),
+        radial-gradient(circle at 84% 18%, rgba(15, 118, 110, 0.22) 0 4px, transparent 5px);
+      background-size: 56px 56px, 78px 78px;
+      mask-image: linear-gradient(to bottom, black 0, black 610px, transparent 830px);
+    }
+
+    header {
+      position: absolute;
+      top: 135px;
+      left: 55px;
+      width: 1150px;
+      text-align: center;
+    }
+
+    body[data-single-line="true"] header {
+      top: 215px;
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Zen Maru Gothic", sans-serif;
+      font-size: 126px;
+      font-weight: 900;
+      letter-spacing: -0.017em;
+      line-height: 146px;
+      white-space: pre-line;
+      text-wrap: balance;
+    }
+
+    .subtitle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin: 18px 0 0;
+      color: color-mix(in srgb, var(--ink) 76%, white);
+      font-family: "Zen Maru Gothic", sans-serif;
+      font-size: 42px;
+      font-weight: 700;
+      letter-spacing: -0.005em;
+    }
+
+    body[data-single-line="true"] .subtitle {
+      margin-top: 29px;
+    }
+
+    .subtitle::before {
+      content: "";
+      flex: 0 0 auto;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent);
+      transform: translateY(5px);
+    }
+
+    .pro-badge {
+      position: absolute;
+      top: 48px;
+      left: 48px;
+      z-index: 1;
+      min-width: 220px;
+      height: 96px;
+      padding: 0 28px;
+      border: 0;
+      border-radius: 999px;
+      background: #171a2b;
+      color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Zen Maru Gothic", sans-serif;
+      font-size: 0;
+      text-align: center;
+    }
+
+    .pro-badge::before {
+      content: "♛";
+      display: inline-block;
+      margin-right: 14px;
+      color: #fbbf24;
+      font-size: 42px;
+      line-height: 1;
+      transform: translateY(-4px);
+    }
+
+    .pro-badge::after {
+      content: attr(data-label);
+      display: inline-block;
+      color: #fff;
+      font-size: 40px;
+      font-weight: 900;
+      letter-spacing: 0.125em;
+      line-height: 1;
+      transform: translateY(-6px);
+    }
+
+    .pro-badge[hidden] {
+      display: none;
+    }
+
+    .screen-wrap {
+      position: absolute;
+      left: 165px;
+      top: 610px;
+      width: 930px;
+      height: 1984px;
+      padding: 15px;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.92);
+      border-radius: 92px 92px 0 0;
+      background: white;
+      box-shadow:
+        0 54px 110px rgba(12, 40, 68, 0.22),
+        0 12px 30px rgba(12, 40, 68, 0.10);
+    }
+
+    .screen-wrap::after {
+      content: "";
+      position: absolute;
+      inset: 15px;
+      pointer-events: none;
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      border-radius: 76px 76px 0 0;
+    }
+
+    .screen {
+      display: block;
+      width: 900px;
+      height: auto;
+      border-radius: 76px 76px 0 0;
+    }
+
+    .dual {
+      display: none;
+      width: 820px;
+      height: 1745px;
+      border-radius: 82px;
+    }
+
+    .dual .screen {
+      width: 790px;
+      border-radius: 66px;
+    }
+
+    .dual-left {
+      left: -60px;
+      top: 760px;
+      transform: rotate(-6.5deg);
+    }
+
+    .dual-right {
+      left: 500px;
+      top: 620px;
+      transform: rotate(6.5deg);
+    }
+
+    body[data-layout="double"] .single {
+      display: none;
+    }
+
+    body[data-layout="double"] .dual {
+      display: block;
+    }
+
+    .accent-orb {
+      position: absolute;
+      z-index: -1;
+      left: 70px;
+      top: 620px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--accent) 22%, transparent);
+      filter: blur(2px);
+    }
+  </style>
+</head>
+<body>
+  <main class="canvas">
+    <div class="pro-badge" id="pro-badge" hidden></div>
+    <header>
+      <h1 id="headline"></h1>
+      <p class="subtitle" id="subtitle"></p>
+    </header>
+    <div class="accent-orb"></div>
+    <div class="screen-wrap single">
+      <img class="screen" id="screen" alt="">
+    </div>
+    <div class="screen-wrap dual dual-left">
+      <img class="screen" id="screen-left" alt="">
+    </div>
+    <div class="screen-wrap dual dual-right">
+      <img class="screen" id="screen-right" alt="">
+    </div>
+  </main>
+
+  <script>
+    const slides = [
+      {
+        number: "01",
+        theme: "mint",
+        headline: "Straight to Eagle.",
+        subtitle: "Pick your media and send it all together.",
+        layout: "single",
+        screen: "../../Screenshots/upload-queue-photo-url.png"
+      },
+      {
+        number: "02",
+        theme: "ocean",
+        headline: "Quick access from\nthe Share Sheet.",
+        subtitle: "Share photos, files, and web pages.",
+        layout: "single",
+        screen: "../../Screenshots/share-menu.png"
+      },
+      {
+        number: "03",
+        theme: "warm",
+        headline: "Tags and folders.",
+        subtitle: "Apply Eagle tags and folders before sending.",
+        layout: "double",
+        screen: "../../Screenshots/folders-selected-recent-all.png",
+        secondaryScreen: "../../Screenshots/tags-selected.png"
+      },
+      {
+        number: "04",
+        theme: "ocean",
+        headline: "Unlock more\nwith Pro.",
+        subtitle: "Unlimited connections and every Shortcut action.",
+        layout: "single",
+        screen: "../../Screenshots/pro-upgrade.png"
+      },
+      {
+        number: "05",
+        theme: "sky",
+        headline: "One press.\nStraight to Eagle.",
+        subtitle: "Run a Shortcut from the Action Button.",
+        badge: "PRO",
+        layout: "single",
+        screen: "../../Screenshots/action-button-shortcut.png"
+      }
+    ];
+
+    const requested = Number(new URLSearchParams(location.search).get("slide") || "1");
+    const slide = slides[Math.max(0, Math.min(slides.length - 1, requested - 1))];
+
+    document.body.dataset.theme = slide.theme;
+    document.body.dataset.layout = slide.layout;
+    document.body.dataset.singleLine = String(!slide.headline.includes("\n"));
+    document.getElementById("headline").textContent = slide.headline;
+    document.getElementById("subtitle").textContent = slide.subtitle;
+    const badge = document.getElementById("pro-badge");
+    badge.dataset.label = slide.badge || "";
+    badge.hidden = !slide.badge;
+    document.getElementById("screen").src = slide.screen;
+    document.getElementById("screen-left").src = slide.screen;
+    document.getElementById("screen-right").src = slide.secondaryScreen || slide.screen;
+  </script>
+</body>
+</html>

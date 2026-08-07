@@ -1,0 +1,45 @@
+{
+  "assetSet": "Eagle Inbox App Store screenshots - English",
+  "platform": "iPhone 6.9-inch display",
+  "format": "PNG",
+  "width": 1260,
+  "height": 2736,
+  "alpha": false,
+  "appVariant": "Pro screenshot state; Free badges are excluded.",
+  "items": [
+    {
+      "order": 1,
+      "file": "01-send-items.png",
+      "headline": "Straight to Eagle.",
+      "source": "../../Screenshots/upload-queue-photo-url.png"
+    },
+    {
+      "order": 2,
+      "file": "02-share-sheet.png",
+      "headline": "Quick access from / the Share Sheet.",
+      "source": "../../Screenshots/share-menu.png"
+    },
+    {
+      "order": 3,
+      "file": "03-organize-tags.png",
+      "headline": "Tags and folders.",
+      "sources": [
+        "../../Screenshots/folders-selected-recent-all.png",
+        "../../Screenshots/tags-selected.png"
+      ]
+    },
+    {
+      "order": 4,
+      "file": "04-pro-upgrade.png",
+      "headline": "Unlock more / with Pro.",
+      "source": "../../Screenshots/pro-upgrade.png"
+    },
+    {
+      "order": 5,
+      "file": "05-action-button.png",
+      "headline": "One press. / Straight to Eagle.",
+      "badge": "PRO",
+      "source": "../../Screenshots/action-button-shortcut.png"
+    }
+  ]
+}

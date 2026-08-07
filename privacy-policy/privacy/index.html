@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#ffffff">
+    <meta
+      name="description"
+      content="Privacy Policy for Eagle Inbox, an iOS app for sending items directly to Eagle."
+    >
+    <title>Privacy Policy — Eagle Inbox</title>
+    <link rel="icon" href="../app-icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../styles.css?v=20260819-1">
+    <script>
+      if (new URLSearchParams(location.search).get("lang") === "ja") {
+        document.documentElement.classList.add("language-loading");
+      }
+    </script>
+    <script src="../language.js" defer></script>
+    <script src="../navigation.js?v=20260818-1" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="../" aria-label="Eagle Inbox home">
+          <img src="../app-icon.svg" width="40" height="40" alt="">
+          <span>Eagle Inbox</span>
+        </a>
+        <div class="header-actions">
+          <nav class="language-switcher" aria-label="Language">
+            <a href="?lang=en" lang="en" aria-current="page">EN</a>
+            <a href="?lang=ja" lang="ja">日本語</a>
+          </nav>
+          <button
+            class="menu-button"
+            type="button"
+            aria-controls="page-index"
+            aria-expanded="false"
+          >
+            <span class="visually-hidden">Open page index</span>
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+              <path d="M4 7h16M4 12h16M4 17h16"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-shell">
+      <nav id="page-index" class="table-of-contents" aria-label="Page index">
+        <div class="drawer-header">
+          <p class="toc-title">INDEX</p>
+          <button class="drawer-close" type="button">
+            <span class="visually-hidden">Close page index</span>
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+              <path d="m6 6 12 12M18 6 6 18"/>
+            </svg>
+          </button>
+        </div>
+        <ol>
+          <li><a href="#scope">1. Scope</a></li>
+          <li><a href="#information">2. Information the App handles</a></li>
+          <li><a href="#use">3. How information is used</a></li>
+          <li><a href="#sharing">4. Sharing and disclosure</a></li>
+          <li><a href="#storage">5. Storage, retention, and deletion</a></li>
+          <li><a href="#security">6. Network security</a></li>
+          <li><a href="#apple-services">7. Apple services and permissions</a></li>
+          <li><a href="#website">8. This website</a></li>
+          <li><a href="#children">9. Children’s privacy</a></li>
+          <li><a href="#changes">10. Changes to this policy</a></li>
+          <li><a href="#contact">11. Contact</a></li>
+        </ol>
+      </nav>
+      <button class="drawer-backdrop" type="button" aria-label="Close page index"></button>
+
+      <main id="main-content" class="policy">
+        <header class="policy-header">
+          <h1><span>Privacy</span> <span>Policy</span></h1>
+          <p class="effective-date">
+            <strong>Effective date:</strong>
+            <time datetime="2026-08-17">August 17, 2026</time>
+          </p>
+          <p class="introduction">
+            This Privacy Policy explains how Eagle Inbox (the “App”) handles
+            information when you use the App, its Share Extension, or its Apple
+            Shortcuts actions. Eagle Inbox is designed to send content directly
+            from your device to the Eagle desktop app or to an Eagle Web API
+            compatible endpoint that you choose.
+          </p>
+        </header>
+
+        <section id="summary" class="summary" aria-labelledby="summary-title">
+          <h2 id="summary-title">Privacy at a glance</h2>
+          <ul>
+            <li>
+              <strong>No developer-operated upload server.</strong> Your files,
+              URLs, and metadata are sent directly to the destination you
+              configure. They are not relayed through an Eagle Inbox server.
+            </li>
+            <li>
+              <strong>No advertising, analytics, or tracking SDKs.</strong> The
+              App does not use third-party advertising or analytics services and
+              does not track you across apps or websites.
+            </li>
+            <li>
+              <strong>Settings stay on your device.</strong> Connection settings
+              and preferences are stored locally. API tokens are stored in the
+              iOS Keychain.
+            </li>
+            <li>
+              <strong>You control what is sent.</strong> The App accesses photos,
+              files, and URLs only when you select or share them, and sends them
+              only when you initiate an upload or run a configured Shortcut.
+            </li>
+          </ul>
+        </section>
+
+        <section id="scope" aria-labelledby="scope-title">
+          <h2 id="scope-title"><span>1.</span> Scope</h2>
+          <p>
+            This policy applies to the Eagle Inbox iOS app, its Share Extension,
+            and its Apple Shortcuts actions. It does not govern the Eagle desktop
+            app, Apple’s services, websites whose URLs you add, or third-party
+            Eagle Web API compatible endpoints. Those services are governed by
+            their own privacy practices.
+          </p>
+        </section>
+
+        <section id="information" aria-labelledby="information-title">
+          <h2 id="information-title"><span>2.</span> Information the App handles</h2>
+          <p>
+            Depending on the features you use, the App may process the following
+            information on your device or send it to your selected destination:
+          </p>
+
+          <h3>Content you choose to send</h3>
+          <p>
+            Photos, videos, audio files, PDFs, other supported files, and web URLs
+            that you select in the App, share from another app, or provide to an
+            Eagle Inbox Shortcut.
+          </p>
+
+          <h3>Upload metadata</h3>
+          <p>
+            Folder selections, tags, annotations, filenames, media types, and
+            other information needed to create the item in your Eagle library.
+          </p>
+
+          <h3>Connection information</h3>
+          <p>
+            The connection name, host or IP address, port, HTTP or HTTPS setting,
+            API token if you provide one, and the name of the destination Eagle
+            library. The App may also retrieve folder names, tags, tag groups,
+            and library information from the selected destination so that you can
+            choose upload metadata and verify the destination.
+          </p>
+
+          <h3>Local app state</h3>
+          <p>
+            App preferences, selected connection, recent metadata choices, and a
+            locally cached record of whether Eagle Inbox Pro is available. The
+            App may create temporary local copies of selected files while
+            preparing or performing an upload.
+          </p>
+
+          <h3>URL previews</h3>
+          <p>
+            When you add a web URL, Apple’s Link Presentation framework may
+            contact that website to retrieve an icon or preview image. The
+            website may receive network information such as your IP address under
+            its own privacy practices.
+          </p>
+
+          <p>
+            The developer does not receive this information through the App and
+            does not maintain a server-side account or database for Eagle Inbox.
+          </p>
+        </section>
+
+        <section id="use" aria-labelledby="use-title">
+          <h2 id="use-title"><span>3.</span> How information is used</h2>
+          <p>The App uses the information described above only to:</p>
+          <ul>
+            <li>connect to and test the destination you configure;</li>
+            <li>display destination libraries, folders, and tags;</li>
+            <li>prepare, send, monitor, and retry uploads you initiate;</li>
+            <li>remember your settings and selected connection on your device;</li>
+            <li>verify and restore your Eagle Inbox Pro purchase through Apple; and</li>
+            <li>show optional local notifications about upload results.</li>
+          </ul>
+          <p>
+            The App does not use your content or connection information for
+            advertising, profiling, data brokerage, or training artificial
+            intelligence models.
+          </p>
+        </section>
+
+        <section id="sharing" aria-labelledby="sharing-title">
+          <h2 id="sharing-title"><span>4.</span> Sharing and disclosure</h2>
+          <p>
+            The developer does not sell, rent, or share your personal information
+            for advertising. Information may leave your device only in the
+            following circumstances:
+          </p>
+          <ul>
+            <li>
+              <strong>Your selected destination:</strong> content, metadata,
+              connection requests, and an API token if configured are sent to the
+              Eagle installation or compatible endpoint you choose.
+            </li>
+            <li>
+              <strong>Apple services:</strong> Apple processes purchase and
+              entitlement information for Eagle Inbox Pro and provides system
+              frameworks used for file selection, sharing, previews,
+              notifications, and Shortcuts. Apple handles that information under
+              its own privacy policy.
+            </li>
+            <li>
+              <strong>At your direction:</strong> when you choose content, share
+              it with the App, configure an endpoint, or run a Shortcut.
+            </li>
+            <li>
+              <strong>Legal requirements:</strong> if the developer later
+              receives information directly from you, such as in a support
+              request, it may be disclosed where reasonably necessary to comply
+              with law or protect rights, safety, and security.
+            </li>
+          </ul>
+        </section>
+
+        <section id="storage" aria-labelledby="storage-title">
+          <h2 id="storage-title"><span>5.</span> Storage, retention, and deletion</h2>
+          <ul>
+            <li>
+              Connection details and preferences remain on your device until you
+              change or delete them. API tokens are stored in the iOS Keychain
+              rather than in ordinary app preferences.
+            </li>
+            <li>
+              Temporary upload files are used only to prepare or complete an
+              upload and are removed by the App when they are no longer needed.
+              iOS may also manage temporary storage.
+            </li>
+            <li>
+              You can remove a saved connection in the App to delete its locally
+              stored connection details and API token. Because Keychain behavior
+              is controlled by iOS, remove saved connections before uninstalling
+              the App if you want to ensure their Keychain items are deleted.
+            </li>
+            <li>
+              Content already sent to Eagle is stored and controlled by your
+              selected destination. To delete it, remove it from that Eagle
+              library or contact the operator of a compatible endpoint.
+            </li>
+            <li>
+              The developer has no Eagle Inbox server-side copy to access, export,
+              or delete. Support messages sent by you are retained only as long as
+              reasonably needed to respond, maintain support records, or comply
+              with legal obligations.
+            </li>
+          </ul>
+        </section>
+
+        <section id="security" aria-labelledby="security-title">
+          <h2 id="security-title"><span>6.</span> Network security</h2>
+          <p>
+            For a direct connection to the Eagle desktop app, Eagle Inbox normally
+            uses HTTP on your local network. HTTP does not encrypt the API token,
+            uploaded content, or metadata in transit. The Eagle Web API includes
+            the API token in URL query parameters. Use HTTP only on a trusted,
+            private network, and do not expose an unencrypted Eagle API endpoint
+            to the internet or use it over public Wi-Fi.
+          </p>
+          <p>
+            The App also supports HTTPS for compatible custom endpoints. HTTPS
+            connections must use a certificate trusted by your device. No method
+            of storage or transmission can be guaranteed to be completely secure,
+            and you are responsible for securing the destination you configure.
+          </p>
+        </section>
+
+        <section id="apple-services" aria-labelledby="apple-services-title">
+          <h2 id="apple-services-title"><span>7.</span> Apple services and permissions</h2>
+          <p>
+            The App may request access to the local network so it can reach Eagle,
+            and it uses system pickers or the Share Sheet for content you choose.
+            Notifications are optional and are used only to report upload results.
+            You can manage permissions in iOS Settings.
+          </p>
+          <p>
+            Eagle Inbox Pro is a non-consumable in-app purchase processed by
+            Apple. The developer does not receive your full payment-card details.
+            The App receives product and entitlement status from StoreKit so it
+            can unlock Pro features and restore purchases. For information about
+            Apple’s data practices, see
+            <a href="https://www.apple.com/legal/privacy/" rel="external">
+              Apple’s Privacy Policy</a>.
+          </p>
+        </section>
+
+        <section id="website" aria-labelledby="website-title">
+          <h2 id="website-title"><span>8.</span> This website</h2>
+          <p>
+            This privacy-policy page does not set cookies and contains no
+            advertising or analytics code.
+          </p>
+        </section>
+
+        <section id="children" aria-labelledby="children-title">
+          <h2 id="children-title"><span>9.</span> Children’s privacy</h2>
+          <p>
+            Eagle Inbox is not directed to children under 13, and the developer
+            does not knowingly collect personal information from children through
+            the App.
+          </p>
+        </section>
+
+        <section id="changes" aria-labelledby="changes-title">
+          <h2 id="changes-title"><span>10.</span> Changes to this policy</h2>
+          <p>
+            This Privacy Policy may be updated to reflect changes to the App or
+            applicable requirements. The updated policy will be posted at this
+            URL, and the effective date at the top of the page will be revised.
+            Material changes will be communicated through an appropriate channel
+            when required.
+          </p>
+        </section>
+
+        <section id="contact" aria-labelledby="contact-title">
+          <h2 id="contact-title"><span>11.</span> Contact</h2>
+          <p>
+            For questions or feature requests about Eagle Inbox, contact the
+            developer at
+            <a href="mailto:contact@bbbit.cc">contact@bbbit.cc</a>.
+          </p>
+          <p class="contact-note">
+            Do not include API tokens, private URLs, personal files, or other
+            sensitive information.
+          </p>
+        </section>
+      </main>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p>© 2026 bbbit. All rights reserved.</p>
+        <nav class="footer-links" aria-label="Legal">
+          <a href="../privacy/">Privacy Policy</a>
+          <a href="../commerce/">Commerce Disclosure</a>
+        </nav>
+        <a
+          class="github-link"
+          href="https://github.com/tuki0918/eagleinbox"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="View the Eagle Inbox repository on GitHub"
+          title="GitHub repository"
+        >
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path d="M12 .7a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2.23c-3.22.7-3.9-1.37-3.9-1.37-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.74-1.55-2.57-.29-5.27-1.29-5.27-5.69 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.47.11-3.05 0 0 .97-.31 3.16 1.18A11 11 0 0 1 12 6.11c.98 0 1.96.13 2.88.39 2.2-1.49 3.16-1.18 3.16-1.18.63 1.58.23 2.76.12 3.05.73.81 1.17 1.83 1.17 3.09 0 4.42-2.7 5.39-5.28 5.68.42.36.79 1.07.79 2.16v3.25c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .7Z"/>
+          </svg>
+          <span class="visually-hidden">GitHub repository</span>
+        </a>
+      </div>
+    </footer>
+  </body>
+</html>

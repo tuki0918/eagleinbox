@@ -1,0 +1,51 @@
+{
+  "assetSet": "Eagle Inbox App Store screenshots - Japanese",
+  "locale": "ja-JP",
+  "platform": "iPhone 6.9-inch display",
+  "format": "PNG",
+  "width": 1260,
+  "height": 2736,
+  "alpha": false,
+  "items": [
+    {
+      "order": 1,
+      "file": "01-send-items.png",
+      "eyebrow": "写真もファイルも",
+      "headline": "まとめてEagleへ",
+      "subtitle": "選んだメディアを一度に送信",
+      "source": "../../../Screenshots/ja/upload-queue-photo-url.png"
+    },
+    {
+      "order": 2,
+      "file": "02-share-sheet.png",
+      "headline": "「共有」から / すばやく起動",
+      "subtitle": "写真やファイル、Webページを送信",
+      "source": "../../../Screenshots/ja/share-menu.png"
+    },
+    {
+      "order": 3,
+      "file": "03-organize-tags.png",
+      "headline": "ちょっと整理",
+      "subtitle": "Eagleのタグやフォルダを送信前に設定",
+      "sources": [
+        "../../../Screenshots/ja/folders-selected-recent-all.png",
+        "../../../Screenshots/ja/tags-selected.png"
+      ]
+    },
+    {
+      "order": 4,
+      "file": "04-pro-upgrade.png",
+      "headline": "Proでもっと自由に",
+      "subtitle": "接続先は無制限、すべてのショートカットが使える",
+      "source": "../../../Screenshots/ja/pro-upgrade.png"
+    },
+    {
+      "order": 5,
+      "file": "05-action-button.png",
+      "headline": "ボタンひとつで / Eagleへ",
+      "subtitle": "アクションボタンからショートカットを実行",
+      "badge": "PRO",
+      "source": "../../../Screenshots/ja/action-button-shortcut.png"
+    }
+  ]
+}

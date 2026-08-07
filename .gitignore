@@ -1,0 +1,15 @@
+.DS_Store
+
+# Xcode build artifacts
+/DerivedData*/
+/build/
+
+# Xcode user settings
+xcuserdata/
+*.xcuserstate
+*.xccheckout
+*.xcscmblueprint
+
+# Swift Package Manager
+/.build/
+.swiftpm/
