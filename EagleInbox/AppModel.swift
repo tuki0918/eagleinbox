@@ -97,6 +97,20 @@ final class AppModel: ObservableObject {
         }.count
     }
 
+#if DEBUG
+    func seedLibraryMismatchForUITesting(
+        expectedLibraryName: String,
+        actualLibraryName: String
+    ) {
+        guard let profile = selectedProfile else { return }
+        let mismatch = EagleLibraryMismatch(
+            expectedLibraryName: expectedLibraryName,
+            actualLibraryName: actualLibraryName
+        )
+        connectionTestStates[profile.id] = .warning(mismatch.warningMessage)
+    }
+#endif
+
     func reloadProfiles() {
         let previousProfile = selectedProfile
         let previousProfiles = Dictionary(

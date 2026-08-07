@@ -134,7 +134,7 @@ The Review Notes should explain that Eagle 4.0 Build 21 or later must be running
 
 Store README images in `Docs/Screenshots/`. Capture the current UI and use the placeholder host `192.168.0.100` and API token `demo-api-token` in the Connection Editor. Never include real credentials in screenshots or Git history.
 
-The deterministic upload-queue screenshot uses optimized photos in `EagleInbox/ScreenshotFixtures/`. They are bundled for Debug UI tests and excluded from Release builds with `EXCLUDED_SOURCE_FILE_NAMES`.
+The deterministic upload-queue screenshot uses optimized photos in `EagleInbox/ScreenshotFixtures/`. They are bundled for Debug UI tests and excluded from Release builds with `EXCLUDED_SOURCE_FILE_NAMES`. The UI test launch state also produces the `Library mismatch` screenshot without contacting a real Eagle server.
 
 ## Troubleshooting
 

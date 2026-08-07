@@ -81,6 +81,12 @@ struct EagleInboxApp: App {
                 settingsStore: settingsStore,
                 allowsAutomaticConnectionRefresh: false
             )
+            if arguments.contains("--ui-testing-seeded-library-mismatch") {
+                model.seedLibraryMismatchForUITesting(
+                    expectedLibraryName: "Design",
+                    actualLibraryName: "Reference"
+                )
+            }
             if arguments.contains("--ui-testing-seeded-upload-queue") {
                 model.queue = Self.makeScreenshotUploadQueue()
             }

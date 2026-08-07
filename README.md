@@ -22,7 +22,7 @@ Open the destination library in Eagle. In Eagle Inbox, tap `Connection Required`
 | --- | --- |
 | ![Connection editor with host, port, and API token](./Docs/Screenshots/connection-editor.png) | ![Saved Eagle connections](./Docs/Screenshots/connections.png) |
 
-The host, library name, and API token shown are examples. On an Apple Silicon Mac, new connections default to `localhost`.
+The host, library name, and API token shown are examples.
 
 ### 2. Add items
 
@@ -66,6 +66,10 @@ Connect the Mac or Windows PC running Eagle and the device running Eagle Inbox t
 
 Each connection stores the name of the Eagle library that was open when the connection was tested.
 
+<p align="center">
+  <img src="./Docs/Screenshots/library-mismatch.png" alt="Library mismatch warning on the upload screen" width="420">
+</p>
+
 - The main screen displays `Library mismatch.` when another library is open.
 - During an upload, you can confirm that you want to use the currently open library for that upload only.
 - To change the library stored with a connection, run `Test Connection` in the Connection Editor.
@@ -80,4 +84,5 @@ The Eagle Web API uses HTTP and sends the API token as a URL query parameter. Us
 
 - [Architecture](./Docs/ARCHITECTURE.md)
 - [Build, test, and release guide](./Docs/DEVELOPMENT.md)
+- [App Store submission draft](./Docs/APP_STORE_SUBMISSION.md)
 - [Eagle Web API v2](https://developer.eagle.cool/web-api)
