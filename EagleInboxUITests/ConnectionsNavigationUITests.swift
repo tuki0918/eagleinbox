@@ -257,6 +257,14 @@ final class ConnectionsNavigationUITests: XCTestCase {
         )
         XCTAssertTrue(shareExtension.frame.intersects(safari.frame))
         attachScreenshot(named: "share-menu")
+
+        shareExtension.tap()
+        let sharedItemCount = safari.staticTexts["upload.queue.count"]
+        XCTAssertTrue(
+            sharedItemCount.waitForExistence(timeout: Self.waitTimeout),
+            safari.debugDescription
+        )
+        XCTAssertEqual(sharedItemCount.label, "1 item")
     }
 
     func testReadmeAddItemsMenuAndSeededQueueScreenshots() {
@@ -350,6 +358,13 @@ final class ConnectionsNavigationUITests: XCTestCase {
 
         app.terminate()
         launchApp(seedConnection: true, seedUploadQueue: true)
+
+        let queuedItemCount = app.staticTexts["upload.queue.count"]
+        XCTAssertTrue(
+            queuedItemCount.waitForExistence(timeout: Self.waitTimeout),
+            app.debugDescription
+        )
+        XCTAssertEqual(queuedItemCount.label, "3 items")
 
         let photoNames = app.textFields.matching(
             NSPredicate(format: "label == %@", "File name")

@@ -338,19 +338,7 @@ struct UploadView: View {
                 }
             }
         } header: {
-            HStack {
-                Text("Upload Queue")
-                Spacer()
-                if !model.queue.isEmpty {
-                    Text("\(model.queue.count)")
-                        .font(.caption.weight(.semibold))
-                        .foregroundStyle(Color.accentColor)
-                        .monospacedDigit()
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 3)
-                        .background(Color.accentColor.opacity(0.12), in: Capsule())
-                }
-            }
+            UploadQueueSectionHeader(count: model.queue.count)
         }
     }
 

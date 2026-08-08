@@ -4,6 +4,33 @@
 import SwiftUI
 import UIKit
 
+struct UploadQueueSectionHeader: View {
+    let count: Int
+
+    var body: some View {
+        HStack {
+            Text("Upload Queue")
+            Spacer()
+            if count > 0 {
+                Text("\(count)")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(Color.accentColor)
+                    .monospacedDigit()
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 3)
+                    .background(
+                        Color.accentColor.opacity(0.12),
+                        in: Capsule()
+                    )
+                    .accessibilityLabel(
+                        "\(count) " + (count == 1 ? "item" : "items")
+                    )
+                    .accessibilityIdentifier("upload.queue.count")
+            }
+        }
+    }
+}
+
 struct UploadQueueItemRow: View {
     @Binding var item: QueuedUpload
     let canDelete: Bool

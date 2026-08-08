@@ -43,6 +43,7 @@ struct ShareUploadView: View {
                 Form {
                     connectionSection
                     queueSection
+                        .animation(.snappy, value: model.queue.count)
                     operationMessageSection
                 }
                 .formStyle(.grouped)
@@ -419,7 +420,7 @@ struct ShareUploadView: View {
                 }
             }
         } header: {
-            Text("Upload Queue")
+            UploadQueueSectionHeader(count: model.queue.count)
         }
     }
 
