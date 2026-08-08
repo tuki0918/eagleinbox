@@ -56,18 +56,40 @@ struct EagleAPIClient: Sendable {
     }
 
     func fetchFolders() async throws -> [EagleFolder] {
-        let pageLimit = 1_000
+        try await fetchFolderList()
+    }
+
+    func fetchRecentFolders() async throws -> [EagleFolder] {
+        try await fetchFolderList(
+            isRecent: true,
+            pageLimit: EagleFolder.recentLimit,
+            maximumCount: EagleFolder.recentLimit
+        )
+    }
+
+    private func fetchFolderList(
+        isRecent: Bool = false,
+        pageLimit: Int = 1_000,
+        maximumCount: Int? = nil
+    ) async throws -> [EagleFolder] {
         var offset = 0
         var allObjects: [[String: Any]] = []
         var pageFingerprints: Set<String> = []
 
         while true {
+            var queryItems = [
+                URLQueryItem(name: "offset", value: String(offset)),
+                URLQueryItem(name: "limit", value: String(pageLimit))
+            ]
+            if isRecent {
+                queryItems.insert(
+                    URLQueryItem(name: "isRecent", value: "true"),
+                    at: 0
+                )
+            }
             let payload = try await get(
                 path: "/api/v2/folder/get",
-                queryItems: [
-                    URLQueryItem(name: "offset", value: String(offset)),
-                    URLQueryItem(name: "limit", value: String(pageLimit))
-                ]
+                queryItems: queryItems
             )
             let page = try folderPage(from: payload)
             let fingerprint = page.objects.compactMap { $0["id"] as? String }
@@ -75,6 +97,9 @@ struct EagleAPIClient: Sendable {
             guard pageFingerprints.insert(fingerprint).inserted else { break }
 
             allObjects.append(contentsOf: page.objects)
+            if let maximumCount, allObjects.count >= maximumCount {
+                break
+            }
 
             let loadedCount = page.objects.count
             let hasMore = if let total = page.total {
@@ -86,18 +111,22 @@ struct EagleAPIClient: Sendable {
             offset += loadedCount
         }
 
-        return EagleFolder.flattened(from: allObjects)
+        let folders = EagleFolder.flattened(from: allObjects)
+        if let maximumCount {
+            return Array(folders.prefix(maximumCount))
+        }
+        return folders
     }
 
     func fetchTags() async throws -> [EagleTag] {
-        try await fetchTags(
+        try await fetchTagList(
             path: "/api/v2/tag/get",
             preservingOrder: false
         )
     }
 
     func fetchRecentTags() async throws -> [EagleTag] {
-        let tags = try await fetchTags(
+        let tags = try await fetchTagList(
             path: "/api/v2/tag/getRecentTags",
             preservingOrder: true,
             pageLimit: EagleTag.recentLimit,
@@ -106,7 +135,7 @@ struct EagleAPIClient: Sendable {
         return EagleTag.recent(from: tags)
     }
 
-    private func fetchTags(
+    private func fetchTagList(
         path: String,
         preservingOrder: Bool,
         pageLimit: Int = 1_000,

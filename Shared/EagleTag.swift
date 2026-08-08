@@ -29,8 +29,11 @@ struct EagleTag: Identifiable, Equatable, Sendable {
             let name = rawName.trimmingCharacters(in: .whitespacesAndNewlines)
             guard !name.isEmpty else { continue }
 
-            let count = (object["count"] as? NSNumber)?.intValue
-                ?? object["count"] as? Int
+            // NOTE: The Web API documentation names this field `count`, but
+            // current Eagle responses use `imageCount`. Prefer the observed
+            // response field while retaining `count` for compatibility.
+            let count = parsedCount(from: object["imageCount"])
+                ?? parsedCount(from: object["count"])
                 ?? 0
             let tag = EagleTag(
                 name: name,
@@ -89,6 +92,16 @@ struct EagleTag: Identifiable, Equatable, Sendable {
             }
             return trimmed
         }
+    }
+
+    private static func parsedCount(from value: Any?) -> Int? {
+        if let number = value as? NSNumber {
+            return number.intValue
+        }
+        if let string = value as? String {
+            return Int(string.trimmingCharacters(in: .whitespacesAndNewlines))
+        }
+        return nil
     }
 }
 

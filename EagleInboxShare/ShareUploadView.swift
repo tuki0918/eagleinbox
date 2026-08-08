@@ -915,7 +915,6 @@ private struct ShareFolderSelectionView: View {
     @ObservedObject var model: ShareUploadViewModel
     @State private var searchText = ""
     @State private var pendingFolderIDs: Set<String>
-    @State private var recentlySelectedFolderIDs: [String] = []
     @State private var didSynchronizeInitialSelection = false
 
     init(model: ShareUploadViewModel) {
@@ -949,7 +948,7 @@ private struct ShareFolderSelectionView: View {
                 if !selectedFolders.isEmpty {
                     Section {
                         ForEach(selectedFolders) { folder in
-                            folderRow(folder)
+                            folderRow(folder, usesFilledIcon: true)
                         }
                     } header: {
                         Text("Selected")
@@ -968,13 +967,15 @@ private struct ShareFolderSelectionView: View {
                     }
                 }
 
-                Section {
-                    ForEach(filteredFolders) { folder in
-                        folderRow(folder)
+                if !filteredFolders.isEmpty {
+                    Section {
+                        ForEach(filteredFolders) { folder in
+                            folderRow(folder)
+                        }
+                    } header: {
+                        Text("All")
+                            .accessibilityIdentifier("folders.section.all")
                     }
-                } header: {
-                    Text("All")
-                        .accessibilityIdentifier("folders.section.all")
                 }
 
                 if let message = model.folderMessage {
@@ -992,11 +993,6 @@ private struct ShareFolderSelectionView: View {
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Select") {
-                    model.rememberRecentFolders(
-                        recentlySelectedFolderIDs.filter {
-                            pendingFolderIDs.contains($0)
-                        }
-                    )
                     model.selectedFolderIDs = pendingFolderIDs
                     dismiss()
                 }
@@ -1018,9 +1014,10 @@ private struct ShareFolderSelectionView: View {
 
     private var filteredFolders: [EagleFolder] {
         let query = trimmedSearchText
-        guard !query.isEmpty else { return model.availableFolders }
-        return model.availableFolders.filter {
-            $0.path.localizedCaseInsensitiveContains(query)
+        return model.availableFolders.filter { folder in
+            guard !pendingFolderIDs.contains(folder.id) else { return false }
+            return query.isEmpty
+                || folder.path.localizedCaseInsensitiveContains(query)
         }
     }
 
@@ -1030,19 +1027,24 @@ private struct ShareFolderSelectionView: View {
 
     private var recentFolders: [EagleFolder] {
         guard trimmedSearchText.isEmpty else { return [] }
-        return model.recentFolders
+        return model.recentFolders.filter {
+            !pendingFolderIDs.contains($0.id)
+        }
     }
 
     private var trimmedSearchText: String {
         searchText.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
-    private func folderRow(_ folder: EagleFolder) -> some View {
+    private func folderRow(
+        _ folder: EagleFolder,
+        usesFilledIcon: Bool = false
+    ) -> some View {
         Button {
             toggle(folder.id)
         } label: {
             HStack(spacing: 12) {
-                Image(systemName: "folder")
+                Image(systemName: usesFilledIcon ? "folder.fill" : "folder")
                     .foregroundStyle(Color.accentColor)
                     .frame(width: 24)
                 VStack(alignment: .leading, spacing: 2) {
@@ -1055,16 +1057,17 @@ private struct ShareFolderSelectionView: View {
                             .lineLimit(1)
                     }
                 }
-                Spacer()
-                if pendingFolderIDs.contains(folder.id) {
-                    Image(systemName: "checkmark.circle.fill")
-                        .foregroundStyle(Color.accentColor)
-                }
+                Spacer(minLength: 8)
+                Text(EagleItemCount.label(for: folder.imageCount))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .accessibilityLabel(folder.path)
+        .accessibilityLabel(
+            "\(folder.path), \(EagleItemCount.label(for: folder.imageCount))"
+        )
         .accessibilityValue(
             pendingFolderIDs.contains(folder.id)
                 ? "Selected"
@@ -1076,11 +1079,8 @@ private struct ShareFolderSelectionView: View {
     private func toggle(_ id: String) {
         if pendingFolderIDs.contains(id) {
             pendingFolderIDs.remove(id)
-            recentlySelectedFolderIDs.removeAll(where: { $0 == id })
         } else {
             pendingFolderIDs.insert(id)
-            recentlySelectedFolderIDs.removeAll(where: { $0 == id })
-            recentlySelectedFolderIDs.insert(id, at: 0)
         }
     }
 

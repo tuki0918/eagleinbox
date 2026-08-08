@@ -32,6 +32,12 @@ Tap `+` to add photos, files, or a URL. Use Metadata to apply folders, an annota
 | --- | --- |
 | ![Menu for adding photos, files, or a URL](./Docs/Screenshots/add-items-menu.png) | ![Expanded Metadata section with folders, annotation, and tags](./Docs/Screenshots/metadata-expanded.png) |
 
+Open Folders or Tags from Metadata to reuse recent choices, browse available values, and apply them to the entire batch.
+
+| Choose folders | Choose tags |
+| --- | --- |
+| ![Folder picker showing selected, recent, and all folders](./Docs/Screenshots/folders-selected-recent-all.png) | ![Tag picker showing selected tags, recent tags, and grouped suggestions](./Docs/Screenshots/tags-selected.png) |
+
 ### 3. Send or share
 
 Tap `Send to Eagle` when the queue is ready. You can also open Eagle Inbox from the share sheet in another app.

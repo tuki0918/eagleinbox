@@ -66,6 +66,7 @@ final class ShareUploadViewModel: ObservableObject {
     @Published private(set) var availableTagGroups: [EagleTagGroup] = []
     @Published private(set) var isLoadingTags = false
     @Published var availableFolders: [EagleFolder] = []
+    @Published private(set) var recentFolders: [EagleFolder] = []
     @Published var selectedFolderIDs: Set<String> = []
     @Published var annotation = ""
     @Published var isLoading = true
@@ -83,7 +84,6 @@ final class ShareUploadViewModel: ObservableObject {
 
     private weak var extensionContext: NSExtensionContext?
     private let settingsStore = SharedSettingsStore()
-    private let recentFolderStore = RecentFolderStore()
     private let uploadNotifier: any UploadNotifying
     private let temporaryFileOwner = ShareTemporaryFileOwner()
     private var folderLoadToken: UUID?
@@ -308,27 +308,6 @@ final class ShareUploadViewModel: ObservableObject {
         return loadedFolderProfile == EagleLibraryProfileFingerprint(profile: profile)
     }
 
-    var recentFolders: [EagleFolder] {
-        guard let profile = selectedProfile,
-              canUseRecentFolderHistory(for: profile) else {
-            return []
-        }
-        let foldersByID = Dictionary(
-            uniqueKeysWithValues: availableFolders.map { ($0.id, $0) }
-        )
-        return recentFolderStore.folderIDs(for: profile).compactMap {
-            foldersByID[$0]
-        }
-    }
-
-    func rememberRecentFolders(_ folderIDs: [String]) {
-        guard let profile = selectedProfile,
-              canUseRecentFolderHistory(for: profile) else {
-            return
-        }
-        recentFolderStore.record(folderIDs, for: profile)
-    }
-
     func loadFoldersIfNeeded() async {
         guard let profile = selectedProfile else {
             await loadFolders()
@@ -342,6 +321,7 @@ final class ShareUploadViewModel: ObservableObject {
     func loadFolders() async {
         guard let profile = selectedProfile else {
             availableFolders = []
+            recentFolders = []
             folderMessage = "Add and select a connection first."
             folderLoadToken = nil
             loadedFolderProfile = nil
@@ -357,21 +337,22 @@ final class ShareUploadViewModel: ObservableObject {
         folderMessage = nil
 
         do {
-            let folders = try await EagleAPIClient(
-                connection: profile.connection
-            ).fetchFolders()
+            let client = EagleAPIClient(connection: profile.connection)
+            async let foldersTask = client.fetchFolders()
+            async let recentFoldersTask = client.fetchRecentFolders()
+            let folders = try await foldersTask
+            let fetchedRecentFolders = (try? await recentFoldersTask) ?? []
+            try Task.checkCancellation()
             guard folderLoadToken == loadToken,
                   selectedProfile.map({ EagleLibraryProfileFingerprint(profile: $0) })
                     == fingerprint else {
                 return
             }
             availableFolders = folders
-            if canUseRecentFolderHistory(for: profile) {
-                recentFolderStore.retainAvailableFolderIDs(
-                    Set(folders.map(\.id)),
-                    for: profile
-                )
-            }
+            recentFolders = EagleFolder.recent(
+                from: fetchedRecentFolders,
+                matching: folders
+            )
             loadedFolderProfile = fingerprint
             folderLoadToken = nil
             folderMessage = folders.isEmpty
@@ -973,6 +954,7 @@ final class ShareUploadViewModel: ObservableObject {
         loadedFolderProfile = nil
         isLoadingFolders = false
         availableFolders = []
+        recentFolders = []
         selectedFolderIDs = []
         folderMessage = nil
         tagLoadToken = nil
@@ -982,18 +964,6 @@ final class ShareUploadViewModel: ObservableObject {
         availableTags = []
         recentTags = []
         availableTagGroups = []
-    }
-
-    private func canUseRecentFolderHistory(
-        for profile: EagleConnectionProfile
-    ) -> Bool {
-        guard let expectedLibraryName = profile.expectedLibraryName,
-              !expectedLibraryName.isEmpty,
-              profile.libraryName == expectedLibraryName,
-              connectionTestStates[profile.id] == .succeeded else {
-            return false
-        }
-        return true
     }
 
     private func removeSucceededUploadsFromQueue() {

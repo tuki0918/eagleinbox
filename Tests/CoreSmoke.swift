@@ -208,6 +208,19 @@ enum CoreSmoke {
         precondition(queryItems.first(where: { $0.name == "limit" })?.value == "1000")
         precondition(queryItems.first(where: { $0.name == "token" })?.value == "token value")
 
+        let recentFoldersEndpoint = try connection.endpoint(
+            "/api/v2/folder/get",
+            queryItems: [URLQueryItem(name: "isRecent", value: "true")]
+        )
+        let recentFolderQueryItems = URLComponents(
+            url: recentFoldersEndpoint,
+            resolvingAgainstBaseURL: false
+        )?.queryItems ?? []
+        precondition(
+            recentFolderQueryItems.first(where: { $0.name == "isRecent" })?.value
+                == "true"
+        )
+
         let parsedTags = EagleTag.parsed(
             from: [
                 ["name": "Design", "count": 12, "groups": ["styles"]],
@@ -224,6 +237,35 @@ enum CoreSmoke {
             parsedTags.first(where: { $0.id == "design" })?.groupIDs
                 == ["styles", "work"]
         )
+
+        let stringCountTags = EagleTag.parsed(
+            from: [["name": "String Count", "count": "17"]]
+        )
+        precondition(stringCountTags.first?.count == 17)
+
+        let imageCountTags = EagleTag.parsed(
+            from: [
+                ["name": "Image Count", "imageCount": 23],
+                ["name": "Preferred Count", "imageCount": 31, "count": 0]
+            ]
+        )
+        precondition(
+            imageCountTags.first(where: { $0.id == "image count" })?.count
+                == 23
+        )
+        precondition(
+            imageCountTags.first(where: { $0.id == "preferred count" })?.count
+                == 31
+        )
+
+        let recentTagsWithImageCounts = EagleTag.parsed(
+            from: [
+                ["name": "Reference", "imageCount": 8],
+                ["name": "Design", "imageCount": 13]
+            ],
+            preservingOrder: true
+        )
+        precondition(recentTagsWithImageCounts.map(\.count) == [8, 13])
 
         let parsedTagGroups = EagleTagGroup.parsed(
             from: [
@@ -485,83 +527,35 @@ enum CoreSmoke {
                 [
                     "id": "ROOT",
                     "name": "Design",
+                    "imageCount": 12,
                     "children": [
-                        ["id": "CHILD", "name": "References"]
+                        [
+                            "id": "CHILD",
+                            "name": "References",
+                            "imageCount": "4"
+                        ]
                     ]
                 ],
                 [
                     "id": "LOOSE_CHILD",
                     "name": "Inspiration",
-                    "parent": "ROOT"
+                    "parent": "ROOT",
+                    "imageCount": 7
                 ]
             ]
         )
         precondition(folders.map(\.id) == ["ROOT", "CHILD", "LOOSE_CHILD"])
         precondition(folders.first(where: { $0.id == "CHILD" })?.path == "Design / References")
         precondition(folders.first(where: { $0.id == "LOOSE_CHILD" })?.depth == 1)
+        precondition(folders.first(where: { $0.id == "ROOT" })?.imageCount == 12)
+        precondition(folders.first(where: { $0.id == "CHILD" })?.imageCount == 4)
 
-        precondition(
-            RecentFolderHistory.merging(
-                ["B", "D", "B", ""],
-                into: ["A", "B", "C"]
-            ) == ["B", "D", "A", "C"]
+        let recentFolders = EagleFolder.recent(
+            from: [folders[2], folders[0], folders[2]],
+            matching: folders
         )
-        precondition(
-            RecentFolderHistory.merging(
-                ["C"],
-                into: ["A", "B", "C"]
-            ) == ["C", "A", "B"]
-        )
-        precondition(
-            RecentFolderHistory.merging(
-                ["A"],
-                into: ["B"],
-                limit: 0
-            ).isEmpty
-        )
-        precondition(RecentFolderHistory.limit == 5)
-        precondition(
-            RecentFolderHistory.merging(
-                ["A", "B", "C", "D", "E", "F"],
-                into: []
-            ) == ["A", "B", "C", "D", "E"]
-        )
-
-        let historyProfileID = try requiredUUID(
-            "00000000-0000-0000-0000-000000000123"
-        )
-        let historyProfile = EagleConnectionProfile(
-            id: historyProfileID,
-            name: "Desk",
-            connection: EagleConnection(
-                host: "192.168.0.10",
-                port: 41595,
-                token: "secret"
-            ),
-            expectedLibraryName: "Design",
-            libraryName: "Design"
-        )
-        let historyScope = RecentFolderHistory.scopeKey(for: historyProfile)
-        var renamedHistoryProfile = historyProfile
-        renamedHistoryProfile.name = "Renamed"
-        renamedHistoryProfile.connection.token = "different-secret"
-        precondition(
-            RecentFolderHistory.scopeKey(for: renamedHistoryProfile)
-                == historyScope
-        )
-        var otherLibraryHistoryProfile = historyProfile
-        otherLibraryHistoryProfile.expectedLibraryName = "Reference"
-        otherLibraryHistoryProfile.libraryName = "Reference"
-        precondition(
-            RecentFolderHistory.scopeKey(for: otherLibraryHistoryProfile)
-                != historyScope
-        )
-        var unverifiedHistoryProfile = historyProfile
-        unverifiedHistoryProfile.expectedLibraryName = nil
-        unverifiedHistoryProfile.libraryName = nil
-        precondition(
-            RecentFolderHistory.scopeKey(for: unverifiedHistoryProfile) == nil
-        )
+        precondition(recentFolders.map(\.id) == ["LOOSE_CHILD", "ROOT"])
+        precondition(recentFolders.map(\.imageCount) == [7, 12])
 
         print("Core smoke tests passed")
     }

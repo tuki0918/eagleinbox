@@ -461,8 +461,17 @@ final class ConnectionsNavigationUITests: XCTestCase {
             ),
             app.debugDescription
         )
-        attachScreenshot(named: "tags-grouped")
-
+        let initialInboxRows = app.buttons.matching(
+            identifier: "tags.suggestion.inbox"
+        )
+        XCTAssertEqual(initialInboxRows.count, 2)
+        for index in 0..<initialInboxRows.count {
+            XCTAssertTrue(
+                initialInboxRows.element(boundBy: index).label.contains(
+                    "42 items"
+                )
+            )
+        }
         let searchField = app.searchFields["Search or create a tag"]
         XCTAssertTrue(searchField.waitForExistence(timeout: Self.waitTimeout))
         searchField.tap()
@@ -486,13 +495,13 @@ final class ConnectionsNavigationUITests: XCTestCase {
                 timeout: Self.waitTimeout
             )
         )
+        XCTAssertTrue(
+            app.buttons["tags.selected.inbox"].label.contains("42 items")
+        )
         let inboxCopies = app.buttons.matching(
             identifier: "tags.suggestion.inbox"
         )
-        XCTAssertEqual(inboxCopies.count, 2)
-        for index in 0..<inboxCopies.count {
-            XCTAssertEqual(inboxCopies.element(boundBy: index).value as? String, "Selected")
-        }
+        XCTAssertEqual(inboxCopies.count, 0)
         searchField.tap()
         searchField.typeText("Concept")
         let createButton = app.buttons["tags.create"]
@@ -510,6 +519,7 @@ final class ConnectionsNavigationUITests: XCTestCase {
         if closeSearchButton.exists {
             closeSearchButton.tap()
         }
+        attachScreenshot(named: "tags-selected")
         let selectButton = app.buttons["tags.select"]
         XCTAssertTrue(
             selectButton.waitForExistence(timeout: Self.waitTimeout)
@@ -520,7 +530,7 @@ final class ConnectionsNavigationUITests: XCTestCase {
         XCTAssertEqual(tagsButton.value as? String, "2 tags")
     }
 
-    func testFolderSelectionShowsSelectedRecentAndAllCopies() {
+    func testFolderSelectionShowsSelectedRecentAndAllSections() {
         launchApp(seedConnection: true, seedFolders: true)
 
         let metadataButton = app.buttons["Metadata"]
@@ -549,18 +559,30 @@ final class ConnectionsNavigationUITests: XCTestCase {
         let inboxCopies = app.buttons.matching(
             identifier: "folders.row.folder-inbox"
         )
-        XCTAssertEqual(inboxCopies.count, 3)
-        for index in 0..<inboxCopies.count {
-            XCTAssertEqual(inboxCopies.element(boundBy: index).value as? String, "Selected")
-        }
+        XCTAssertEqual(inboxCopies.count, 1)
+        XCTAssertEqual(
+            inboxCopies.element(boundBy: 0).value as? String,
+            "Selected"
+        )
+        XCTAssertTrue(inboxCopies.element(boundBy: 0).label.contains("42 items"))
         attachScreenshot(named: "folders-selected-recent-all")
 
-        inboxCopies.element(boundBy: 2).tap()
+        let referenceRows = app.buttons.matching(
+            identifier: "folders.row.folder-reference"
+        )
+        XCTAssertEqual(referenceRows.count, 2)
+        referenceRows.element(boundBy: 0).tap()
+
+        let archiveRow = app.buttons["folders.row.folder-archive"]
+        XCTAssertTrue(archiveRow.waitForExistence(timeout: Self.waitTimeout))
+        archiveRow.tap()
         XCTAssertFalse(
-            app.staticTexts["folders.section.selected"].waitForExistence(
+            app.staticTexts["folders.section.all"].waitForExistence(
                 timeout: 1
             )
         )
+
+        inboxCopies.element(boundBy: 0).tap()
         let remainingCopies = app.buttons.matching(
             identifier: "folders.row.folder-inbox"
         )

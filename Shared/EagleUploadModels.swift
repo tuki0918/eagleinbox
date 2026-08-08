@@ -1,10 +1,27 @@
 import Foundation
 
 struct EagleFolder: Identifiable, Equatable, Sendable {
+    static let recentLimit = 5
+
     let id: String
     let name: String
     let path: String
     let depth: Int
+    let imageCount: Int
+
+    init(
+        id: String,
+        name: String,
+        path: String,
+        depth: Int,
+        imageCount: Int = 0
+    ) {
+        self.id = id
+        self.name = name
+        self.path = path
+        self.depth = depth
+        self.imageCount = max(0, imageCount)
+    }
 
     static func flattened(from objects: [[String: Any]]) -> [EagleFolder] {
         var recordsByID: [String: EagleFolderRecord] = [:]
@@ -26,11 +43,21 @@ struct EagleFolder: Identifiable, Equatable, Sendable {
                 recordsByID[id] = EagleFolderRecord(
                     id: id,
                     name: name,
-                    parentID: parentID
+                    parentID: parentID,
+                    imageCount: parsedCount(from: object["imageCount"]) ?? 0
                 )
                 discoveryOrder.append(id)
-            } else if recordsByID[id]?.parentID == nil, let parentID {
-                recordsByID[id]?.parentID = parentID
+            } else {
+                if recordsByID[id]?.parentID == nil, let parentID {
+                    recordsByID[id]?.parentID = parentID
+                }
+                if let imageCount = parsedCount(from: object["imageCount"]) {
+                    let existingImageCount = recordsByID[id]?.imageCount ?? 0
+                    recordsByID[id]?.imageCount = max(
+                        existingImageCount,
+                        imageCount
+                    )
+                }
             }
 
             for child in object["children"] as? [[String: Any]] ?? [] {
@@ -64,7 +91,8 @@ struct EagleFolder: Identifiable, Equatable, Sendable {
                     id: record.id,
                     name: record.name,
                     path: components.joined(separator: " / "),
-                    depth: parentPath.count
+                    depth: parentPath.count,
+                    imageCount: record.imageCount
                 )
             )
             for childID in childrenByParentID[id] ?? [] {
@@ -80,117 +108,43 @@ struct EagleFolder: Identifiable, Equatable, Sendable {
         }
         return result
     }
-}
 
-enum RecentFolderHistory {
-    static let limit = 5
-
-    static func merging(
-        _ mostRecentFolderIDs: [String],
-        into existingFolderIDs: [String],
-        limit: Int = RecentFolderHistory.limit
-    ) -> [String] {
-        guard limit > 0 else { return [] }
-
+    static func recent(
+        from recentFolders: [EagleFolder],
+        matching availableFolders: [EagleFolder]
+    ) -> [EagleFolder] {
+        let availableByID = Dictionary(
+            uniqueKeysWithValues: availableFolders.map { ($0.id, $0) }
+        )
         var seen: Set<String> = []
-        return (mostRecentFolderIDs + existingFolderIDs)
-            .filter { folderID in
-                !folderID.isEmpty && seen.insert(folderID).inserted
-            }
-            .prefix(limit)
-            .map { $0 }
+        return recentFolders
+            .filter { seen.insert($0.id).inserted }
+            .prefix(recentLimit)
+            .compactMap { availableByID[$0.id] }
     }
 
-    static func scopeKey(for profile: EagleConnectionProfile) -> String? {
-        guard let libraryName = profile.expectedLibraryName
-            ?? profile.libraryName,
-            !libraryName.isEmpty else {
-            return nil
+    private static func parsedCount(from value: Any?) -> Int? {
+        if let number = value as? NSNumber {
+            return number.intValue
         }
-        return [
-            profile.id.uuidString.lowercased(),
-            profile.connection.normalizedHost.lowercased(),
-            String(profile.connection.port),
-            libraryName
-        ].joined(separator: "\u{0}")
-    }
-}
-
-struct RecentFolderStore {
-    private enum Key {
-        static let histories = "eagle.recent-folder-histories.v1"
-    }
-
-    private let defaults: UserDefaults
-
-    init(defaults: UserDefaults = SharedIdentifiers.defaults) {
-        self.defaults = defaults
-    }
-
-    func folderIDs(for profile: EagleConnectionProfile) -> [String] {
-        guard let key = RecentFolderHistory.scopeKey(for: profile) else {
-            return []
+        if let string = value as? String {
+            return Int(string.trimmingCharacters(in: .whitespacesAndNewlines))
         }
-        return Array(
-            (histories()[key] ?? []).prefix(RecentFolderHistory.limit)
-        )
+        return nil
     }
-
-    func record(
-        _ mostRecentFolderIDs: [String],
-        for profile: EagleConnectionProfile
-    ) {
-        guard !mostRecentFolderIDs.isEmpty else { return }
-
-        guard let key = RecentFolderHistory.scopeKey(for: profile) else {
-            return
-        }
-        var values = histories()
-        values[key] = RecentFolderHistory.merging(
-            mostRecentFolderIDs,
-            into: values[key] ?? []
-        )
-        guard let data = try? JSONEncoder().encode(values) else { return }
-        defaults.set(data, forKey: Key.histories)
-    }
-
-    func retainAvailableFolderIDs(
-        _ availableFolderIDs: Set<String>,
-        for profile: EagleConnectionProfile
-    ) {
-        guard let key = RecentFolderHistory.scopeKey(for: profile) else {
-            return
-        }
-        var values = histories()
-        guard let existing = values[key] else { return }
-        let retained = Array(
-            existing
-                .filter(availableFolderIDs.contains)
-                .prefix(RecentFolderHistory.limit)
-        )
-        guard retained != existing else { return }
-        values[key] = retained
-        guard let data = try? JSONEncoder().encode(values) else { return }
-        defaults.set(data, forKey: Key.histories)
-    }
-
-    private func histories() -> [String: [String]] {
-        guard let data = defaults.data(forKey: Key.histories),
-              let values = try? JSONDecoder().decode(
-                  [String: [String]].self,
-                  from: data
-              ) else {
-            return [:]
-        }
-        return values
-    }
-
 }
 
 private struct EagleFolderRecord {
     let id: String
     let name: String
     var parentID: String?
+    var imageCount: Int
+}
+
+enum EagleItemCount {
+    static func label(for count: Int) -> String {
+        "\(count.formatted()) " + (count == 1 ? "item" : "items")
+    }
 }
 
 struct EagleUploadMetadata: Sendable {

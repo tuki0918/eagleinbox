@@ -35,6 +35,7 @@ final class AppModel: ObservableObject {
     @Published private(set) var availableTagGroups: [EagleTagGroup] = []
     @Published private(set) var isLoadingTags = false
     @Published var availableFolders: [EagleFolder] = []
+    @Published private(set) var recentFolders: [EagleFolder] = []
     @Published var selectedFolderIDs: Set<String> = []
     @Published var annotation = ""
     @Published var isWorking = false
@@ -50,7 +51,6 @@ final class AppModel: ObservableObject {
 
     private let settingsStore: SharedSettingsStore
     let allowsAutomaticConnectionRefresh: Bool
-    private let recentFolderStore = RecentFolderStore()
     private let uploadNotifier: any UploadNotifying
     private var folderLoadToken: UUID?
     private var loadedFolderProfile: EagleLibraryProfileFingerprint?
@@ -59,10 +59,6 @@ final class AppModel: ObservableObject {
     private var tagLoadToken: UUID?
     private var loadedTagProfile: EagleLibraryProfileFingerprint?
     private var loadedTagsAt: Date?
-#if DEBUG
-    private var seededRecentFolderIDsForUITesting: [String]?
-#endif
-
     init(
         settingsStore: SharedSettingsStore = SharedSettingsStore(),
         allowsAutomaticConnectionRefresh: Bool = true,
@@ -300,37 +296,6 @@ final class AppModel: ObservableObject {
         return loadedFolderProfile == EagleLibraryProfileFingerprint(profile: profile)
     }
 
-    var recentFolders: [EagleFolder] {
-#if DEBUG
-        if let seededRecentFolderIDsForUITesting {
-            let foldersByID = Dictionary(
-                uniqueKeysWithValues: availableFolders.map { ($0.id, $0) }
-            )
-            return seededRecentFolderIDsForUITesting
-                .prefix(RecentFolderHistory.limit)
-                .compactMap { foldersByID[$0] }
-        }
-#endif
-        guard let profile = selectedProfile,
-              canUseRecentFolderHistory(for: profile) else {
-            return []
-        }
-        let foldersByID = Dictionary(
-            uniqueKeysWithValues: availableFolders.map { ($0.id, $0) }
-        )
-        return recentFolderStore.folderIDs(for: profile).compactMap {
-            foldersByID[$0]
-        }
-    }
-
-    func rememberRecentFolders(_ folderIDs: [String]) {
-        guard let profile = selectedProfile,
-              canUseRecentFolderHistory(for: profile) else {
-            return
-        }
-        recentFolderStore.record(folderIDs, for: profile)
-    }
-
     func loadFoldersIfNeeded() async {
 #if DEBUG
         if seedFoldersForUITestingIfRequested() {
@@ -354,6 +319,7 @@ final class AppModel: ObservableObject {
 #endif
         guard let profile = selectedProfile else {
             availableFolders = []
+            recentFolders = []
             folderMessage = "Add and select a connection first."
             folderLoadToken = nil
             loadedFolderProfile = nil
@@ -369,21 +335,22 @@ final class AppModel: ObservableObject {
         folderMessage = nil
 
         do {
-            let folders = try await EagleAPIClient(
-                connection: profile.connection
-            ).fetchFolders()
+            let client = EagleAPIClient(connection: profile.connection)
+            async let foldersTask = client.fetchFolders()
+            async let recentFoldersTask = client.fetchRecentFolders()
+            let folders = try await foldersTask
+            let fetchedRecentFolders = (try? await recentFoldersTask) ?? []
+            try Task.checkCancellation()
             guard folderLoadToken == loadToken,
                   selectedProfile.map({ EagleLibraryProfileFingerprint(profile: $0) })
                     == fingerprint else {
                 return
             }
             availableFolders = folders
-            if canUseRecentFolderHistory(for: profile) {
-                recentFolderStore.retainAvailableFolderIDs(
-                    Set(folders.map(\.id)),
-                    for: profile
-                )
-            }
+            recentFolders = EagleFolder.recent(
+                from: fetchedRecentFolders,
+                matching: folders
+            )
             loadedFolderProfile = fingerprint
             folderLoadToken = nil
             folderMessage = folders.isEmpty
@@ -478,21 +445,31 @@ final class AppModel: ObservableObject {
             return false
         }
         availableFolders = [
-            EagleFolder(id: "folder-inbox", name: "Inbox", path: "Inbox", depth: 0),
+            EagleFolder(
+                id: "folder-inbox",
+                name: "Inbox",
+                path: "Inbox",
+                depth: 0,
+                imageCount: 42
+            ),
             EagleFolder(
                 id: "folder-reference",
                 name: "Reference",
                 path: "Reference",
-                depth: 0
+                depth: 0,
+                imageCount: 18
             ),
-            EagleFolder(id: "folder-archive", name: "Archive", path: "Archive", depth: 0),
+            EagleFolder(
+                id: "folder-archive",
+                name: "Archive",
+                path: "Archive",
+                depth: 0,
+                imageCount: 7
+            ),
         ]
         selectedFolderIDs = ["folder-inbox"]
         connectionTestStates[profile.id] = .succeeded
-        seededRecentFolderIDsForUITesting = [
-            "folder-inbox",
-            "folder-reference",
-        ]
+        recentFolders = [availableFolders[0], availableFolders[1]]
         loadedFolderProfile = EagleLibraryProfileFingerprint(profile: profile)
         folderLoadToken = nil
         isLoadingFolders = false
@@ -1004,11 +981,9 @@ final class AppModel: ObservableObject {
         loadedFolderProfile = nil
         isLoadingFolders = false
         availableFolders = []
+        recentFolders = []
         selectedFolderIDs = []
         folderMessage = nil
-#if DEBUG
-        seededRecentFolderIDsForUITesting = nil
-#endif
         tagLoadToken = nil
         loadedTagProfile = nil
         loadedTagsAt = nil
@@ -1016,18 +991,6 @@ final class AppModel: ObservableObject {
         availableTags = []
         recentTags = []
         availableTagGroups = []
-    }
-
-    private func canUseRecentFolderHistory(
-        for profile: EagleConnectionProfile
-    ) -> Bool {
-        guard let expectedLibraryName = profile.expectedLibraryName,
-              !expectedLibraryName.isEmpty,
-              profile.libraryName == expectedLibraryName,
-              connectionTestStates[profile.id] == .succeeded else {
-            return false
-        }
-        return true
     }
 
     private func clearConnectionTest(for id: UUID) {

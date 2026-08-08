@@ -86,7 +86,7 @@ struct TagSelectionView: View {
 
     @ViewBuilder
     private var recentTagsSection: some View {
-        if !recentTags.isEmpty {
+        if !limitedRecentTags.isEmpty {
             Section {
                 ForEach(limitedRecentTags) { tag in
                     availableTagRow(tag)
@@ -99,7 +99,9 @@ struct TagSelectionView: View {
     }
 
     private var limitedRecentTags: [EagleTag] {
-        EagleTag.recent(from: recentTags)
+        EagleTag.recent(from: recentTags).filter {
+            !isTagSelected($0.name)
+        }
     }
 
     @ViewBuilder
@@ -164,7 +166,7 @@ struct TagSelectionView: View {
 
     private var availableTagSections: [EagleTagGroupSection] {
         EagleTagGrouping.sections(
-            from: availableTags,
+            from: availableTags.filter { !isTagSelected($0.name) },
             groups: availableTagGroups
         )
     }
@@ -173,7 +175,7 @@ struct TagSelectionView: View {
         EagleTagSuggestionRanker.suggestions(
             from: availableTags,
             matching: trimmedSearchText,
-            excluding: [],
+            excluding: pendingTags,
             limit: 50
         )
     }
@@ -227,14 +229,16 @@ struct TagSelectionView: View {
                 Text(tag)
                     .foregroundStyle(.primary)
                 Spacer(minLength: 8)
-                Image(systemName: "checkmark.circle.fill")
-                    .foregroundStyle(Color.accentColor)
-                    .accessibilityHidden(true)
+                if let availableTag = availableTag(named: tag) {
+                    Text(EagleItemCount.label(for: availableTag.count))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
             }
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .accessibilityLabel(tag)
+        .accessibilityLabel(selectedTagAccessibilityLabel(tag))
         .accessibilityValue("Selected")
         .accessibilityHint("Removes this tag")
         .accessibilityIdentifier("tags.selected.\(EagleTag.normalized(tag))")
@@ -242,7 +246,7 @@ struct TagSelectionView: View {
 
     private func availableTagRow(_ tag: EagleTag) -> some View {
         Button {
-            toggleTag(tag.name)
+            addTag(tag.name)
             searchText = ""
         } label: {
             HStack(spacing: 12) {
@@ -254,30 +258,16 @@ struct TagSelectionView: View {
                     .foregroundStyle(.primary)
                     .lineLimit(1)
                 Spacer(minLength: 8)
-                if tag.count > 0 {
-                    Text(
-                        "\(tag.count.formatted()) "
-                            + (tag.count == 1 ? "item" : "items")
-                    )
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-                Image(
-                    systemName: isTagSelected(tag.name)
-                        ? "checkmark.circle.fill"
-                        : "plus.circle"
-                )
-                    .foregroundStyle(Color.accentColor)
-                    .accessibilityHidden(true)
+                Text(EagleItemCount.label(for: tag.count))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
         .accessibilityLabel(tagAccessibilityLabel(tag))
-        .accessibilityValue(isTagSelected(tag.name) ? "Selected" : "Not selected")
-        .accessibilityHint(
-            isTagSelected(tag.name) ? "Removes this tag" : "Adds this tag"
-        )
+        .accessibilityValue("Not selected")
+        .accessibilityHint("Adds this tag")
         .accessibilityIdentifier("tags.suggestion.\(tag.id)")
     }
 
@@ -287,14 +277,15 @@ struct TagSelectionView: View {
         }
     }
 
-    private func toggleTag(_ tag: String) {
-        if isTagSelected(tag) {
-            pendingTags.removeAll {
-                EagleTag.normalized($0) == EagleTag.normalized(tag)
-            }
-        } else {
-            addTag(tag)
+    private func availableTag(named name: String) -> EagleTag? {
+        availableTags.first {
+            $0.id == EagleTag.normalized(name)
         }
+    }
+
+    private func selectedTagAccessibilityLabel(_ tag: String) -> String {
+        guard let availableTag = availableTag(named: tag) else { return tag }
+        return "\(tag), \(EagleItemCount.label(for: availableTag.count))"
     }
 
     private func addTag(_ tag: String) {
@@ -312,8 +303,7 @@ struct TagSelectionView: View {
     }
 
     private func tagAccessibilityLabel(_ tag: EagleTag) -> String {
-        guard tag.count > 0 else { return tag.name }
-        return "\(tag.name), \(tag.count) item\(tag.count == 1 ? "" : "s")"
+        "\(tag.name), \(EagleItemCount.label(for: tag.count))"
     }
 
     private static func uniqueTags(_ tags: [String]) -> [String] {
