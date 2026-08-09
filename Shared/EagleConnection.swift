@@ -50,6 +50,10 @@ struct EagleConnection: Equatable, Sendable {
         "\(scheme.rawValue)://\(normalizedHost):\(port)"
     }
 
+    var displayEndpoint: String {
+        "\(normalizedHost):\(port)"
+    }
+
     var isValid: Bool {
         !normalizedHost.isEmpty
             && (1 ... 65_535).contains(port)

@@ -47,6 +47,10 @@ enum CoreSmoke {
             EagleConnection.default.displayAddress
                 == "http://192.168.0.100:41595"
         )
+        precondition(
+            EagleConnection.default.displayEndpoint
+                == "192.168.0.100:41595"
+        )
         precondition(EagleConnection.default.isValid)
 
         let connectionEditorBaseline = EagleConnectionProfile(
@@ -287,6 +291,10 @@ enum CoreSmoke {
         precondition(
             secureEndpointConnection.displayAddress
                 == "https://eagle.example.com:443"
+        )
+        precondition(
+            secureEndpointConnection.displayEndpoint
+                == "eagle.example.com:443"
         )
 
         let pagedEndpoint = try connection.endpoint(

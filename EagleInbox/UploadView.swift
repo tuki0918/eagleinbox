@@ -175,7 +175,7 @@ struct UploadView: View {
                                 Text(profile.displayTitle)
                                     .font(.body.weight(.semibold))
                                     .foregroundStyle(.primary)
-                                Text(profile.connection.displayAddress)
+                                Text(profile.connection.displayEndpoint)
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
                                     .lineLimit(1)

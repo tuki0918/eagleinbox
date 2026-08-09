@@ -101,7 +101,7 @@ struct SettingsView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(profile.displayTitle)
                             .font(.headline)
-                        Text(profile.connection.displayAddress)
+                        Text(profile.connection.displayEndpoint)
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                             .lineLimit(1)
@@ -120,7 +120,7 @@ struct SettingsView: View {
                     ? "\(profile.displayTitle), selected"
                     : "Select \(profile.displayTitle)"
             )
-            .accessibilityValue(profile.connection.displayAddress)
+            .accessibilityValue(profile.connection.displayEndpoint)
             .accessibilityHint("Tap Select to confirm this connection.")
             .accessibilityIdentifier(
                 "connections.row.\(profile.id.uuidString)"
