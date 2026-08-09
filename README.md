@@ -6,7 +6,7 @@
 
 Eagle Inbox is an iOS app for sending photos, files, URLs, and other supported media from your device to [Eagle](https://eagle.cool/) over the same local network.
 
-You can also send items directly from the share sheet in Photos, Files, Safari, and other apps.
+You can also send items directly from the share sheet in Photos, Files, Safari, and other apps, or from Apple Shortcuts and the iPhone Action Button.
 
 ## Get Started
 
@@ -48,10 +48,26 @@ Tap `Send to Eagle` when the queue is ready. You can also open Eagle Inbox from 
 
 Allow local network access when prompted. Notifications are optional and do not affect uploads.
 
+### 4. Use Shortcuts or the Action Button
+
+Eagle Inbox provides two actions in Apple Shortcuts:
+
+- `Send Files to Eagle` accepts photos, videos, audio, and PDFs from a previous action
+- `Send URLs to Eagle` saves HTTP and HTTPS URLs as Eagle bookmarks
+
+Both actions use the connection currently selected in Eagle Inbox and run without opening the app. The selected connection must have been tested and the expected Eagle library must be open.
+
+For example, create a shortcut with `Take Photo` followed by `Send Files to Eagle`. On an iPhone with an Action Button, choose that shortcut under Settings → Action Button → Shortcut. You can also leave the action input set to `Ask Each Time` to choose content when the shortcut runs.
+
+| Create the shortcut | Assign it to the Action Button |
+| --- | --- |
+| ![Send Files to Eagle in Apple Shortcuts](./Docs/Screenshots/shortcuts-send-files.png) | ![Send Files to Eagle assigned to the iPhone Action Button](./Docs/Screenshots/action-button-shortcut.png) |
+
 ## Features
 
 - Send photos, videos, audio, PDFs, and URLs to Eagle
 - Add items from the share sheet
+- Send items from Apple Shortcuts and Action Button workflows
 - Save and switch between multiple connections
 - Apply folders, an annotation, and tags to an entire batch
 - Preview queued items with thumbnails, cancel uploads, and retry failures

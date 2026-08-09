@@ -16,7 +16,7 @@ The main app and share extension are implemented as iOS apps.
 
 | Path / target | Responsibility |
 | --- | --- |
-| `EagleInbox/` | Main SwiftUI app, connection management, and upload screen |
+| `EagleInbox/` | Main SwiftUI app, connection management, upload screen, and App Intents for Shortcuts |
 | `EagleInboxShare/` | iOS share extension and shared-content loading |
 | `Shared/` | Connection persistence, Keychain access, Eagle API client, shared models, and shared UI |
 | `EagleInboxUITests/` | XCUITests for Connections and the Connection Editor |
@@ -77,6 +77,19 @@ The main app and share extension store their Metadata expanded or collapsed stat
 The share extension uses the main app's connections through the App Group and Keychain. It accepts up to 50 files, 50 images, 20 movies, and 20 web URLs. Some supported content may still fail to load depending on the format provided by the source app.
 
 Messages for loading shared content, connection status, and folder retrieval are stored separately so one operation does not overwrite another operation's result. Closing the share view deletes temporary files retained for retry.
+
+## Shortcuts and Action Button
+
+The main app exposes separate App Intents for supported files and web URLs. They appear in Apple Shortcuts and can be used in a shortcut assigned to the iPhone Action Button.
+
+- Use the connection currently selected in the shared settings store
+- Run without opening the main app
+- Revalidate the connection and expected library before sending
+- Reject a library mismatch instead of allowing an unattended one-time override
+- Copy each shortcut file into temporary storage, upload it, and delete the copy before processing the next file
+- Continue through a batch and report partial failures to Shortcuts
+
+Shortcut uploads intentionally do not reuse the main app's in-memory queue or metadata. They accept up to 50 files or 20 URLs per run.
 
 ## Data and Security
 

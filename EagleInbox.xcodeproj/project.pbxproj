@@ -12,6 +12,7 @@
 		A10000000000000000000003 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000003 /* ContentView.swift */; };
 		A10000000000000000000004 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000004 /* SettingsView.swift */; };
 		A10000000000000000000005 /* UploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000005 /* UploadView.swift */; };
+		A10000000000000000000006 /* EagleShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000000000000000000000C /* EagleShortcuts.swift */; };
 		A10000000000000000000011 /* SharedIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000021 /* SharedIdentifiers.swift */; };
 		A10000000000000000000012 /* EagleConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000022 /* EagleConnection.swift */; };
 		A10000000000000000000013 /* EagleClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000023 /* EagleClientError.swift */; };
@@ -92,6 +93,7 @@
 		C10000000000000000000003 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C10000000000000000000004 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C10000000000000000000005 /* UploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadView.swift; sourceTree = "<group>"; };
+		C1000000000000000000000C /* EagleShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EagleShortcuts.swift; sourceTree = "<group>"; };
 		C10000000000000000000006 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C10000000000000000000007 /* EagleInbox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EagleInbox.entitlements; sourceTree = "<group>"; };
 		C10000000000000000000008 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 				C10000000000000000000003 /* ContentView.swift */,
 				C10000000000000000000004 /* SettingsView.swift */,
 				C10000000000000000000005 /* UploadView.swift */,
+				C1000000000000000000000C /* EagleShortcuts.swift */,
 				C10000000000000000000008 /* Assets.xcassets */,
 				D10000000000000000000007 /* ScreenshotFixtures */,
 				C10000000000000000000009 /* PrivacyInfo.xcprivacy */,
@@ -381,6 +384,7 @@
 				A10000000000000000000003 /* ContentView.swift in Sources */,
 				A10000000000000000000004 /* SettingsView.swift in Sources */,
 				A10000000000000000000005 /* UploadView.swift in Sources */,
+				A10000000000000000000006 /* EagleShortcuts.swift in Sources */,
 				A10000000000000000000011 /* SharedIdentifiers.swift in Sources */,
 				A10000000000000000000012 /* EagleConnection.swift in Sources */,
 				A10000000000000000000013 /* EagleClientError.swift in Sources */,

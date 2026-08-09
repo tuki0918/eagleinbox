@@ -109,6 +109,7 @@ At minimum, verify the following on a physical device or through TestFlight:
 - Canceling or approving a one-time upload when the library does not match
 - Canceling an upload in progress, retaining unsent items, and retrying failed items
 - Photos, files, URLs, and the share extension
+- `Send Files to Eagle` and `Send URLs to Eagle` in Apple Shortcuts, including an Action Button workflow on a physical iPhone
 - Connection sharing between the main app and share extension
 - iPad in iPhone compatibility mode
 - Running as a Designed for iPhone app on an Apple Silicon Mac
