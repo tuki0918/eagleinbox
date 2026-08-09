@@ -42,6 +42,11 @@ enum CoreSmoke {
         )
 
         precondition(EagleConnection.default.host == "192.168.0.100")
+        precondition(EagleConnection.default.scheme == .http)
+        precondition(
+            EagleConnection.default.displayAddress
+                == "http://192.168.0.100:41595"
+        )
         precondition(EagleConnection.default.isValid)
 
         let connectionEditorBaseline = EagleConnectionProfile(
@@ -85,6 +90,24 @@ enum CoreSmoke {
         )
         precondition(
             !changedPortDraft.matchesVerifiedConnection(
+                connectionEditorBaseline.connection
+            )
+        )
+
+        var secureConnectionProfile = connectionEditorBaseline
+        secureConnectionProfile.connection.scheme = .https
+        let secureConnectionDraft = ConnectionEditorDraft(
+            profile: secureConnectionProfile,
+            portText: "41595"
+        )
+        precondition(secureConnectionDraft.isValid)
+        precondition(
+            secureConnectionDraft.hasUnsavedChanges(
+                comparedTo: connectionEditorBaseline
+            )
+        )
+        precondition(
+            !secureConnectionDraft.matchesVerifiedConnection(
                 connectionEditorBaseline.connection
             )
         )
@@ -140,6 +163,30 @@ enum CoreSmoke {
         precondition(emptySettingsSnapshot.profiles.isEmpty)
         precondition(emptySettingsSnapshot.selectedProfileID == nil)
 
+        let legacyProfileID = UUID()
+        settingsDefaults.set(
+            try JSONSerialization.data(
+                withJSONObject: [[
+                    "id": legacyProfileID.uuidString,
+                    "name": "Legacy Eagle",
+                    "host": "192.168.0.30",
+                    "port": 41595
+                ]]
+            ),
+            forKey: "eagle.connection-profiles.v\(SharedIdentifiers.connectionStoreVersion)"
+        )
+        settingsDefaults.set(
+            legacyProfileID.uuidString,
+            forKey: "eagle.selected-profile-id"
+        )
+        let legacySettingsSnapshot = SharedSettingsStore(
+            defaultsSuiteName: settingsSuiteName
+        ).load()
+        precondition(legacySettingsSnapshot.profiles.count == 1)
+        precondition(
+            legacySettingsSnapshot.profiles.first?.connection.scheme == .http
+        )
+
         let isolatedTokenService = "\(settingsSuiteName).tokens"
         precondition(
             SharedSettingsStore().tokenServiceIdentifier
@@ -152,6 +199,36 @@ enum CoreSmoke {
             ).tokenServiceIdentifier == isolatedTokenService
         )
 
+        let secureProfileID = UUID()
+        settingsDefaults.set(
+            try JSONSerialization.data(
+                withJSONObject: [[
+                    "id": secureProfileID.uuidString,
+                    "name": "Custom API",
+                    "host": "eagle.example.com",
+                    "port": 443,
+                    "scheme": "https"
+                ]]
+            ),
+            forKey: "eagle.connection-profiles.v\(SharedIdentifiers.connectionStoreVersion)"
+        )
+        settingsDefaults.set(
+            secureProfileID.uuidString,
+            forKey: "eagle.selected-profile-id"
+        )
+        let isolatedSettingsStore = SharedSettingsStore(
+            defaultsSuiteName: settingsSuiteName,
+            tokenService: isolatedTokenService
+        )
+        let reloadedSecureSettings = isolatedSettingsStore.load()
+        precondition(reloadedSecureSettings.profiles.count == 1)
+        precondition(
+            reloadedSecureSettings.profiles.first?.connection.scheme == .https
+        )
+        precondition(
+            reloadedSecureSettings.selectedProfileID == secureProfileID
+        )
+
         let tokenlessConnection = EagleConnection(
             host: "127.0.0.1",
             port: 41595,
@@ -159,6 +236,7 @@ enum CoreSmoke {
         )
         precondition(tokenlessConnection.isValid)
         let tokenlessEndpoint = try tokenlessConnection.endpoint("/api/v2/app/info")
+        precondition(tokenlessEndpoint.scheme == "http")
         precondition(
             URLComponents(url: tokenlessEndpoint, resolvingAgainstBaseURL: false)?
                 .queryItems?.contains(where: { $0.name == "token" }) != true
@@ -190,8 +268,26 @@ enum CoreSmoke {
         )
         precondition(endpoint.host == "192.168.1.20")
         precondition(endpoint.port == 41595)
+        precondition(endpoint.scheme == "http")
         precondition(URLComponents(url: endpoint, resolvingAgainstBaseURL: false)?
             .queryItems?.first?.value == "token value")
+
+        let secureEndpointConnection = EagleConnection(
+            host: "eagle.example.com",
+            port: 443,
+            token: "",
+            scheme: .https
+        )
+        let secureEndpoint = try secureEndpointConnection.endpoint(
+            "/api/v2/app/info"
+        )
+        precondition(secureEndpoint.scheme == "https")
+        precondition(secureEndpoint.host == "eagle.example.com")
+        precondition(secureEndpoint.port == 443)
+        precondition(
+            secureEndpointConnection.displayAddress
+                == "https://eagle.example.com:443"
+        )
 
         let pagedEndpoint = try connection.endpoint(
             "/api/v2/folder/get",

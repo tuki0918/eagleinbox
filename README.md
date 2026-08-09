@@ -4,7 +4,7 @@
   <img src="./Design/EagleInboxIcon.svg" alt="Eagle Inbox app icon" width="128">
 </p>
 
-Eagle Inbox is an iOS app for sending photos, files, URLs, and other supported media from your device to [Eagle](https://eagle.cool/) over the same local network.
+Eagle Inbox is an iOS app for sending photos, files, URLs, and other supported media from your device to [Eagle](https://eagle.cool/) over the same local network or to an Eagle API-compatible endpoint.
 
 You can also send items directly from the share sheet in Photos, Files, Safari, and other apps, or from Apple Shortcuts and the iPhone Action Button.
 
@@ -12,7 +12,7 @@ You can also send items directly from the share sheet in Photos, Files, Safari, 
 
 ### 1. Connect to Eagle
 
-Open the destination library in Eagle. In Eagle Inbox, tap `Connection Required`, choose or add a connection, and enter the computer’s host or IP address and port (usually `41595`). Run `Test Connection`, then save and select the connection. Add the API token from Eagle → Settings → Developer only if required.
+Open the destination library in Eagle. In Eagle Inbox, tap `Connection Required`, choose or add a connection, select HTTP (the default) or HTTPS, and enter the server’s host or IP address and port (usually `41595` for Eagle). Run `Test Connection`, then save and select the connection. Add the API token from Eagle → Settings → Developer only if required.
 
 | 1. Before setup | 2. Add a connection |
 | --- | --- |
@@ -66,6 +66,7 @@ For example, create a shortcut with `Take Photo` followed by `Send Files to Eagl
 ## Features
 
 - Send photos, videos, audio, PDFs, and URLs to Eagle
+- Connect to Eagle or a compatible endpoint over HTTP or HTTPS
 - Add items from the share sheet
 - Send items from Apple Shortcuts and Action Button workflows
 - Save and switch between multiple connections
@@ -82,22 +83,22 @@ For example, create a shortcut with `Take Photo` followed by `Send Files to Eagl
 
 Mac Catalyst and Intel Macs are not supported.
 
-Connect the Mac or Windows PC running Eagle and the device running Eagle Inbox to the same trusted local network.
+For a direct connection to the Eagle desktop app, connect the Mac or Windows PC running Eagle and the device running Eagle Inbox to the same trusted local network.
 
 ## Network and Eagle Web API
 
-Eagle Inbox communicates directly with the [Eagle Web API v2](https://developer.eagle.cool/web-api) running in the Eagle desktop app. The connection uses `http://<host>:<port>/api/v2/...` over the local network—currently HTTP, not HTTPS/TLS. The usual port is `41595`, and an API token, when configured, is included in the URL query parameters.
+Eagle Inbox communicates with the [Eagle Web API v2](https://developer.eagle.cool/web-api) or an API-compatible custom endpoint. Each saved connection can use `http://<host>:<port>/api/v2/...` (the default) or `https://<host>:<port>/api/v2/...`. Eagle normally uses HTTP on port `41595`; custom endpoints can use HTTPS and any configured port. An API token, when configured, is included in the URL query parameters.
 
 Files and metadata are sent directly from Eagle Inbox to the computer running Eagle. They are not relayed through an Eagle Inbox server.
 
 ```mermaid
 flowchart LR
     Sources["Photos, Files, Safari,<br/>and other apps"] -->|"Item selection or<br/>iOS share sheet"| Inbox["iPhone or iPad<br/>Eagle Inbox"]
-    Inbox -->|"Local network<br/>HTTP · TCP 41595<br/>Eagle Web API v2"| Eagle["Mac or Windows PC<br/>Eagle desktop app"]
-    Eagle --> Library["Currently open<br/>Eagle library"]
+    Inbox -->|"HTTP or HTTPS<br/>Eagle Web API v2"| Eagle["Eagle desktop app or<br/>compatible endpoint"]
+    Eagle --> Library["Destination<br/>Eagle library"]
 ```
 
-Because HTTP does not encrypt the API token or uploaded content in transit, use Eagle Inbox only on a trusted private network. Do not expose the Eagle API port to the internet or use it over public Wi-Fi. iOS may ask for Local Network permission before the first connection.
+HTTP does not encrypt the API token or uploaded content in transit, so use HTTP connections only on a trusted private network. Do not expose an unencrypted Eagle API port to the internet or use it over public Wi-Fi. HTTPS endpoints must present a certificate trusted by the device. iOS may ask for Local Network permission before the first local connection.
 
 ## Library Mismatch
 
@@ -115,7 +116,7 @@ Each connection stores the name of the Eagle library that was open when the conn
 
 API tokens are stored in Keychain. The app includes no third-party advertising, analytics, or tracking SDKs.
 
-The Eagle Web API connection uses HTTP and sends the API token as a URL query parameter. See [Network and Eagle Web API](#network-and-eagle-web-api) for the communication path and network precautions.
+The Eagle Web API connection sends the API token as a URL query parameter. HTTP connections do not encrypt it in transit. See [Network and Eagle Web API](#network-and-eagle-web-api) for the communication path and network precautions.
 
 ## Developer Documentation
 

@@ -28,7 +28,7 @@ The main app and share extension reuse Connection Editor input and validation lo
 
 ## Connections
 
-A connection stores a name, host, port, optional API token, and verified library name.
+A connection stores a name, HTTP or HTTPS scheme, host, port, optional API token, and verified library name. HTTP is used when loading records saved before the scheme field was added.
 
 - Store connection metadata, the selected connection, and recent folder IDs in App Group `UserDefaults`
 - Store API tokens in the shared Keychain access group used by the main app and share extension
@@ -100,4 +100,4 @@ Shortcut uploads intentionally do not reuse the main app's in-memory queue or me
 - URL previews: Link Presentation may access the destination URL
 - Third-party advertising, analytics, and tracking SDKs: none
 
-The main app and share extension include `PrivacyInfo.xcprivacy` manifests that declare the reasons for accessing `UserDefaults` in the app and App Group. The Eagle Web API uses HTTP and sends API tokens as URL query parameters, so Eagle Inbox is intended for use only on a trusted local network.
+The main app and share extension include `PrivacyInfo.xcprivacy` manifests that declare the reasons for accessing `UserDefaults` in the app and App Group. API tokens are sent as URL query parameters. HTTP connections are therefore intended only for trusted local networks; custom HTTPS endpoints must use a certificate trusted by the device.

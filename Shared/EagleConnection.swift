@@ -1,9 +1,38 @@
 import Foundation
 
+enum EagleConnectionScheme:
+    String,
+    CaseIterable,
+    Hashable,
+    Identifiable,
+    Sendable {
+    case http
+    case https
+
+    var id: Self { self }
+
+    var displayName: String {
+        rawValue.uppercased()
+    }
+}
+
 struct EagleConnection: Equatable, Sendable {
     var host: String
     var port: Int
     var token: String
+    var scheme: EagleConnectionScheme
+
+    init(
+        host: String,
+        port: Int,
+        token: String,
+        scheme: EagleConnectionScheme = .http
+    ) {
+        self.host = host
+        self.port = port
+        self.token = token
+        self.scheme = scheme
+    }
 
     static var defaultHost: String {
         ProcessInfo.processInfo.isiOSAppOnMac ? "localhost" : "192.168.0.100"
@@ -18,7 +47,7 @@ struct EagleConnection: Equatable, Sendable {
     }
 
     var displayAddress: String {
-        "\(normalizedHost):\(port)"
+        "\(scheme.rawValue)://\(normalizedHost):\(port)"
     }
 
     var isValid: Bool {
@@ -52,7 +81,8 @@ struct EagleConnection: Equatable, Sendable {
         EagleConnection(
             host: normalizedHost,
             port: port,
-            token: token.trimmingCharacters(in: .whitespacesAndNewlines)
+            token: token.trimmingCharacters(in: .whitespacesAndNewlines),
+            scheme: scheme
         )
     }
 
@@ -65,7 +95,7 @@ struct EagleConnection: Equatable, Sendable {
         }
 
         var components = URLComponents()
-        components.scheme = "http"
+        components.scheme = scheme.rawValue
         components.host = normalizedHost
         components.port = port
         components.path = path.hasPrefix("/") ? path : "/\(path)"

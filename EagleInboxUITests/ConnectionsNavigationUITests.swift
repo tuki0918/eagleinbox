@@ -35,6 +35,33 @@ final class ConnectionsNavigationUITests: XCTestCase {
         XCTAssertEqual(nameField.value as? String, "My Eagle UITEST")
     }
 
+    func testHTTPSSelectionRequiresConfirmation() {
+        launchApp()
+        openConnections()
+
+        app.buttons["connections.add"].tap()
+        XCTAssertTrue(
+            app.navigationBars["New Connection"].waitForExistence(
+                timeout: Self.waitTimeout
+            )
+        )
+
+        let protocolPicker = app.segmentedControls["connectionEditor.scheme"]
+        XCTAssertTrue(protocolPicker.waitForExistence(timeout: Self.waitTimeout))
+        XCTAssertTrue(protocolPicker.buttons["HTTP"].isSelected)
+
+        protocolPicker.buttons["HTTPS"].tap()
+        let alert = app.alerts["Use HTTPS?"]
+        XCTAssertTrue(alert.waitForExistence(timeout: Self.waitTimeout))
+        alert.buttons["Cancel"].tap()
+        XCTAssertTrue(protocolPicker.buttons["HTTP"].isSelected)
+
+        protocolPicker.buttons["HTTPS"].tap()
+        XCTAssertTrue(alert.waitForExistence(timeout: Self.waitTimeout))
+        alert.buttons["Use HTTPS"].tap()
+        XCTAssertTrue(protocolPicker.buttons["HTTPS"].isSelected)
+    }
+
     func testUnchangedBackReturnsToConnections() {
         launchApp()
         openConnections()

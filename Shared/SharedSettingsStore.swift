@@ -16,6 +16,7 @@ struct SharedSettingsStore: Sendable {
         var name: String
         var host: String
         var port: Int
+        var scheme: String?
         var expectedLibraryName: String?
         var libraryName: String?
     }
@@ -52,7 +53,10 @@ struct SharedSettingsStore: Sendable {
                         token: (try? KeychainTokenStore.read(
                             service: tokenService,
                             account: tokenAccount(for: record.id)
-                        )) ?? ""
+                        )) ?? "",
+                        scheme: record.scheme.flatMap(
+                            EagleConnectionScheme.init(rawValue:)
+                        ) ?? .http
                     ),
                     expectedLibraryName: record.expectedLibraryName ?? record.libraryName,
                     libraryName: record.libraryName
@@ -95,6 +99,7 @@ struct SharedSettingsStore: Sendable {
                 name: profile.displayName,
                 host: profile.connection.normalizedHost,
                 port: profile.connection.port,
+                scheme: profile.connection.scheme.rawValue,
                 expectedLibraryName: profile.expectedLibraryName,
                 libraryName: profile.libraryName
             )

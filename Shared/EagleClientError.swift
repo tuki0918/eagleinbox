@@ -15,7 +15,7 @@ enum EagleClientError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidConnection:
-            return "Check the host, port, and API token."
+            return "Check the protocol, host, port, and API token."
         case .invalidBookmarkURL:
             return "Enter a valid HTTP or HTTPS URL."
         case .invalidResponse:

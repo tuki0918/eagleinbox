@@ -52,6 +52,7 @@ struct ConnectionEditorServerSection: View {
     @Binding private var draft: EagleConnectionProfile
     @Binding private var portText: String
     @State private var isTokenVisible = false
+    @State private var isHTTPSConfirmationPresented = false
     private let isDisabled: Bool
 
     init(
@@ -70,6 +71,18 @@ struct ConnectionEditorServerSection: View {
                 TextField("My Eagle", text: $draft.name)
                     .accessibilityLabel("Connection name")
                     .accessibilityIdentifier("connectionEditor.name")
+            }
+
+            editorField("Protocol") {
+                Picker("Protocol", selection: schemeSelection) {
+                    ForEach(EagleConnectionScheme.allCases) { scheme in
+                        Text(scheme.displayName).tag(scheme)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .labelsHidden()
+                .accessibilityLabel("Protocol")
+                .accessibilityIdentifier("connectionEditor.scheme")
             }
 
             editorField("Host or IP address") {
@@ -122,9 +135,34 @@ struct ConnectionEditorServerSection: View {
         } header: {
             Text("Server")
         } footer: {
-            Text("Find the API token in Eagle → Settings → Developer.")
+            VStack(alignment: .leading, spacing: 4) {
+                Text("HTTP is the default. HTTPS requires a certificate trusted by this device.")
+                Text("Find the API token in Eagle → Settings → Developer.")
+            }
         }
         .disabled(isDisabled)
+        .alert("Use HTTPS?", isPresented: $isHTTPSConfirmationPresented) {
+            Button("Cancel", role: .cancel) {}
+            Button("Use HTTPS") {
+                draft.connection.scheme = .https
+            }
+        } message: {
+            Text("HTTPS is not the default protocol used by the Eagle desktop API.")
+        }
+    }
+
+    private var schemeSelection: Binding<EagleConnectionScheme> {
+        Binding(
+            get: { draft.connection.scheme },
+            set: { selectedScheme in
+                guard selectedScheme != draft.connection.scheme else { return }
+                if selectedScheme == .https {
+                    isHTTPSConfirmationPresented = true
+                } else {
+                    draft.connection.scheme = .http
+                }
+            }
+        )
     }
 
     private func editorField<Content: View>(

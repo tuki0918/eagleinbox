@@ -103,7 +103,7 @@ At minimum, verify the following on a physical device or through TestFlight:
 
 - Local Network behavior before and after permission is granted
 - Notifications when allowed or denied, and while the app is in the foreground
-- Adding, editing, deleting, and selecting connections, including confirmation before discarding unsaved changes
+- Adding, editing, deleting, and selecting HTTP and HTTPS connections, including the HTTPS warning and confirmation before discarding unsaved changes
 - Launch, resume, pull-to-refresh, and revalidation after switching connections
 - Successful uploads, partial failures, the five-second timeout, and an incorrect API token
 - Canceling or approving a one-time upload when the library does not match
