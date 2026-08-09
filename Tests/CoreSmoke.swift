@@ -541,6 +541,19 @@ enum CoreSmoke {
         precondition(failedNotification.body.contains("1 item couldn’t be sent"))
         precondition(UploadNotificationResult.completed(sent: 0, failed: 0) == nil)
 
+        let halfUploaded = UploadProgressSnapshot(
+            sentByteCount: 512,
+            totalByteCount: 1_024
+        )
+        precondition(halfUploaded.fractionCompleted == 0.5)
+        precondition(!halfUploaded.isComplete)
+        let completedUpload = UploadProgressSnapshot(
+            sentByteCount: 1_024,
+            totalByteCount: 1_024
+        )
+        precondition(completedUpload.fractionCompleted == 1)
+        precondition(completedUpload.isComplete)
+
         precondition(pinnedProfile.expectedLibraryName == "Design Library")
 
         let mediaURL = FileManager.default.temporaryDirectory

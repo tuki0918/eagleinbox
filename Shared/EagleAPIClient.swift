@@ -213,13 +213,19 @@ struct EagleAPIClient: Sendable {
 
     func upload(
         source: EagleUploadSource,
-        metadata: EagleUploadMetadata
+        metadata: EagleUploadMetadata,
+        progress: (@Sendable (UploadProgressSnapshot) -> Void)? = nil
     ) async throws -> EagleUploadResult {
         switch source {
         case let .bookmark(url):
             return try await uploadBookmark(url, metadata: metadata)
         case let .file(url, mimeType):
-            return try await uploadFile(url, mimeType: mimeType, metadata: metadata)
+            return try await uploadFile(
+                url,
+                mimeType: mimeType,
+                metadata: metadata,
+                progress: progress
+            )
         }
     }
 
@@ -244,7 +250,8 @@ struct EagleAPIClient: Sendable {
     private func uploadFile(
         _ fileURL: URL,
         mimeType: String,
-        metadata: EagleUploadMetadata
+        metadata: EagleUploadMetadata,
+        progress: (@Sendable (UploadProgressSnapshot) -> Void)?
     ) async throws -> EagleUploadResult {
         let bodyURL = try Base64JSONBodyWriter.write(
             fileURL: fileURL,
@@ -254,7 +261,12 @@ struct EagleAPIClient: Sendable {
         defer { try? FileManager.default.removeItem(at: bodyURL) }
 
         let request = try uploadRequest()
-        let (data, response) = try await session.upload(for: request, fromFile: bodyURL)
+        let delegate = progress.map(UploadProgressTaskDelegate.init)
+        let (data, response) = try await session.upload(
+            for: request,
+            fromFile: bodyURL,
+            delegate: delegate
+        )
         return try parseUploadResult(data: data, response: response)
     }
 
@@ -400,6 +412,51 @@ struct EagleAPIClient: Sendable {
             throw EagleClientError.invalidResponse
         }
         return payload
+    }
+}
+
+private final class UploadProgressTaskDelegate:
+    NSObject,
+    URLSessionTaskDelegate,
+    @unchecked Sendable {
+    private let handler: @Sendable (UploadProgressSnapshot) -> Void
+    private let lock = NSLock()
+    private var lastReportedAt: TimeInterval = 0
+
+    init(handler: @escaping @Sendable (UploadProgressSnapshot) -> Void) {
+        self.handler = handler
+    }
+
+    func urlSession(
+        _ session: URLSession,
+        task: URLSessionTask,
+        didSendBodyData bytesSent: Int64,
+        totalBytesSent: Int64,
+        totalBytesExpectedToSend: Int64
+    ) {
+        let expectedByteCount = totalBytesExpectedToSend > 0
+            ? totalBytesExpectedToSend
+            : task.countOfBytesExpectedToSend
+        guard expectedByteCount > 0 else { return }
+
+        let snapshot = UploadProgressSnapshot(
+            sentByteCount: totalBytesSent,
+            totalByteCount: expectedByteCount
+        )
+        let now = ProcessInfo.processInfo.systemUptime
+
+        lock.lock()
+        let shouldReport = lastReportedAt == 0
+            || snapshot.isComplete
+            || now - lastReportedAt >= 0.1
+        if shouldReport {
+            lastReportedAt = now
+        }
+        lock.unlock()
+
+        if shouldReport {
+            handler(snapshot)
+        }
     }
 }
 

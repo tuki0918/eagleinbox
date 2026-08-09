@@ -46,6 +46,10 @@ struct UploadQueueItemRow: View {
             VStack(alignment: .leading, spacing: 4) {
                 sourceLabel
 
+                if item.state == .uploading {
+                    uploadProgressView
+                }
+
                 if let stateMessage {
                     Text(stateMessage)
                         .font(.caption)
@@ -64,6 +68,37 @@ struct UploadQueueItemRow: View {
             .accessibilityLabel("Remove \(sourceAccessibilityName)")
         }
         .padding(.vertical, 4)
+    }
+
+    @ViewBuilder
+    private var uploadProgressView: some View {
+        if let progress = item.uploadProgress {
+            ProgressView(value: progress.fractionCompleted)
+                .progressViewStyle(.linear)
+                .tint(Color.accentColor)
+                .accessibilityLabel("Upload progress")
+                .accessibilityValue(uploadProgressText(for: progress))
+
+            Text(uploadProgressText(for: progress))
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .monospacedDigit()
+        } else {
+            ProgressView()
+                .progressViewStyle(.linear)
+                .tint(Color.accentColor)
+                .accessibilityLabel("Preparing upload")
+
+            Text("Preparing upload…")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    private func uploadProgressText(for progress: UploadProgressSnapshot) -> String {
+        guard !progress.isComplete else { return "Finishing…" }
+        let percentage = Int((progress.fractionCompleted * 100).rounded(.down))
+        return "Uploading · \(percentage)%"
     }
 
     @ViewBuilder

@@ -192,6 +192,20 @@ struct EagleUploadResult: Sendable {
     let ids: [String]
 }
 
+struct UploadProgressSnapshot: Equatable, Sendable {
+    let sentByteCount: Int64
+    let totalByteCount: Int64
+
+    var fractionCompleted: Double {
+        guard totalByteCount > 0 else { return 0 }
+        return min(max(Double(sentByteCount) / Double(totalByteCount), 0), 1)
+    }
+
+    var isComplete: Bool {
+        totalByteCount > 0 && sentByteCount >= totalByteCount
+    }
+}
+
 enum UploadState: Equatable, Sendable {
     case waiting
     case uploading
@@ -210,11 +224,13 @@ struct QueuedUpload: Identifiable, Sendable {
     var name: String
     let source: EagleUploadSource
     var state: UploadState
+    var uploadProgress: UploadProgressSnapshot?
 
     init(name: String, source: EagleUploadSource) {
         id = UUID()
         self.name = name
         self.source = source
         state = .waiting
+        uploadProgress = nil
     }
 }

@@ -108,6 +108,7 @@ At minimum, verify the following on a physical device or through TestFlight:
 - Successful uploads, partial failures, the five-second timeout, and an incorrect API token
 - Canceling or approving a one-time upload when the library does not match
 - Canceling an upload in progress, retaining unsent items, and retrying failed items
+- Per-item progress for a large video, including preparing, uploading, and finishing states
 - Photos, files, URLs, and the share extension
 - `Send Files to Eagle` and `Send URLs to Eagle` in Apple Shortcuts, including an Action Button workflow on a physical iPhone
 - Connection sharing between the main app and share extension

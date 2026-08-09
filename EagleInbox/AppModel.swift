@@ -907,6 +907,7 @@ final class AppModel: ObservableObject {
                 break
             }
             queue[index].state = .uploading
+            queue[index].uploadProgress = nil
             let item = queue[index]
             let metadata = EagleUploadMetadata(
                 name: item.name,
@@ -917,10 +918,19 @@ final class AppModel: ObservableObject {
             )
 
             do {
-                _ = try await client.upload(source: item.source, metadata: metadata)
+                _ = try await client.upload(
+                    source: item.source,
+                    metadata: metadata
+                ) { [weak self] progress in
+                    Task { @MainActor [weak self] in
+                        self?.updateUploadProgress(progress, for: item.id)
+                    }
+                }
                 queue[index].state = .succeeded
+                queue[index].uploadProgress = nil
                 succeeded += 1
             } catch {
+                queue[index].uploadProgress = nil
                 if Task.isCancelled {
                     queue[index].state = .canceled(
                         UploadCancellation.uncertainDeliveryMessage
@@ -944,6 +954,19 @@ final class AppModel: ObservableObject {
         ) {
             await uploadNotifier.post(result)
         }
+    }
+
+    private func updateUploadProgress(
+        _ progress: UploadProgressSnapshot,
+        for itemID: UUID
+    ) {
+        guard let index = queue.firstIndex(where: { $0.id == itemID }),
+              queue[index].state == .uploading,
+              progress.sentByteCount
+                >= (queue[index].uploadProgress?.sentByteCount ?? 0) else {
+            return
+        }
+        queue[index].uploadProgress = progress
     }
 
     @discardableResult
