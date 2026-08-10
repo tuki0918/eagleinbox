@@ -24,6 +24,9 @@ Open the destination library in Eagle. In Eagle Inbox, tap `Connection Required`
 
 The host, library name, and API token shown are examples.
 
+> [!NOTE]
+> For a direct connection to the Eagle desktop app, use HTTP. HTTPS is intended for custom endpoints compatible with the subset of Eagle Web API v2 used by Eagle Inbox. The endpoints used by Eagle Inbox are listed in [Eagle Web API v2 compatibility](./Docs/EAGLE_WEB_API_COMPATIBILITY.md).
+
 ### 2. Add items
 
 Tap `+` to add photos, files, or a URL. Use Metadata to apply folders, an annotation, and tags to the batch.
