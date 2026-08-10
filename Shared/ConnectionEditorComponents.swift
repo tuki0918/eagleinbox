@@ -140,10 +140,7 @@ struct ConnectionEditorServerSection: View {
         } header: {
             Text("Server")
         } footer: {
-            VStack(alignment: .leading, spacing: 4) {
-                Text("HTTP is the default. HTTPS requires a certificate trusted by this device.")
-                Text("Find the API token in Eagle → Settings → Developer.")
-            }
+            Text("Find the API token in Eagle → Settings → Developer.")
         }
         .disabled(isDisabled)
         .alert("Use HTTPS?", isPresented: $isHTTPSConfirmationPresented) {
