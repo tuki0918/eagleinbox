@@ -83,6 +83,7 @@ For example, create a shortcut with `Take Photo` followed by `Send Files to Eagl
 - Apply folders, an annotation, and tags to an entire batch
 - Preview queued items with thumbnails, cancel uploads, and retry failures
 - Verify the destination Eagle library before uploading
+- Use the app, share extension, notifications, and Shortcuts in English or Japanese
 
 ## Requirements
 

@@ -59,11 +59,18 @@ struct SendFilesToEagleIntent: AppIntent {
         }
 
         try batch.throwIfNeeded()
-        let itemLabel = batch.sent == 1 ? "item" : "items"
-        return .result(
-            dialog: IntentDialog(
-                "Sent \(batch.sent) \(itemLabel) to \(uploader.destinationName)."
+        let dialog: IntentDialog
+        if batch.sent == 1 {
+            dialog = IntentDialog(
+                "Sent \(batch.sent) item to \(uploader.destinationName)."
             )
+        } else {
+            dialog = IntentDialog(
+                "Sent \(batch.sent) items to \(uploader.destinationName)."
+            )
+        }
+        return .result(
+            dialog: dialog
         )
     }
 }
@@ -141,11 +148,18 @@ struct SendURLsToEagleIntent: AppIntent {
         }
 
         try batch.throwIfNeeded()
-        let itemLabel = batch.sent == 1 ? "URL" : "URLs"
-        return .result(
-            dialog: IntentDialog(
-                "Sent \(batch.sent) \(itemLabel) to \(uploader.destinationName)."
+        let dialog: IntentDialog
+        if batch.sent == 1 {
+            dialog = IntentDialog(
+                "Sent \(batch.sent) URL to \(uploader.destinationName)."
             )
+        } else {
+            dialog = IntentDialog(
+                "Sent \(batch.sent) URLs to \(uploader.destinationName)."
+            )
+        }
+        return .result(
+            dialog: dialog
         )
     }
 }
@@ -299,7 +313,7 @@ private final class EagleShortcutFile {
 
     static func displayName(for file: IntentFile) -> String {
         let name = resolvedFileName(for: file)
-        return name.isEmpty ? "Attachment" : name
+        return name.isEmpty ? String(localized: "Attachment") : name
     }
 
     private static func resolvedFileName(for file: IntentFile) -> String {
@@ -323,7 +337,9 @@ private struct EagleShortcutBatchResult {
     mutating func recordFailure(itemName: String, error: Error) {
         failed += 1
         if firstFailure == nil {
-            firstFailure = "\(itemName): \(error.localizedDescription)"
+            firstFailure = String(
+                localized: "\(itemName): \(error.localizedDescription)"
+            )
         }
     }
 
@@ -332,7 +348,8 @@ private struct EagleShortcutBatchResult {
         throw EagleShortcutError.batchFailed(
             sent: sent,
             failed: failed,
-            firstFailure: firstFailure ?? "The item could not be sent."
+            firstFailure: firstFailure
+                ?? String(localized: "The item could not be sent.")
         )
     }
 }
@@ -350,24 +367,51 @@ private enum EagleShortcutError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .noInput:
-            return "Choose at least one file to send."
+            return String(localized: "Choose at least one file to send.")
         case .noValidWebURL:
-            return "Provide at least one valid HTTP or HTTPS URL."
+            return String(
+                localized: "Provide at least one valid HTTP or HTTPS URL."
+            )
         case .noConnection:
-            return "Open Eagle Inbox and add or select a connection first."
+            return String(
+                localized: "Open Eagle Inbox and add or select a connection first."
+            )
         case let .tooManyFiles(maximum):
-            return "Choose no more than \(maximum) files at a time."
+            if maximum == 1 {
+                return String(
+                    localized: "Choose no more than \(maximum) file at a time."
+                )
+            }
+            return String(
+                localized: "Choose no more than \(maximum) files at a time."
+            )
         case let .tooManyURLs(maximum):
-            return "Choose no more than \(maximum) URLs at a time."
+            if maximum == 1 {
+                return String(
+                    localized: "Choose no more than \(maximum) URL at a time."
+                )
+            }
+            return String(
+                localized: "Choose no more than \(maximum) URLs at a time."
+            )
         case let .unsupportedFile(name):
-            return "\(name) is not a supported photo, video, audio, or PDF."
+            return String(
+                localized: "\(name) is not a supported photo, video, audio, or PDF."
+            )
         case let .libraryMismatch(mismatch):
-            return "Open \(mismatch.expectedLibraryName) in Eagle and try again. "
-                + "\(mismatch.actualLibraryName) is currently open."
+            return String(
+                localized: "Open \(mismatch.expectedLibraryName) in Eagle and try again. \(mismatch.actualLibraryName) is currently open."
+            )
         case let .batchFailed(sent, failed, firstFailure):
             let completed = sent + failed
-            return "Sent \(sent) of \(completed) items. "
-                + "\(failed) failed. \(firstFailure)"
+            if completed == 1 {
+                return String(
+                    localized: "Sent \(sent) of \(completed) item. \(failed) failed. \(firstFailure)"
+                )
+            }
+            return String(
+                localized: "Sent \(sent) of \(completed) items. \(failed) failed. \(firstFailure)"
+            )
         }
     }
 }

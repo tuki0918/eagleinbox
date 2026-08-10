@@ -115,10 +115,16 @@ struct SettingsView: View {
             .disabled(model.isWorking)
             .accessibilityLabel(
                 isTesting(profile)
-                    ? "Testing \(profile.displayTitle)"
+                    ? String(
+                        localized: "Testing \(profile.displayTitle)"
+                    )
                     : pendingSelectionID == profile.id
-                    ? "\(profile.displayTitle), selected"
-                    : "Select \(profile.displayTitle)"
+                    ? String(
+                        localized: "\(profile.displayTitle), selected"
+                    )
+                    : String(
+                        localized: "Select \(profile.displayTitle)"
+                    )
             )
             .accessibilityValue(profile.connection.displayEndpoint)
             .accessibilityHint("Tap Select to confirm this connection.")
@@ -139,7 +145,9 @@ struct SettingsView: View {
             .buttonStyle(.plain)
             .foregroundStyle(.secondary)
             .disabled(model.isWorking)
-            .accessibilityLabel("Edit \(profile.displayTitle)")
+            .accessibilityLabel(
+                String(localized: "Edit \(profile.displayTitle)")
+            )
             .accessibilityIdentifier(
                 "connections.edit.\(profile.id.uuidString)"
             )
@@ -257,7 +265,11 @@ private struct ConnectionEditorView: View {
                 startConnectionTest()
             }
         }
-        .navigationTitle(isNew ? "New Connection" : "Edit Connection")
+        .navigationTitle(
+            isNew
+                ? String(localized: "New Connection")
+                : String(localized: "Edit Connection")
+        )
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .interactiveDismissDisabled(hasUnsavedChanges || isTestingConnection)

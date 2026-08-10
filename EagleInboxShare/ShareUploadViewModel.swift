@@ -130,9 +130,13 @@ final class ShareUploadViewModel: ObservableObject {
         isLoading = false
 
         if queue.isEmpty {
-            operationMessage = "No supported file or URL was shared."
+            operationMessage = String(
+                localized: "No supported file or URL was shared."
+            )
         } else if selectedProfile?.connection.isValid != true {
-            operationMessage = "Configure this share extension’s connection before uploading."
+            operationMessage = String(
+                localized: "Configure this share extension’s connection before uploading."
+            )
         }
     }
 
@@ -268,7 +272,9 @@ final class ShareUploadViewModel: ObservableObject {
             $0.id == baseline.id
         })
         guard isNew ? storedProfile == nil : storedProfile == baseline else {
-            connectionMessage = "This connection was changed elsewhere. Reopen it and try again."
+            connectionMessage = String(
+                localized: "This connection was changed elsewhere. Reopen it and try again."
+            )
             return false
         }
         return upsertProfile(
@@ -322,7 +328,9 @@ final class ShareUploadViewModel: ObservableObject {
         guard let profile = selectedProfile else {
             availableFolders = []
             recentFolders = []
-            folderMessage = "Add and select a connection first."
+            folderMessage = String(
+                localized: "Add and select a connection first."
+            )
             folderLoadToken = nil
             loadedFolderProfile = nil
             isLoadingFolders = false
@@ -356,7 +364,9 @@ final class ShareUploadViewModel: ObservableObject {
             loadedFolderProfile = fingerprint
             folderLoadToken = nil
             folderMessage = folders.isEmpty
-                ? "The current Eagle library has no folders."
+                ? String(
+                    localized: "The current Eagle library has no folders."
+                )
                 : nil
             isLoadingFolders = false
         } catch {
@@ -589,7 +599,9 @@ final class ShareUploadViewModel: ObservableObject {
               proposal.profile.expectedLibraryName
                 == proposal.mismatch.actualLibraryName,
               proposal.profile.libraryName == proposal.mismatch.actualLibraryName else {
-            connectionMessage = "This connection was changed elsewhere. Reopen it and test again."
+            connectionMessage = String(
+                localized: "This connection was changed elsewhere. Reopen it and test again."
+            )
             return false
         }
 
@@ -642,7 +654,9 @@ final class ShareUploadViewModel: ObservableObject {
             guard case let .bookmark(queuedURL) = $0.source else { return false }
             return MediaFileSupport.bookmarkIdentity(for: queuedURL) == identity
         }) else {
-            operationMessage = "This bookmark is already in the queue."
+            operationMessage = String(
+                localized: "This bookmark is already in the queue."
+            )
             return false
         }
 
@@ -740,7 +754,8 @@ final class ShareUploadViewModel: ObservableObject {
                     originalName = transferred.originalFileName
                 } else if let data = try await selection.loadTransferable(type: Data.self) {
                     let fileExtension = contentType.preferredFilenameExtension ?? "bin"
-                    originalName = "Photo-\(UUID().uuidString.prefix(8)).\(fileExtension)"
+                    let localizedPhotoName = String(localized: "Photo")
+                    originalName = "\(localizedPhotoName)-\(UUID().uuidString.prefix(8)).\(fileExtension)"
                     destination = FileManager.default.temporaryDirectory
                         .appendingPathComponent(originalName)
                     try data.write(to: destination, options: .atomic)
@@ -782,7 +797,9 @@ final class ShareUploadViewModel: ObservableObject {
         pendingUploadLibraryMismatch = nil
         guard let profile = selectedProfile else {
             didLastSendFail = true
-            operationMessage = "Add and select a connection before uploading."
+            operationMessage = String(
+                localized: "Add and select a connection before uploading."
+            )
             return
         }
         guard profile.connection.isValid else {

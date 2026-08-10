@@ -194,7 +194,7 @@ enum EagleTagGrouping {
             sections.append(
                 EagleTagGroupSection(
                     id: "__ungrouped__",
-                    title: "Ungrouped",
+                    title: String(localized: "Ungrouped"),
                     tags: ungroupedTags
                 )
             )

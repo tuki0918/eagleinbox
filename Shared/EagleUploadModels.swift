@@ -143,7 +143,11 @@ private struct EagleFolderRecord {
 
 enum EagleItemCount {
     static func label(for count: Int) -> String {
-        "\(count.formatted()) " + (count == 1 ? "item" : "items")
+        let formattedCount = count.formatted()
+        if count == 1 {
+            return String(localized: "\(formattedCount) item")
+        }
+        return String(localized: "\(formattedCount) items")
     }
 }
 
@@ -216,7 +220,7 @@ enum UploadState: Equatable, Sendable {
 
 enum UploadCancellation {
     static let uncertainDeliveryMessage =
-        "Sending was canceled. Check Eagle before retrying."
+        String(localized: "Sending was canceled. Check Eagle before retrying.")
 }
 
 struct QueuedUpload: Identifiable, Sendable {

@@ -12,7 +12,7 @@ struct UploadQueueSectionHeader: View {
             Text("Upload Queue")
             Spacer()
             if count > 0 {
-                Text("\(count)")
+                Text(count, format: .number)
                     .font(.caption.weight(.semibold))
                     .foregroundStyle(Color.accentColor)
                     .monospacedDigit()
@@ -23,7 +23,7 @@ struct UploadQueueSectionHeader: View {
                         in: Capsule()
                     )
                     .accessibilityLabel(
-                        "\(count) " + (count == 1 ? "item" : "items")
+                        EagleItemCount.label(for: count)
                     )
                     .accessibilityIdentifier("upload.queue.count")
             }
@@ -65,7 +65,9 @@ struct UploadQueueItemRow: View {
             }
             .buttonStyle(.borderless)
             .disabled(!canDelete)
-            .accessibilityLabel("Remove \(sourceAccessibilityName)")
+            .accessibilityLabel(
+                String(localized: "Remove \(sourceAccessibilityName)")
+            )
         }
         .padding(.vertical, 4)
     }
@@ -96,9 +98,11 @@ struct UploadQueueItemRow: View {
     }
 
     private func uploadProgressText(for progress: UploadProgressSnapshot) -> String {
-        guard !progress.isComplete else { return "Finishing…" }
+        guard !progress.isComplete else {
+            return String(localized: "Finishing…")
+        }
         let percentage = Int((progress.fractionCompleted * 100).rounded(.down))
-        return "Uploading · \(percentage)%"
+        return String(localized: "Uploading · \(percentage)%")
     }
 
     @ViewBuilder
@@ -112,7 +116,9 @@ struct UploadQueueItemRow: View {
                     .strikethrough(true, color: .secondary)
                     .lineLimit(1)
                     .accessibilityLabel("File name")
-                    .accessibilityValue("\(item.name), sent")
+                    .accessibilityValue(
+                        String(localized: "\(item.name), sent")
+                    )
             } else {
                 TextField("File name", text: $item.name)
                     .font(.body)
@@ -131,7 +137,7 @@ struct UploadQueueItemRow: View {
                 .accessibilityLabel("URL")
                 .accessibilityValue(
                     item.state == .succeeded
-                        ? "\(url.absoluteString), sent"
+                        ? String(localized: "\(url.absoluteString), sent")
                         : url.absoluteString
                 )
         }

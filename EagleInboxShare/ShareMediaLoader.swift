@@ -124,7 +124,8 @@ enum ShareMediaLoader {
                 } catch {
                     uploads.append(
                         QueuedUpload(
-                            name: provider.suggestedName ?? "Could Not Load Attachment",
+                            name: provider.suggestedName
+                                ?? String(localized: "Could Not Load Attachment"),
                             source: .bookmark(URL(string: "invalid://attachment")!)
                         )
                     )

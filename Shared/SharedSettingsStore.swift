@@ -116,7 +116,7 @@ struct SharedSettingsStore: Sendable {
             account: Key.legacyTokenAccount
         )) ?? ""
         let profile = EagleConnectionProfile(
-            name: "My Eagle",
+            name: String(localized: "My Eagle"),
             connection: EagleConnection(
                 host: savedHost?.isEmpty == false ? savedHost! : EagleConnection.default.host,
                 port: savedPort > 0 ? savedPort : EagleConnection.default.port,

@@ -15,6 +15,24 @@ final class ConnectionsNavigationUITests: XCTestCase {
         app = nil
     }
 
+    func testJapaneseLocalizationSmoke() {
+        launchApp(language: "ja", locale: "ja_JP")
+
+        XCTAssertTrue(
+            app.staticTexts["接続先が必要です"].waitForExistence(
+                timeout: Self.waitTimeout
+            )
+        )
+        XCTAssertTrue(app.staticTexts["送信リスト"].exists)
+
+        openConnections(expectedTitle: "接続先")
+        app.buttons["connections.add"].tap()
+
+        let editor = app.navigationBars["新しい接続先"]
+        XCTAssertTrue(editor.waitForExistence(timeout: Self.waitTimeout))
+        XCTAssertTrue(editor.buttons["保存"].exists)
+    }
+
     func testAddConnectionPushAndFirstTapTextEntry() {
         launchApp()
         openConnections()
@@ -677,11 +695,17 @@ final class ConnectionsNavigationUITests: XCTestCase {
         seedTags: Bool = false,
         seedFolders: Bool = false,
         seedLibraryMismatch: Bool = false,
-        seedUploadLibraryMismatchDialog: Bool = false
+        seedUploadLibraryMismatchDialog: Bool = false,
+        language: String = "en",
+        locale: String = "en_US"
     ) {
         XCUIDevice.shared.press(.home)
         app = XCUIApplication()
-        app.launchArguments = ["--ui-testing"]
+        app.launchArguments = [
+            "--ui-testing",
+            "-AppleLanguages", "(\(language))",
+            "-AppleLocale", locale
+        ]
         if seedConnection {
             app.launchArguments.append("--ui-testing-seeded-connection")
         }
@@ -705,12 +729,12 @@ final class ConnectionsNavigationUITests: XCTestCase {
         app.launch()
     }
 
-    private func openConnections() {
+    private func openConnections(expectedTitle: String = "Connections") {
         let button = app.buttons["upload.connection.open"]
         XCTAssertTrue(button.waitForExistence(timeout: Self.waitTimeout))
         button.tap()
         XCTAssertTrue(
-            app.navigationBars["Connections"].waitForExistence(
+            app.navigationBars[expectedTitle].waitForExistence(
                 timeout: Self.waitTimeout
             )
         )

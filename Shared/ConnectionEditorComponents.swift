@@ -67,13 +67,13 @@ struct ConnectionEditorServerSection: View {
 
     var body: some View {
         Section {
-            editorField("Connection name") {
+            editorField(String(localized: "Connection name")) {
                 TextField("My Eagle", text: $draft.name)
                     .accessibilityLabel("Connection name")
                     .accessibilityIdentifier("connectionEditor.name")
             }
 
-            editorField("Protocol") {
+            editorField(String(localized: "Protocol")) {
                 Picker("Protocol", selection: schemeSelection) {
                     ForEach(EagleConnectionScheme.allCases) { scheme in
                         Text(scheme.displayName).tag(scheme)
@@ -85,7 +85,7 @@ struct ConnectionEditorServerSection: View {
                 .accessibilityIdentifier("connectionEditor.scheme")
             }
 
-            editorField("Host or IP address") {
+            editorField(String(localized: "Host or IP address")) {
                 TextField(EagleConnection.defaultHost, text: $draft.connection.host)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
@@ -96,8 +96,11 @@ struct ConnectionEditorServerSection: View {
 #endif
             }
 
-            editorField("Port") {
-                TextField("41595", text: $portText)
+            editorField(String(localized: "Port")) {
+                TextField(
+                    String(EagleConnection.default.port),
+                    text: $portText
+                )
                     .accessibilityLabel("Port")
                     .accessibilityIdentifier("connectionEditor.port")
 #if os(iOS)
@@ -105,7 +108,7 @@ struct ConnectionEditorServerSection: View {
 #endif
             }
 
-            editorField("API token (optional)") {
+            editorField(String(localized: "API token (optional)")) {
                 HStack(spacing: 10) {
                     Group {
                         if isTokenVisible {
@@ -128,7 +131,9 @@ struct ConnectionEditorServerSection: View {
                     .buttonStyle(.plain)
                     .foregroundStyle(.secondary)
                     .accessibilityLabel(
-                        isTokenVisible ? "Hide API token" : "Show API token"
+                        isTokenVisible
+                            ? String(localized: "Hide API token")
+                            : String(localized: "Show API token")
                     )
                 }
             }
@@ -187,7 +192,10 @@ struct ConnectionEditorStatusSection: View {
     var body: some View {
         Section("Connection") {
             LabeledContent("Address", value: draft.connection.displayAddress)
-            LabeledContent("Library", value: draft.libraryName ?? "Not verified")
+            LabeledContent(
+                "Library",
+                value: draft.libraryName ?? String(localized: "Not verified")
+            )
             LabeledContent("Status") {
                 statusValue
             }
@@ -252,11 +260,11 @@ struct ConnectionEditorStatusSection: View {
             case .testing:
                 nil
             case .failed:
-                "Failed"
+                String(localized: "Failed")
             case .connected:
-                "Connected"
+                String(localized: "Connected")
             case .notVerified:
-                "Not verified"
+                String(localized: "Not verified")
             }
         }
 
@@ -309,7 +317,11 @@ struct ConnectionEditorTestSection: View {
                     } else {
                         Image(systemName: "bolt.horizontal.circle")
                     }
-                    Text(isTesting ? "Cancel" : "Test Connection")
+                    Text(
+                        isTesting
+                            ? String(localized: "Cancel")
+                            : String(localized: "Test Connection")
+                    )
                 }
                 .frame(maxWidth: .infinity)
             }
@@ -318,12 +330,14 @@ struct ConnectionEditorTestSection: View {
             .tint(isTesting ? .red : Color.accentColor)
             .disabled(isDisabled)
             .accessibilityLabel(
-                isTesting ? "Cancel Connection Test" : "Test Connection"
+                isTesting
+                    ? String(localized: "Cancel Connection Test")
+                    : String(localized: "Test Connection")
             )
             .accessibilityHint(
                 isTesting
-                    ? "Stops the connection test"
-                    : "Checks this Eagle connection"
+                    ? String(localized: "Stops the connection test")
+                    : String(localized: "Checks this Eagle connection")
             )
             .accessibilityIdentifier("connectionEditor.test")
             .listRowInsets(

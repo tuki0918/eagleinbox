@@ -32,6 +32,9 @@
 		A10000000000000000000022 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000009 /* PrivacyInfo.xcprivacy */; };
 		A10000000000000000000023 /* IMG_0001.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C1000000000000000000000A /* IMG_0001.jpg */; };
 		A10000000000000000000024 /* IMG_0111.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C1000000000000000000000B /* IMG_0111.jpg */; };
+		A10000000000000000000025 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000030 /* Localizable.xcstrings */; };
+		A10000000000000000000026 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C1000000000000000000000D /* InfoPlist.xcstrings */; };
+		A10000000000000000000027 /* AppShortcuts.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C1000000000000000000000E /* AppShortcuts.xcstrings */; };
 		A10000000000000000000030 /* EagleInboxShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C10000000000000000000032 /* EagleInboxShare.appex */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B10000000000000000000001 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000011 /* ShareViewController.swift */; };
 		B10000000000000000000002 /* ShareMediaLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000012 /* ShareMediaLoader.swift */; };
@@ -53,6 +56,8 @@
 		B1000000000000000000001E /* ConnectionEditorComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000000000000000000002E /* ConnectionEditorComponents.swift */; };
 		B1000000000000000000001F /* TagSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000000000000000000002F /* TagSelectionView.swift */; };
 		B10000000000000000000021 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000017 /* PrivacyInfo.xcprivacy */; };
+		B10000000000000000000022 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000030 /* Localizable.xcstrings */; };
+		B10000000000000000000023 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000018 /* InfoPlist.xcstrings */; };
 		C30000000000000000000001 /* ConnectionsNavigationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000041 /* ConnectionsNavigationUITests.swift */; };
 /* End PBXBuildFile section */
 
@@ -100,6 +105,8 @@
 		C10000000000000000000009 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		C1000000000000000000000A /* IMG_0001.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_0001.jpg; sourceTree = "<group>"; };
 		C1000000000000000000000B /* IMG_0111.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_0111.jpg; sourceTree = "<group>"; };
+		C1000000000000000000000D /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		C1000000000000000000000E /* AppShortcuts.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = AppShortcuts.xcstrings; sourceTree = "<group>"; };
 		C10000000000000000000011 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		C10000000000000000000012 /* ShareMediaLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareMediaLoader.swift; sourceTree = "<group>"; };
 		C10000000000000000000013 /* ShareUploadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareUploadViewModel.swift; sourceTree = "<group>"; };
@@ -107,6 +114,7 @@
 		C10000000000000000000015 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C10000000000000000000016 /* EagleInboxShare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EagleInboxShare.entitlements; sourceTree = "<group>"; };
 		C10000000000000000000017 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		C10000000000000000000018 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		C10000000000000000000021 /* SharedIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedIdentifiers.swift; sourceTree = "<group>"; };
 		C10000000000000000000022 /* EagleConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EagleConnection.swift; sourceTree = "<group>"; };
 		C10000000000000000000023 /* EagleClientError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EagleClientError.swift; sourceTree = "<group>"; };
@@ -122,6 +130,7 @@
 		C1000000000000000000002D /* ConnectionEditorDraft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionEditorDraft.swift; sourceTree = "<group>"; };
 		C1000000000000000000002E /* ConnectionEditorComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionEditorComponents.swift; sourceTree = "<group>"; };
 		C1000000000000000000002F /* TagSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagSelectionView.swift; sourceTree = "<group>"; };
+		C10000000000000000000030 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		C10000000000000000000031 /* EagleInbox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EagleInbox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C10000000000000000000032 /* EagleInboxShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = EagleInboxShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C10000000000000000000041 /* ConnectionsNavigationUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionsNavigationUITests.swift; sourceTree = "<group>"; };
@@ -173,6 +182,8 @@
 				C10000000000000000000004 /* SettingsView.swift */,
 				C10000000000000000000005 /* UploadView.swift */,
 				C1000000000000000000000C /* EagleShortcuts.swift */,
+				C1000000000000000000000E /* AppShortcuts.xcstrings */,
+				C1000000000000000000000D /* InfoPlist.xcstrings */,
 				C10000000000000000000008 /* Assets.xcassets */,
 				D10000000000000000000007 /* ScreenshotFixtures */,
 				C10000000000000000000009 /* PrivacyInfo.xcprivacy */,
@@ -189,6 +200,7 @@
 				C10000000000000000000012 /* ShareMediaLoader.swift */,
 				C10000000000000000000013 /* ShareUploadViewModel.swift */,
 				C10000000000000000000014 /* ShareUploadView.swift */,
+				C10000000000000000000018 /* InfoPlist.xcstrings */,
 				C10000000000000000000017 /* PrivacyInfo.xcprivacy */,
 				C10000000000000000000015 /* Info.plist */,
 				C10000000000000000000016 /* EagleInboxShare.entitlements */,
@@ -214,6 +226,7 @@
 				C1000000000000000000002D /* ConnectionEditorDraft.swift */,
 				C1000000000000000000002E /* ConnectionEditorComponents.swift */,
 				C1000000000000000000002F /* TagSelectionView.swift */,
+				C10000000000000000000030 /* Localizable.xcstrings */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -350,9 +363,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A10000000000000000000027 /* AppShortcuts.xcstrings in Resources */,
 				A10000000000000000000021 /* Assets.xcassets in Resources */,
 				A10000000000000000000023 /* IMG_0001.jpg in Resources */,
 				A10000000000000000000024 /* IMG_0111.jpg in Resources */,
+				A10000000000000000000026 /* InfoPlist.xcstrings in Resources */,
+				A10000000000000000000025 /* Localizable.xcstrings in Resources */,
 				A10000000000000000000022 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -361,6 +377,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B10000000000000000000023 /* InfoPlist.xcstrings in Resources */,
+				B10000000000000000000022 /* Localizable.xcstrings in Resources */,
 				B10000000000000000000021 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

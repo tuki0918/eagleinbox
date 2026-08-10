@@ -20,22 +20,34 @@ enum UploadNotificationResult: Equatable, Sendable {
     var title: String {
         switch self {
         case .success:
-            return "Sent to Eagle"
+            return String(localized: "Sent to Eagle")
         case .partial:
-            return "Some Items Couldn’t Send"
+            return String(localized: "Some Items Couldn’t Send")
         case .failure:
-            return "Couldn’t Send to Eagle"
+            return String(localized: "Couldn’t Send to Eagle")
         }
     }
 
     var body: String {
         switch self {
         case let .success(sent):
-            return "\(sent) item\(sent == 1 ? " was" : "s were") sent."
+            if sent == 1 {
+                return String(localized: "\(sent) item was sent.")
+            }
+            return String(localized: "\(sent) items were sent.")
         case let .partial(sent, failed):
-            return "\(sent) sent, \(failed) failed. Open Eagle Inbox for details."
+            return String(
+                localized: "\(sent) sent, \(failed) failed. Open Eagle Inbox for details."
+            )
         case let .failure(failed):
-            return "\(failed) item\(failed == 1 ? "" : "s") couldn’t be sent. Open Eagle Inbox for details."
+            if failed == 1 {
+                return String(
+                    localized: "\(failed) item couldn’t be sent. Open Eagle Inbox for details."
+                )
+            }
+            return String(
+                localized: "\(failed) items couldn’t be sent. Open Eagle Inbox for details."
+            )
         }
     }
 }

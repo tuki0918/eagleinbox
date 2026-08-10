@@ -206,9 +206,9 @@ struct TagSelectionView: View {
 
     private var newTagActionTitle: String {
         if newTagCandidates.count == 1, let tag = newTagCandidates.first {
-            return "Create “\(tag)”"
+            return String(localized: "Create “\(tag)”")
         }
-        return "Create \(newTagCandidates.count) tags"
+        return String(localized: "Create \(newTagCandidates.count) tags")
     }
 
     private var trimmedSearchText: String {
@@ -285,7 +285,9 @@ struct TagSelectionView: View {
 
     private func selectedTagAccessibilityLabel(_ tag: String) -> String {
         guard let availableTag = availableTag(named: tag) else { return tag }
-        return "\(tag), \(EagleItemCount.label(for: availableTag.count))"
+        return String(
+            localized: "\(tag), \(EagleItemCount.label(for: availableTag.count))"
+        )
     }
 
     private func addTag(_ tag: String) {
@@ -303,7 +305,7 @@ struct TagSelectionView: View {
     }
 
     private func tagAccessibilityLabel(_ tag: EagleTag) -> String {
-        "\(tag.name), \(EagleItemCount.label(for: tag.count))"
+        String(localized: "\(tag.name), \(EagleItemCount.label(for: tag.count))")
     }
 
     private static func uniqueTags(_ tags: [String]) -> [String] {
@@ -316,11 +318,11 @@ enum TagSelectionSummary {
     static func text(from tagsText: String) -> String {
         let tags = MediaFileSupport.list(from: tagsText)
         if tags.isEmpty {
-            return "None"
+            return String(localized: "None")
         }
         if tags.count == 1, let tag = tags.first {
             return tag
         }
-        return "\(tags.count) tags"
+        return String(localized: "\(tags.count) tags")
     }
 }

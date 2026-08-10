@@ -142,19 +142,19 @@ struct EagleConnectionProfile: Identifiable, Equatable, Sendable {
     }
 
     static func newDefault() -> EagleConnectionProfile {
-        EagleConnectionProfile(name: "My Eagle")
+        EagleConnectionProfile(name: String(localized: "My Eagle"))
     }
 
     var displayName: String {
         let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        return trimmed.isEmpty ? "Untitled Connection" : trimmed
+        return trimmed.isEmpty ? String(localized: "Untitled Connection") : trimmed
     }
 
     var displayTitle: String {
         guard let expectedLibraryName, !expectedLibraryName.isEmpty else {
             return displayName
         }
-        return "\(displayName) - \(expectedLibraryName)"
+        return String(localized: "\(displayName) - \(expectedLibraryName)")
     }
 }
 
@@ -186,15 +186,21 @@ struct EagleLibraryMismatch: Identifiable, Equatable, Sendable {
     }
 
     var warningMessage: String {
-        "Library mismatch.\nExpected “\(expectedLibraryName)”, but “\(actualLibraryName)” is open."
+        String(
+            localized: "Library mismatch.\nExpected “\(expectedLibraryName)”, but “\(actualLibraryName)” is open."
+        )
     }
 
     var uploadConfirmationMessage: String {
-        "Expected “\(expectedLibraryName)”, but “\(actualLibraryName)” is open."
+        String(
+            localized: "Expected “\(expectedLibraryName)”, but “\(actualLibraryName)” is open."
+        )
     }
 
     var libraryUpdateConfirmationMessage: String {
-        "This connection is saved for “\(expectedLibraryName)”, but “\(actualLibraryName)” is open.\n\nUpdate it to use “\(actualLibraryName)”?"
+        String(
+            localized: "This connection is saved for “\(expectedLibraryName)”, but “\(actualLibraryName)” is open.\n\nUpdate it to use “\(actualLibraryName)”?"
+        )
     }
 }
 

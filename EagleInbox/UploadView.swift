@@ -293,7 +293,9 @@ struct UploadView: View {
                         Text(bookmarkValidationMessage)
                             .foregroundStyle(.red)
                             .accessibilityLabel(
-                                "URL error: \(bookmarkValidationMessage)"
+                                String(
+                                    localized: "URL error: \(bookmarkValidationMessage)"
+                                )
                             )
                     }
                 }
@@ -380,13 +382,15 @@ struct UploadView: View {
         .buttonStyle(.plain)
         .accessibilityLabel("Metadata")
         .accessibilityValue(
-            isMetadataExpanded ? "Expanded, 3 settings" : "Collapsed"
+            isMetadataExpanded
+                ? String(localized: "Expanded, 3 settings")
+                : String(localized: "Collapsed")
         )
         .accessibilityAddTraits(.isHeader)
         .accessibilityHint(
             isMetadataExpanded
-                ? "Hides folders, annotation, and tags"
-                : "Shows folders, annotation, and tags"
+                ? String(localized: "Hides folders, annotation, and tags")
+                : String(localized: "Shows folders, annotation, and tags")
         )
         .listRowSeparator(
             isMetadataExpanded ? .visible : .hidden,
@@ -513,15 +517,15 @@ struct UploadView: View {
     private func connectionTestAccessibilityValue(for state: ConnectionTestState) -> String {
         switch state {
         case .testing:
-            return "Testing"
+            return String(localized: "Testing")
         case .succeeded:
-            return "Verified"
+            return String(localized: "Verified")
         case .unverified:
-            return "Not verified"
+            return String(localized: "Not verified")
         case let .warning(message):
-            return "Warning: \(message)"
+            return String(localized: "Warning: \(message)")
         case let .failed(message):
-            return "Failed: \(message)"
+            return String(localized: "Failed: \(message)")
         }
     }
 
@@ -651,15 +655,15 @@ struct UploadView: View {
 
     private var uploadButtonTitle: String {
         if model.isImportingFiles {
-            return "Adding files…"
+            return String(localized: "Adding files…")
         }
         if isUploadingItems {
-            return "Sending…"
+            return String(localized: "Sending…")
         }
         if hasSendFailure {
-            return "Couldn’t Send"
+            return String(localized: "Couldn’t Send")
         }
-        return "Send to Eagle"
+        return String(localized: "Send to Eagle")
     }
 
     private var isUploadEnabled: Bool {
@@ -685,24 +689,28 @@ struct UploadView: View {
 
     private var uploadButtonAccessibilityHint: String {
         if model.isImportingFiles {
-            return "Files are being added to the upload queue"
+            return String(
+                localized: "Files are being added to the upload queue"
+            )
         }
         if isUploadingItems {
-            return "Sending items to Eagle"
+            return String(localized: "Sending items to Eagle")
         }
         if hasSendFailure {
-            return "Try sending the failed items again"
+            return String(localized: "Try sending the failed items again")
         }
         if model.pendingUploadCount == 0 {
-            return "Add an item before uploading"
+            return String(localized: "Add an item before uploading")
         }
         if model.selectedProfile == nil {
-            return "Select a connection before uploading"
+            return String(localized: "Select a connection before uploading")
         }
         if model.isWorking {
-            return "Wait for the current operation to finish"
+            return String(
+                localized: "Wait for the current operation to finish"
+            )
         }
-        return "Uploads all pending items"
+        return String(localized: "Uploads all pending items")
     }
 
     private var trimmedBookmarkURL: String {
@@ -716,7 +724,7 @@ struct UploadView: View {
     private var folderSelectionSummary: String {
         let count = model.selectedFolderIDs.count
         if count == 0 {
-            return "None"
+            return String(localized: "None")
         }
         if count == 1,
            let selected = model.availableFolders.first(where: {
@@ -724,7 +732,7 @@ struct UploadView: View {
            }) {
             return selected.name
         }
-        return "\(count) selected"
+        return String(localized: "\(count) selected")
     }
 
     private func horizontalContentInset(for width: CGFloat) -> CGFloat {
@@ -734,7 +742,9 @@ struct UploadView: View {
     private func addBookmark() {
         guard !trimmedBookmarkURL.isEmpty else { return }
         guard isValidBookmarkURL else {
-            bookmarkValidationMessage = "Enter a valid HTTP or HTTPS URL."
+            bookmarkValidationMessage = String(
+                localized: "Enter a valid HTTP or HTTPS URL."
+            )
             if model.operationMessage == EagleClientError.invalidBookmarkURL.localizedDescription {
                 model.operationMessage = nil
             }
@@ -863,7 +873,12 @@ private struct FolderSelectionView: View {
                 ContentUnavailableView {
                     Label("No Folders Available", systemImage: "folder.badge.questionmark")
                 } description: {
-                    Text(model.folderMessage ?? "No folders were found in this Eagle library.")
+                    Text(
+                        model.folderMessage
+                            ?? String(
+                                localized: "No folders were found in this Eagle library."
+                            )
+                    )
                 } actions: {
                     Button("Try Again") {
                         Task {
@@ -995,12 +1010,14 @@ private struct FolderSelectionView: View {
         }
         .buttonStyle(.plain)
         .accessibilityLabel(
-            "\(folder.path), \(EagleItemCount.label(for: folder.imageCount))"
+            String(
+                localized: "\(folder.path), \(EagleItemCount.label(for: folder.imageCount))"
+            )
         )
         .accessibilityValue(
             pendingFolderIDs.contains(folder.id)
-                ? "Selected"
-                : "Not selected"
+                ? String(localized: "Selected")
+                : String(localized: "Not selected")
         )
         .accessibilityIdentifier("folders.row.\(folder.id)")
     }

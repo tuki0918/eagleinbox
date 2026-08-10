@@ -349,7 +349,9 @@ struct ShareUploadView: View {
                         Text(bookmarkValidationMessage)
                             .foregroundStyle(.red)
                             .accessibilityLabel(
-                                "URL error: \(bookmarkValidationMessage)"
+                                String(
+                                    localized: "URL error: \(bookmarkValidationMessage)"
+                                )
                             )
                     }
                 }
@@ -400,8 +402,8 @@ struct ShareUploadView: View {
                 } description: {
                     Text(
                         model.didCompleteUpload
-                            ? "Tap Done to close."
-                            : "Use + to add items."
+                            ? String(localized: "Tap Done to close.")
+                            : String(localized: "Use + to add items.")
                     )
                         .font(.body)
                 }
@@ -486,13 +488,15 @@ struct ShareUploadView: View {
         .buttonStyle(.plain)
         .accessibilityLabel("Metadata")
         .accessibilityValue(
-            isMetadataExpanded ? "Expanded, 3 settings" : "Collapsed"
+            isMetadataExpanded
+                ? String(localized: "Expanded, 3 settings")
+                : String(localized: "Collapsed")
         )
         .accessibilityAddTraits(.isHeader)
         .accessibilityHint(
             isMetadataExpanded
-                ? "Hides folders, annotation, and tags"
-                : "Shows folders, annotation, and tags"
+                ? String(localized: "Hides folders, annotation, and tags")
+                : String(localized: "Shows folders, annotation, and tags")
         )
         .listRowSeparator(
             isMetadataExpanded ? .visible : .hidden,
@@ -689,15 +693,15 @@ struct ShareUploadView: View {
 
     private var uploadButtonTitle: String {
         if model.isAddingItems {
-            return "Adding items…"
+            return String(localized: "Adding items…")
         }
         if model.isUploading {
-            return "Sending…"
+            return String(localized: "Sending…")
         }
         if hasSendFailure {
-            return "Couldn’t Send"
+            return String(localized: "Couldn’t Send")
         }
-        return "Send to Eagle"
+        return String(localized: "Send to Eagle")
     }
 
     private var hasFailedUploads: Bool {
@@ -737,24 +741,24 @@ struct ShareUploadView: View {
 
     private var uploadButtonAccessibilityHint: String {
         if model.isAddingItems {
-            return "Items are being added to the upload queue"
+            return String(localized: "Items are being added to the upload queue")
         }
         if model.isUploading {
-            return "Sending items to Eagle"
+            return String(localized: "Sending items to Eagle")
         }
         if hasSendFailure {
-            return "Try sending the failed items again"
+            return String(localized: "Try sending the failed items again")
         }
         if model.queue.isEmpty {
-            return "Add an item before sending"
+            return String(localized: "Add an item before sending")
         }
         if model.selectedProfile == nil {
-            return "Select a connection before sending"
+            return String(localized: "Select a connection before sending")
         }
         if model.isTestingConnection {
-            return "Wait for the connection test to finish"
+            return String(localized: "Wait for the connection test to finish")
         }
-        return "Sends all pending items to Eagle"
+        return String(localized: "Sends all pending items to Eagle")
     }
 
     private var tagSelectionSummary: String {
@@ -764,7 +768,7 @@ struct ShareUploadView: View {
     private var folderSelectionSummary: String {
         let count = model.selectedFolderIDs.count
         if count == 0 {
-            return "None"
+            return String(localized: "None")
         }
         if count == 1,
            let selected = model.availableFolders.first(where: {
@@ -772,7 +776,7 @@ struct ShareUploadView: View {
            }) {
             return selected.name
         }
-        return "\(count) selected"
+        return String(localized: "\(count) selected")
     }
 
     private var trimmedBookmarkURL: String {
@@ -791,7 +795,9 @@ struct ShareUploadView: View {
     private func addBookmark() {
         guard !trimmedBookmarkURL.isEmpty else { return }
         guard isValidBookmarkURL else {
-            bookmarkValidationMessage = "Enter a valid HTTP or HTTPS URL."
+            bookmarkValidationMessage = String(
+                localized: "Enter a valid HTTP or HTTPS URL."
+            )
             return
         }
 
@@ -897,15 +903,15 @@ struct ShareUploadView: View {
     private func connectionStateAccessibilityValue(_ state: ConnectionTestState) -> String {
         switch state {
         case .unverified:
-            return "Not verified"
+            return String(localized: "Not verified")
         case .testing:
-            return "Testing"
+            return String(localized: "Testing")
         case .succeeded:
-            return "Verified"
+            return String(localized: "Verified")
         case let .warning(message):
-            return "Warning: \(message)"
+            return String(localized: "Warning: \(message)")
         case let .failed(message):
-            return "Failed: \(message)"
+            return String(localized: "Failed: \(message)")
         }
     }
 
@@ -935,7 +941,12 @@ private struct ShareFolderSelectionView: View {
                 ContentUnavailableView {
                     Label("No Folders Available", systemImage: "folder.badge.questionmark")
                 } description: {
-                    Text(model.folderMessage ?? "No folders were found in this Eagle library.")
+                    Text(
+                        model.folderMessage
+                            ?? String(
+                                localized: "No folders were found in this Eagle library."
+                            )
+                    )
                 } actions: {
                     Button("Try Again") {
                         Task {
@@ -1067,12 +1078,14 @@ private struct ShareFolderSelectionView: View {
         }
         .buttonStyle(.plain)
         .accessibilityLabel(
-            "\(folder.path), \(EagleItemCount.label(for: folder.imageCount))"
+            String(
+                localized: "\(folder.path), \(EagleItemCount.label(for: folder.imageCount))"
+            )
         )
         .accessibilityValue(
             pendingFolderIDs.contains(folder.id)
-                ? "Selected"
-                : "Not selected"
+                ? String(localized: "Selected")
+                : String(localized: "Not selected")
         )
         .accessibilityIdentifier("folders.row.\(folder.id)")
     }
@@ -1231,10 +1244,10 @@ private struct ShareConnectionsView: View {
             .disabled(isBusy)
             .accessibilityLabel(
                 isTesting(profile)
-                    ? "Testing \(profile.displayTitle)"
+                    ? String(localized: "Testing \(profile.displayTitle)")
                     : pendingSelectionID == profile.id
-                    ? "\(profile.displayTitle), selected"
-                    : "Select \(profile.displayTitle)"
+                    ? String(localized: "\(profile.displayTitle), selected")
+                    : String(localized: "Select \(profile.displayTitle)")
             )
             .accessibilityValue(profile.connection.displayEndpoint)
             .accessibilityHint("Tap Select to confirm this connection.")
@@ -1249,7 +1262,9 @@ private struct ShareConnectionsView: View {
             .buttonStyle(.plain)
             .foregroundStyle(.secondary)
             .disabled(isBusy)
-            .accessibilityLabel("Edit \(profile.displayTitle)")
+            .accessibilityLabel(
+                String(localized: "Edit \(profile.displayTitle)")
+            )
         }
         .swipeActions(edge: .trailing) {
             Button(role: .destructive) {
@@ -1357,7 +1372,11 @@ private struct ShareConnectionEditorView: View {
                 startConnectionTest()
             }
         }
-        .navigationTitle(isNew ? "New Connection" : "Edit Connection")
+        .navigationTitle(
+            isNew
+                ? String(localized: "New Connection")
+                : String(localized: "Edit Connection")
+        )
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .interactiveDismissDisabled(hasUnsavedChanges || isTestingConnection)

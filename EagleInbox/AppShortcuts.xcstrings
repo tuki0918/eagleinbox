@@ -1,0 +1,52 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Send files with ${applicationName}" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Send files with ${applicationName}",
+              "Send media with ${applicationName}"
+            ]
+          }
+        },
+        "ja" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName}でファイルを送信",
+              "${applicationName}でメディアを送信"
+            ]
+          }
+        }
+      }
+    },
+    "Send URLs with ${applicationName}" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Send URLs with ${applicationName}",
+              "Save links with ${applicationName}"
+            ]
+          }
+        },
+        "ja" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName}でURLを送信",
+              "${applicationName}でリンクを保存"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.1"
+}

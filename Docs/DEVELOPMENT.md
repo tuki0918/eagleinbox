@@ -15,6 +15,17 @@ This document covers how to build, test, and release Eagle Inbox. See [ARCHITECT
 3. Confirm that App Groups and Keychain Sharing match for both targets.
 4. Run the `EagleInbox` scheme on a physical iPhone or in Simulator. The share extension is built at the same time and embedded in the main app.
 
+## Localization
+
+English is the source language and Japanese is the supported translation. iOS selects the system language by default; users can override it for Eagle Inbox under Settings → Apps → Eagle Inbox → Language.
+
+- `Shared/Localizable.xcstrings` contains app and share-extension UI, model, error, notification, and App Intent strings. Keep it in both targets.
+- `EagleInbox/InfoPlist.xcstrings` and `EagleInboxShare/InfoPlist.xcstrings` contain target-specific display names and Local Network permission descriptions.
+- `EagleInbox/AppShortcuts.xcstrings` contains the localized Siri phrases for App Shortcuts.
+- SwiftUI string literals are extracted automatically. A user-facing value produced as `String`, including computed labels and errors, must use `String(localized:)` so it is extracted and localized before display.
+
+When adding a user-facing string, verify both English and Japanese in the main app and share extension. Preserve format placeholders and do not localize user content, server responses, URLs, MIME types, accessibility identifiers, or SF Symbol names.
+
 ### Identifiers
 
 To distribute the app under a different Developer Team or Bundle ID, update the following values as a single set.
@@ -94,6 +105,8 @@ xcodebuild test \
   -configuration Debug \
   -destination 'platform=iOS Simulator,name=iPhone Air' \
   -derivedDataPath /tmp/EagleInboxUITestsDerived \
+  -testLanguage en \
+  -testRegion US \
   -only-testing:EagleInboxUITests
 ```
 

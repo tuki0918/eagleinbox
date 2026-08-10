@@ -133,7 +133,9 @@ enum MediaFileSupport {
                 guard values.isRegularFile == true,
                       values.isSymbolicLink != true,
                       isSupportedFile(sourceURL) else {
-                    latestErrorMessage = "No supported files found in \(sourceURL.lastPathComponent)."
+                    latestErrorMessage = String(
+                        localized: "No supported files found in \(sourceURL.lastPathComponent)."
+                    )
                     continue
                 }
 
@@ -165,7 +167,9 @@ enum MediaFileSupport {
                     )
                 )
             } catch {
-                latestErrorMessage = "\(sourceURL.lastPathComponent): \(error.localizedDescription)"
+                latestErrorMessage = String(
+                    localized: "\(sourceURL.lastPathComponent): \(error.localizedDescription)"
+                )
             }
         }
 
@@ -183,7 +187,10 @@ enum MediaFileSupport {
         }
     }
 
-    static func itemName(forFileName fileName: String, fallback: String = "Untitled") -> String {
+    static func itemName(
+        forFileName fileName: String,
+        fallback: String = String(localized: "Untitled")
+    ) -> String {
         let decoded = fileName.removingPercentEncoding ?? fileName
         let name = URL(fileURLWithPath: decoded)
             .deletingPathExtension()
@@ -208,7 +215,7 @@ enum MediaFileSupport {
         } else if !trimmedRepresentationName.isEmpty {
             resolvedName = trimmedRepresentationName
         } else {
-            resolvedName = "Attachment"
+            resolvedName = String(localized: "Attachment")
         }
 
         let fileExtension = preferredFilenameExtension?
@@ -224,9 +231,12 @@ enum MediaFileSupport {
     static func itemName(forBookmarkURL url: URL) -> String {
         let lastComponent = url.lastPathComponent
         if !lastComponent.isEmpty {
-            return itemName(forFileName: lastComponent, fallback: url.host ?? "Bookmark")
+            return itemName(
+                forFileName: lastComponent,
+                fallback: url.host ?? String(localized: "Bookmark")
+            )
         }
-        return url.host ?? "Bookmark"
+        return url.host ?? String(localized: "Bookmark")
     }
 
     static func bookmarkIdentity(for url: URL) -> String {
