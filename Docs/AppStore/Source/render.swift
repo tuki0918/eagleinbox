@@ -190,20 +190,6 @@ private func render(
     let fullRect = NSRect(origin: .zero, size: canvasSize)
     NSGradient(colors: slide.background)?.draw(in: fullRect, angle: 120)
 
-    NSColor.white.withAlphaComponent(0.50).setFill()
-    NSBezierPath(ovalIn: topRect(670, -175, 820, 820)).fill()
-
-    for row in 0..<9 {
-        for column in 0..<20 where (row + column) % 2 == 0 {
-            let dot = topRect(42 + CGFloat(column) * 64, 190 + CGFloat(row) * 56, 8, 8)
-            NSColor.white.withAlphaComponent(0.40).setFill()
-            NSBezierPath(ovalIn: dot).fill()
-        }
-    }
-
-    slide.accent.withAlphaComponent(0.14).setFill()
-    NSBezierPath(ovalIn: topRect(68, 618, 305, 305)).fill()
-
     let isSingleLineHeadline = !slide.headline.contains("\n")
     let headlineTop: CGFloat = isSingleLineHeadline ? 215 : 135
     let subtitleTop: CGFloat = isSingleLineHeadline ? 390 : 445
@@ -212,7 +198,7 @@ private func render(
         slide.headline,
         rect: topRect(55, headlineTop, 1150, isSingleLineHeadline ? 160 : 310),
         font: headlineFont,
-        color: NSColor(hex: 0x0C2844),
+        color: .white,
         lineHeight: 146,
         tracking: -1.8,
         alignment: .center
@@ -240,7 +226,7 @@ private func render(
         slide.subtitle,
         rect: topRect(subtitleGroupX + 34, subtitleTop, subtitleWidth + 4, 70),
         font: subtitleFont,
-        color: NSColor(hex: 0x40566B),
+        color: NSColor.white.withAlphaComponent(0.84),
         tracking: subtitleTracking
     )
 
@@ -306,6 +292,12 @@ let subtitleFont = try loadFont(
     size: 42
 )
 
+private let vividBackground = [
+    NSColor(hex: 0x007A8A),
+    NSColor(hex: 0x1D4ED8),
+    NSColor(hex: 0x5B21B6)
+]
+
 private let slides: [Slide] = [
     Slide(
         headline: "Straight to Eagle.",
@@ -313,8 +305,8 @@ private let slides: [Slide] = [
         source: "Docs/Screenshots/upload-queue-photo-url.png",
         secondarySource: nil,
         output: "Docs/AppStore/Final/01-send-items.png",
-        background: [NSColor(hex: 0xE9FFF9), NSColor(hex: 0xD8EDF7), NSColor(hex: 0xE6E2FF)],
-        accent: NSColor(hex: 0x0F766E)
+        background: vividBackground,
+        accent: NSColor(hex: 0x5EEAD4)
     ),
     Slide(
         headline: "Quick access from\nthe Share Sheet.",
@@ -322,8 +314,8 @@ private let slides: [Slide] = [
         source: "Docs/Screenshots/share-menu.png",
         secondarySource: nil,
         output: "Docs/AppStore/Final/02-share-sheet.png",
-        background: [NSColor(hex: 0xEFFBFF), NSColor(hex: 0xDFEAFF), NSColor(hex: 0xE9E2FF)],
-        accent: NSColor(hex: 0x2563A7)
+        background: vividBackground,
+        accent: NSColor(hex: 0x7DD3FC)
     ),
     Slide(
         headline: "Tags and folders.",
@@ -331,8 +323,8 @@ private let slides: [Slide] = [
         source: "Docs/Screenshots/folders-selected-recent-all.png",
         secondarySource: "Docs/Screenshots/tags-selected.png",
         output: "Docs/AppStore/Final/03-organize-tags.png",
-        background: [NSColor(hex: 0xFFF8EA), NSColor(hex: 0xFDECE8), NSColor(hex: 0xE9F7F2)],
-        accent: NSColor(hex: 0xC15D3C)
+        background: vividBackground,
+        accent: NSColor(hex: 0xFDBA74)
     ),
     Slide(
         headline: "One press.\nStraight to Eagle.",
@@ -340,8 +332,8 @@ private let slides: [Slide] = [
         source: "Docs/Screenshots/action-button-shortcut.png",
         secondarySource: nil,
         output: "Docs/AppStore/Final/04-action-button.png",
-        background: [NSColor(hex: 0xE9FBFF), NSColor(hex: 0xE1EFFF), NSColor(hex: 0xECE6FF)],
-        accent: NSColor(hex: 0x4057A6)
+        background: vividBackground,
+        accent: NSColor(hex: 0xC4B5FD)
     )
 ]
 
