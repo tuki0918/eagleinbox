@@ -130,7 +130,11 @@ private func drawScreenshotCard(
     shadow.shadowBlurRadius = shadowBlur
     shadow.shadowOffset = NSSize(width: 0, height: shadowOffset)
     shadow.set()
-    NSColor.white.setFill()
+    let frameColor = NSColor(
+        deviceWhite: CGFloat(0x11) / 255,
+        alpha: 1
+    )
+    frameColor.setFill()
     roundedPath(outerRect, radius: outerRadius).fill()
 
     NSGraphicsContext.saveGraphicsState()
@@ -149,7 +153,7 @@ private func drawScreenshotCard(
     drawImage(screenshot, in: innerRect)
     NSGraphicsContext.restoreGraphicsState()
 
-    NSColor.white.withAlphaComponent(0.44).setStroke()
+    frameColor.setStroke()
     let innerBorder = roundedPath(innerRect.insetBy(dx: 1, dy: 1), radius: outerRadius - 17)
     innerBorder.lineWidth = 2
     innerBorder.stroke()
