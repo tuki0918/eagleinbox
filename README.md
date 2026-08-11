@@ -68,17 +68,11 @@ Eagle Inbox provides five actions in Apple Shortcuts:
 - `Send Files to Eagle with Tags` sends supported files with a required list of tags
 - `Split Text into Tags` turns comma- or newline-separated text into a tag list
 
-The two simple send actions do not show tag settings. The two `with Tags` actions apply the same tags to every item in the action. Folder and annotation parameters are not included.
-
 All send actions use the connection currently selected in Eagle Inbox and run without opening the app. The selected connection must have been tested and the expected Eagle library must be open.
 
-For OCR tags, connect `Extract Text from Image` to `Split Text into Tags`, then connect its `Tags` output to a `with Tags` action. In a screenshot workflow, set the send action's file input to the original screenshot and its tag input to the splitter output.
-
-For example, create a shortcut with `Take Photo` followed by `Send Files to Eagle`. On an iPhone with an Action Button, choose that shortcut under Settings → Action Button → Shortcut. You can also leave the action input set to `Ask Each Time` to choose content when the shortcut runs.
-
-| Create the shortcut | Assign it to the Action Button |
+| Shortcut example | Assign it to the Action Button |
 | --- | --- |
-| ![Send Files to Eagle in Apple Shortcuts](./Docs/Screenshots/shortcuts-send-files.png) | ![Send Files to Eagle assigned to the iPhone Action Button](./Docs/Screenshots/action-button-shortcut.png) |
+| ![Send Screenshot to Eagle with Tags in Apple Shortcuts](./Docs/Screenshots/shortcuts-send-screenshot-with-tags.png) | ![Send Files to Eagle assigned to the iPhone Action Button](./Docs/Screenshots/action-button-shortcut.png) |
 
 ## Features
 
