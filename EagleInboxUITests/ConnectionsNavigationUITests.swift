@@ -445,6 +445,134 @@ final class ConnectionsNavigationUITests: XCTestCase {
         )
     }
 
+    func testSendIsDisabledForUnverifiedConnection() {
+        launchApp(
+            seedUploadQueue: true,
+            seedUnverifiedConnection: true
+        )
+
+        let sendButton = app.buttons["upload.send"]
+        XCTAssertTrue(
+            sendButton.waitForExistence(timeout: Self.waitTimeout),
+            app.debugDescription
+        )
+        XCTAssertEqual(sendButton.label, "Send to Eagle")
+        XCTAssertFalse(sendButton.isEnabled)
+
+        let connectionStatusButton = app.buttons["Test Connection"]
+        XCTAssertEqual(
+            connectionStatusButton.value as? String,
+            "Not verified"
+        )
+        XCTAssertFalse(
+            app.staticTexts[
+                "Test this connection and save it before uploading."
+            ].exists
+        )
+    }
+
+    func testSendRemainsEnabledForLibraryMismatchWarning() {
+        launchApp(
+            seedConnection: true,
+            seedUploadQueue: true,
+            seedLibraryMismatch: true
+        )
+
+        let sendButton = app.buttons["upload.send"]
+        XCTAssertTrue(
+            sendButton.waitForExistence(timeout: Self.waitTimeout),
+            app.debugDescription
+        )
+        let connectionStatus = app.buttons["Test Connection"].value as? String
+        XCTAssertTrue(
+            connectionStatus?.hasPrefix("Warning: Library mismatch.") == true,
+            connectionStatus ?? app.debugDescription
+        )
+        XCTAssertTrue(sendButton.isEnabled, app.debugDescription)
+    }
+
+    func testSendIsDisabledForFailedConnection() {
+        launchApp(
+            seedConnection: true,
+            seedUploadQueue: true,
+            seedConnectionFailure: true
+        )
+
+        let sendButton = app.buttons["upload.send"]
+        XCTAssertTrue(
+            sendButton.waitForExistence(timeout: Self.waitTimeout),
+            app.debugDescription
+        )
+        XCTAssertEqual(sendButton.label, "Couldn’t Send")
+        XCTAssertFalse(sendButton.isEnabled)
+
+        let connectionStatusButton = app.buttons["Test Connection"]
+        XCTAssertEqual(
+            connectionStatusButton.value as? String,
+            "Failed: Couldn’t connect to Eagle."
+        )
+
+        let operationMessage = app.staticTexts["upload.operationMessage.text"]
+        XCTAssertTrue(
+            operationMessage.waitForExistence(timeout: Self.waitTimeout),
+            app.debugDescription
+        )
+        XCTAssertEqual(operationMessage.label, "Couldn’t connect to Eagle.")
+        let connectionFailure = app.staticTexts["upload.connection.failure"]
+        XCTAssertTrue(
+            connectionFailure.waitForExistence(timeout: Self.waitTimeout),
+            app.debugDescription
+        )
+        XCTAssertEqual(connectionFailure.label, "Couldn’t connect to Eagle.")
+        XCTAssertEqual(
+            operationMessage.frame.midX,
+            app.frame.midX,
+            accuracy: 2
+        )
+        XCTAssertTrue(app.buttons["upload.operationMessage.dismiss"].exists)
+        attachScreenshot(named: "send-connection-failure")
+
+        app.buttons["upload.operationMessage.dismiss"].tap()
+        XCTAssertTrue(
+            operationMessage.waitForNonExistence(timeout: Self.waitTimeout)
+        )
+        XCTAssertTrue(connectionFailure.exists)
+        XCTAssertEqual(connectionFailure.label, "Couldn’t connect to Eagle.")
+        XCTAssertEqual(
+            connectionStatusButton.value as? String,
+            "Failed: Couldn’t connect to Eagle."
+        )
+        waitForLabel(
+            "Send to Eagle",
+            on: sendButton,
+            timeout: Self.waitTimeout
+        )
+        XCTAssertFalse(sendButton.isEnabled)
+    }
+
+    func testRecoveredConnectionClearsSendFailureFeedback() {
+        launchApp(
+            seedConnection: true,
+            seedUploadQueue: true,
+            seedRecoveredSendConnection: true
+        )
+
+        let sendButton = app.buttons["upload.send"]
+        XCTAssertTrue(
+            sendButton.waitForExistence(timeout: Self.waitTimeout),
+            app.debugDescription
+        )
+        XCTAssertEqual(sendButton.label, "Send to Eagle")
+        XCTAssertTrue(sendButton.isEnabled)
+        XCTAssertEqual(
+            app.buttons["Test Connection"].value as? String,
+            "Verified"
+        )
+        XCTAssertFalse(
+            app.staticTexts["upload.operationMessage.text"].exists
+        )
+    }
+
     func testReadmeLibraryMismatchScreenshot() {
         launchApp(seedConnection: true, seedLibraryMismatch: true)
 
@@ -696,6 +824,9 @@ final class ConnectionsNavigationUITests: XCTestCase {
         seedFolders: Bool = false,
         seedLibraryMismatch: Bool = false,
         seedUploadLibraryMismatchDialog: Bool = false,
+        seedUnverifiedConnection: Bool = false,
+        seedConnectionFailure: Bool = false,
+        seedRecoveredSendConnection: Bool = false,
         language: String = "en",
         locale: String = "en_US"
     ) {
@@ -724,6 +855,21 @@ final class ConnectionsNavigationUITests: XCTestCase {
         if seedUploadLibraryMismatchDialog {
             app.launchArguments.append(
                 "--ui-testing-seeded-upload-library-mismatch-dialog"
+            )
+        }
+        if seedUnverifiedConnection {
+            app.launchArguments.append(
+                "--ui-testing-seeded-unverified-connection"
+            )
+        }
+        if seedConnectionFailure {
+            app.launchArguments.append(
+                "--ui-testing-seeded-connection-failure"
+            )
+        }
+        if seedRecoveredSendConnection {
+            app.launchArguments.append(
+                "--ui-testing-seeded-recovered-send-connection"
             )
         }
         app.launch()

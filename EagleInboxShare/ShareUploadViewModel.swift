@@ -95,6 +95,7 @@ final class ShareUploadViewModel: ObservableObject {
     private var itemAdditionToken: UUID?
     private var fileImportTask: Task<Void, Never>?
     private var fileImportWorkerTask: Task<MediaFileImportResult, Never>?
+    private var sendConnectionFailure: (profileID: UUID, message: String)?
 
     init(
         extensionContext: NSExtensionContext?,
@@ -113,8 +114,7 @@ final class ShareUploadViewModel: ObservableObject {
     }
 
     func connectionTestState(for profile: EagleConnectionProfile) -> ConnectionTestState {
-        connectionTestStates[profile.id]
-            ?? (profile.libraryName == nil ? .unverified : .succeeded)
+        connectionTestStates[profile.id] ?? .unverified
     }
 
     func load() async {
@@ -153,6 +153,9 @@ final class ShareUploadViewModel: ObservableObject {
             || previousProfile?.connection != selectedProfile?.connection
             || previousProfile?.expectedLibraryName
                 != selectedProfile?.expectedLibraryName {
+            if let previousProfile {
+                clearSendConnectionFailure(for: previousProfile.id)
+            }
             didLastSendFail = false
             resetFolders()
         }
@@ -176,6 +179,9 @@ final class ShareUploadViewModel: ObservableObject {
             selectedProfileID = previousSelectedProfileID
             return false
         }
+        if let previousSelectedProfileID {
+            clearSendConnectionFailure(for: previousSelectedProfileID)
+        }
         operationMessage = nil
         didLastSendFail = false
         resetFolders()
@@ -184,7 +190,12 @@ final class ShareUploadViewModel: ObservableObject {
 
     func dismissOperationMessage(ifMatching currentMessage: String) {
         guard operationMessage == currentMessage else { return }
-        operationMessage = nil
+        if let failure = sendConnectionFailure,
+           failure.message == currentMessage {
+            clearSendConnectionFailure(for: failure.profileID)
+        } else {
+            operationMessage = nil
+        }
     }
 
     @discardableResult
@@ -247,6 +258,7 @@ final class ShareUploadViewModel: ObservableObject {
            normalizedVerifiedConnection == normalized.connection,
            normalized.libraryName != nil {
             connectionTestStates[normalized.id] = .succeeded
+            clearSendConnectionFailure(for: normalized.id)
         } else if isNewProfile || connectionChanged || expectedLibraryChanged {
             connectionTestStates.removeValue(forKey: normalized.id)
         }
@@ -254,6 +266,7 @@ final class ShareUploadViewModel: ObservableObject {
             resetFolders()
         }
         if shouldClearSendFailure {
+            clearSendConnectionFailure(for: normalized.id)
             didLastSendFail = false
         }
         connectionMessage = nil
@@ -304,6 +317,7 @@ final class ShareUploadViewModel: ObservableObject {
         }
         connectionTestStates.removeValue(forKey: id)
         if didDeleteSelectedProfile {
+            clearSendConnectionFailure(for: id)
             didLastSendFail = false
             resetFolders()
         }
@@ -508,6 +522,7 @@ final class ShareUploadViewModel: ObservableObject {
               let profile = profiles.first(where: { $0.id == id }) else {
             return
         }
+        guard !Task.isCancelled else { return }
         guard !isUploading, !isAddingItems, !isTestingConnection else {
             return
         }
@@ -517,6 +532,7 @@ final class ShareUploadViewModel: ObservableObject {
         let previousTestState = connectionTestState(for: profile)
         isTestingConnection = true
         connectionTestStates[id] = .testing
+        connectionMessage = nil
         defer { isTestingConnection = false }
         await Task.yield()
         do {
@@ -543,6 +559,8 @@ final class ShareUploadViewModel: ObservableObject {
                     resetFolders()
                 }
                 connectionTestStates[id] = .warning(mismatch.warningMessage)
+                connectionMessage = nil
+                clearSendConnectionFailure(for: id)
                 return
             }
 
@@ -559,12 +577,17 @@ final class ShareUploadViewModel: ObservableObject {
             }
             if let persistenceError = persistProfiles() {
                 profiles[index] = previousProfile
-                connectionTestStates[id] = .failed(
-                    persistenceError.localizedDescription
-                )
+                let message = persistenceError.localizedDescription
+                connectionTestStates[id] = .failed(message)
+                connectionMessage = message
+                if sendConnectionFailure?.profileID == id {
+                    applySendConnectionFailure(message, profileID: id)
+                }
                 return
             }
             connectionTestStates[id] = .succeeded
+            connectionMessage = nil
+            clearSendConnectionFailure(for: id)
             loadedTagsAt = nil
         } catch {
             if Task.isCancelled || error is CancellationError {
@@ -584,6 +607,10 @@ final class ShareUploadViewModel: ObservableObject {
 
             let errorMessage = error.localizedDescription
             connectionTestStates[id] = .failed(errorMessage)
+            connectionMessage = errorMessage
+            if sendConnectionFailure?.profileID == id {
+                applySendConnectionFailure(errorMessage, profileID: id)
+            }
         }
     }
 
@@ -810,12 +837,9 @@ final class ShareUploadViewModel: ObservableObject {
         guard !isAddingItems else { return }
         guard !isTestingConnection else { return }
         guard !isUploading else { return }
-        guard let expectedLibraryName = profile.expectedLibraryName else {
-            didLastSendFail = true
-            let errorMessage = EagleClientError.libraryNotPinned.localizedDescription
-            connectionTestStates[profile.id] = .unverified
-            operationMessage = errorMessage
-            pendingUploadLibraryMismatch = nil
+        guard connectionTestState(for: profile).allowsUpload,
+              profile.hasPinnedLibrary,
+              let expectedLibraryName = profile.expectedLibraryName else {
             return
         }
 
@@ -825,6 +849,7 @@ final class ShareUploadViewModel: ObservableObject {
         didLastSendFail = false
         didCompleteUpload = false
         operationMessage = nil
+        sendConnectionFailure = nil
         defer {
             isUploading = false
             if isTerminated {
@@ -869,11 +894,8 @@ final class ShareUploadViewModel: ObservableObject {
                 operationMessage = nil
                 return
             }
-            didLastSendFail = true
             let errorMessage = error.localizedDescription
-            pendingUploadLibraryMismatch = nil
-            connectionTestStates[profile.id] = .failed(errorMessage)
-            operationMessage = errorMessage
+            applySendConnectionFailure(errorMessage, profileID: profile.id)
             return
         }
 
@@ -941,6 +963,36 @@ final class ShareUploadViewModel: ObservableObject {
         }
         guard !Task.isCancelled, !isTerminated else { return }
         didCompleteUpload = didComplete
+    }
+
+    private func applySendConnectionFailure(
+        _ message: String,
+        profileID: UUID
+    ) {
+        didLastSendFail = true
+        sendConnectionFailure = (profileID, message)
+        pendingUploadLibraryMismatch = nil
+        connectionTestStates[profileID] = .failed(message)
+        connectionMessage = message
+        operationMessage = message
+    }
+
+    private func clearSendConnectionFailure(for profileID: UUID) {
+        guard let failure = sendConnectionFailure,
+              failure.profileID == profileID else {
+            return
+        }
+        sendConnectionFailure = nil
+        if operationMessage == failure.message {
+            operationMessage = nil
+        }
+        let hasFailedUpload = queue.contains {
+            if case .failed = $0.state { return true }
+            return false
+        }
+        if !hasFailedUpload {
+            didLastSendFail = false
+        }
     }
 
     private func updateUploadProgress(

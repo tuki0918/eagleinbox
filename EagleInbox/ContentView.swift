@@ -21,6 +21,13 @@ struct ContentView: View {
                     await performPendingActivationRefresh()
                 }
             }
+            .onChange(of: model.pendingUploadLibraryMismatch) {
+                _, mismatch in
+                guard mismatch == nil else { return }
+                Task { @MainActor in
+                    await performPendingActivationRefresh()
+                }
+            }
     }
 
     @MainActor
@@ -31,6 +38,7 @@ struct ContentView: View {
         }
         guard needsActivationRefresh,
               scenePhase == .active,
+              model.pendingUploadLibraryMismatch == nil,
               !model.isWorking else {
             return
         }

@@ -54,7 +54,22 @@ struct EagleInboxApp: App {
                 tokenService: "com.tuki0918.EagleInbox.UITests.connections"
             )
             let snapshot: ConnectionSettingsSnapshot
-            if arguments.contains("--ui-testing-seeded-connection") {
+            if arguments.contains("--ui-testing-seeded-unverified-connection") {
+                let profile = EagleConnectionProfile(
+                    id: UUID(uuidString: "3B112B34-6C80-44E8-B7D7-0A1C7399A5A7")!,
+                    name: "Studio",
+                    connection: EagleConnection(
+                        host: "192.168.0.100",
+                        port: 41595,
+                        token: "demo-api-token"
+                    ),
+                    expectedLibraryName: "Design"
+                )
+                snapshot = ConnectionSettingsSnapshot(
+                    profiles: [profile],
+                    selectedProfileID: profile.id
+                )
+            } else if arguments.contains("--ui-testing-seeded-connection") {
                 let profile = EagleConnectionProfile(
                     id: UUID(uuidString: "3B112B34-6C80-44E8-B7D7-0A1C7399A5A7")!,
                     name: "Studio",
@@ -81,6 +96,24 @@ struct EagleInboxApp: App {
                 settingsStore: settingsStore,
                 allowsAutomaticConnectionRefresh: false
             )
+            if arguments.contains("--ui-testing-seeded-unverified-connection") {
+                model.seedPinnedUnverifiedConnectionForUITesting(
+                    expectedLibraryName: "Design"
+                )
+            }
+            if arguments.contains("--ui-testing-seeded-connection-failure") {
+                model.seedConnectionFailureForUITesting(
+                    String(localized: "Couldn’t connect to Eagle.")
+                )
+            }
+            if arguments.contains(
+                "--ui-testing-seeded-recovered-send-connection"
+            ) {
+                model.seedRecoveredSendConnectionForUITesting(
+                    String(localized: "Couldn’t connect to Eagle."),
+                    expectedLibraryName: "Design"
+                )
+            }
             if arguments.contains("--ui-testing-seeded-library-mismatch") {
                 model.seedLibraryMismatchForUITesting(
                     expectedLibraryName: "Design",

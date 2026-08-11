@@ -59,6 +59,7 @@ final class AppModel: ObservableObject {
     private var tagLoadToken: UUID?
     private var loadedTagProfile: EagleLibraryProfileFingerprint?
     private var loadedTagsAt: Date?
+    private var sendConnectionFailure: (profileID: UUID, message: String)?
     init(
         settingsStore: SharedSettingsStore = SharedSettingsStore(),
         allowsAutomaticConnectionRefresh: Bool = true,
@@ -94,11 +95,49 @@ final class AppModel: ObservableObject {
     }
 
 #if DEBUG
+    func seedPinnedUnverifiedConnectionForUITesting(
+        expectedLibraryName: String
+    ) {
+        guard let profile = selectedProfile,
+              let index = profiles.firstIndex(where: { $0.id == profile.id }) else {
+            return
+        }
+        profiles[index].expectedLibraryName = expectedLibraryName
+        profiles[index].libraryName = nil
+        connectionTestStates[profile.id] = .unverified
+    }
+
+    func seedConnectionFailureForUITesting(_ message: String) {
+        guard let profile = selectedProfile else { return }
+        applySendConnectionFailure(message, profileID: profile.id)
+    }
+
+    func seedRecoveredSendConnectionForUITesting(
+        _ message: String,
+        expectedLibraryName: String
+    ) {
+        guard let profile = selectedProfile,
+              let index = profiles.firstIndex(where: { $0.id == profile.id }) else {
+            return
+        }
+        profiles[index].expectedLibraryName = expectedLibraryName
+        profiles[index].libraryName = expectedLibraryName
+        applySendConnectionFailure(message, profileID: profile.id)
+        connectionTestStates[profile.id] = .succeeded
+        connectionMessage = nil
+        clearSendConnectionFailure(for: profile.id)
+    }
+
     func seedLibraryMismatchForUITesting(
         expectedLibraryName: String,
         actualLibraryName: String
     ) {
-        guard let profile = selectedProfile else { return }
+        guard let profile = selectedProfile,
+              let index = profiles.firstIndex(where: { $0.id == profile.id }) else {
+            return
+        }
+        profiles[index].expectedLibraryName = expectedLibraryName
+        profiles[index].libraryName = expectedLibraryName
         let mismatch = EagleLibraryMismatch(
             expectedLibraryName: expectedLibraryName,
             actualLibraryName: actualLibraryName
@@ -110,7 +149,12 @@ final class AppModel: ObservableObject {
         expectedLibraryName: String,
         actualLibraryName: String
     ) {
-        guard let profile = selectedProfile else { return }
+        guard let profile = selectedProfile,
+              let index = profiles.firstIndex(where: { $0.id == profile.id }) else {
+            return
+        }
+        profiles[index].expectedLibraryName = expectedLibraryName
+        profiles[index].libraryName = expectedLibraryName
         let mismatch = EagleLibraryMismatch(
             expectedLibraryName: expectedLibraryName,
             actualLibraryName: actualLibraryName
@@ -151,6 +195,9 @@ final class AppModel: ObservableObject {
             || previousProfile?.connection != selectedProfile?.connection
             || previousProfile?.expectedLibraryName
                 != selectedProfile?.expectedLibraryName {
+            if let previousProfile {
+                clearSendConnectionFailure(for: previousProfile.id)
+            }
             didLastSendFail = false
             resetFolders()
         }
@@ -170,6 +217,9 @@ final class AppModel: ObservableObject {
         guard persistProfiles() else {
             selectedProfileID = previousSelectedProfileID
             return false
+        }
+        if let previousSelectedProfileID {
+            clearSendConnectionFailure(for: previousSelectedProfileID)
         }
         didLastSendFail = false
         resetFolders()
@@ -234,6 +284,7 @@ final class AppModel: ObservableObject {
            normalizedVerifiedConnection == normalized.connection,
            normalized.libraryName != nil {
             connectionTestStates[normalized.id] = .succeeded
+            clearSendConnectionFailure(for: normalized.id)
         } else if isNewProfile || connectionChanged || expectedLibraryChanged {
             clearConnectionTest(for: normalized.id)
         }
@@ -241,6 +292,7 @@ final class AppModel: ObservableObject {
             resetFolders()
         }
         if shouldClearSendFailure {
+            clearSendConnectionFailure(for: normalized.id)
             didLastSendFail = false
         }
         return true
@@ -288,6 +340,7 @@ final class AppModel: ObservableObject {
         clearConnectionTest(for: id)
         pendingUploadLibraryMismatch = nil
         if didDeleteSelectedProfile {
+            clearSendConnectionFailure(for: id)
             didLastSendFail = false
             resetFolders()
         }
@@ -626,6 +679,7 @@ final class AppModel: ObservableObject {
                 }
                 connectionTestStates[id] = .warning(mismatch.warningMessage)
                 connectionMessage = nil
+                clearSendConnectionFailure(for: id)
                 return
             }
 
@@ -643,15 +697,18 @@ final class AppModel: ObservableObject {
             connectionMessage = nil
             guard persistProfiles() else {
                 profiles[index] = previousProfile
-                connectionTestStates[id] = .failed(
-                    connectionMessage
-                        ?? String(
-                            localized: "The connection result could not be saved."
-                        )
-                )
+                let message = connectionMessage
+                    ?? String(
+                        localized: "The connection result could not be saved."
+                    )
+                connectionTestStates[id] = .failed(message)
+                if sendConnectionFailure?.profileID == id {
+                    applySendConnectionFailure(message, profileID: id)
+                }
                 return
             }
             connectionTestStates[id] = .succeeded
+            clearSendConnectionFailure(for: id)
             loadedTagsAt = nil
         } catch {
             if Task.isCancelled || error is CancellationError {
@@ -674,6 +731,9 @@ final class AppModel: ObservableObject {
             let message = error.localizedDescription
             connectionTestStates[id] = .failed(message)
             connectionMessage = message
+            if sendConnectionFailure?.profileID == id {
+                applySendConnectionFailure(message, profileID: id)
+            }
         }
     }
 
@@ -764,7 +824,12 @@ final class AppModel: ObservableObject {
 
     func dismissOperationMessage(ifMatching message: String) {
         guard operationMessage == message else { return }
-        operationMessage = nil
+        if let failure = sendConnectionFailure,
+           failure.message == message {
+            clearSendConnectionFailure(for: failure.profileID)
+        } else {
+            operationMessage = nil
+        }
     }
 
     func addPhotos(_ selections: [PhotosPickerItem]) async {
@@ -842,13 +907,9 @@ final class AppModel: ObservableObject {
             return
         }
         guard !isWorking else { return }
-        guard let expectedLibraryName = profile.expectedLibraryName else {
-            didLastSendFail = true
-            let message = EagleClientError.libraryNotPinned.localizedDescription
-            connectionTestStates[profile.id] = .unverified
-            connectionMessage = message
-            operationMessage = message
-            pendingUploadLibraryMismatch = nil
+        guard connectionTestState(for: profile).allowsUpload,
+              profile.hasPinnedLibrary,
+              let expectedLibraryName = profile.expectedLibraryName else {
             return
         }
 
@@ -858,6 +919,7 @@ final class AppModel: ObservableObject {
         isSending = true
         didLastSendFail = false
         operationMessage = nil
+        sendConnectionFailure = nil
         defer {
             isSending = false
             isWorking = false
@@ -901,12 +963,8 @@ final class AppModel: ObservableObject {
                 operationMessage = nil
                 return
             }
-            didLastSendFail = true
             let message = error.localizedDescription
-            pendingUploadLibraryMismatch = nil
-            connectionTestStates[profile.id] = .failed(message)
-            connectionMessage = message
-            operationMessage = message
+            applySendConnectionFailure(message, profileID: profile.id)
             return
         }
 
@@ -967,6 +1025,32 @@ final class AppModel: ObservableObject {
             failed: failed
         ) {
             await uploadNotifier.post(result)
+        }
+    }
+
+    private func applySendConnectionFailure(
+        _ message: String,
+        profileID: UUID
+    ) {
+        didLastSendFail = true
+        sendConnectionFailure = (profileID, message)
+        pendingUploadLibraryMismatch = nil
+        connectionTestStates[profileID] = .failed(message)
+        connectionMessage = message
+        operationMessage = message
+    }
+
+    private func clearSendConnectionFailure(for profileID: UUID) {
+        guard let failure = sendConnectionFailure,
+              failure.profileID == profileID else {
+            return
+        }
+        sendConnectionFailure = nil
+        if operationMessage == failure.message {
+            operationMessage = nil
+        }
+        if failedUploadCount == 0 {
+            didLastSendFail = false
         }
     }
 

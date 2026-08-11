@@ -1,2446 +1,2447 @@
 {
-  "sourceLanguage": "en",
-  "strings": {
-    "%@ - %@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "new",
-            "value": "%1$@ - %2$@"
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%@ - %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ - %2$@"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$@ - %2$@"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ - %2$@"
           }
         }
       }
     },
-    "%@ is not a supported photo, video, audio, or PDF.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "「%@」は対応していないファイル形式です。対応しているのは写真、ビデオ、音声、PDFです。"
+    "%@ is not a supported photo, video, audio, or PDF." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「%@」は対応していないファイル形式です。対応しているのは写真、ビデオ、音声、PDFです。"
           }
         }
       }
     },
-    "%@ item": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@件"
+    "%@ item" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@件"
           }
         }
       }
     },
-    "%@ items": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@件"
+    "%@ items" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@件"
           }
         }
       }
     },
-    "%@, %@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "new",
-            "value": "%1$@, %2$@"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$@、%2$@"
-          }
-        }
-      }
-    },
-    "%@, selected": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@、選択済み"
-          }
-        }
-      }
-    },
-    "%@, sent": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@、送信済み"
-          }
-        }
-      }
-    },
-    "%@: %@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "new",
-            "value": "%1$@: %2$@"
+    "%@, %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, %2$@"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$@：%2$@"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@、%2$@"
           }
         }
       }
     },
-    "%lld item couldn’t be sent. Open Eagle Inbox for details.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld件を送信できませんでした。詳細はEagle Inboxで確認してください。"
+    "%@, selected" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@、選択済み"
           }
         }
       }
     },
-    "%lld item was sent.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld件を送信しました。"
+    "%@, sent" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@、送信済み"
           }
         }
       }
     },
-    "%lld items couldn’t be sent. Open Eagle Inbox for details.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld件を送信できませんでした。詳細はEagle Inboxで確認してください。"
-          }
-        }
-      }
-    },
-    "%lld items were sent.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld件を送信しました。"
-          }
-        }
-      }
-    },
-    "%lld selected": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld件選択済み"
-          }
-        }
-      }
-    },
-    "%lld sent, %lld failed. Open Eagle Inbox for details.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "new",
-            "value": "%1$lld sent, %2$lld failed. Open Eagle Inbox for details."
+    "%@: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@: %2$@"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$lld件を送信し、%2$lld件は送信できませんでした。詳細はEagle Inboxで確認してください。"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@：%2$@"
           }
         }
       }
     },
-    "%lld tags": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld個のタグ"
+    "%lld item couldn’t be sent. Open Eagle Inbox for details." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld件を送信できませんでした。詳細はEagle Inboxで確認してください。"
           }
         }
       }
     },
-    "Add": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "追加"
+    "%lld item was sent." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld件を送信しました。"
           }
         }
       }
     },
-    "Add a connection first.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "先に接続先を追加してください。"
+    "%lld items couldn’t be sent. Open Eagle Inbox for details." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld件を送信できませんでした。詳細はEagle Inboxで確認してください。"
           }
         }
       }
     },
-    "Add an Eagle server to start uploading.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Eagleサーバーを追加してアップロードを開始してください。"
+    "%lld items were sent." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld件を送信しました。"
           }
         }
       }
     },
-    "Add an item before sending": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "送信する前に項目を追加してください"
+    "%lld selected" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld件選択済み"
           }
         }
       }
     },
-    "Add an item before uploading": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "アップロードする前に項目を追加してください"
-          }
-        }
-      }
-    },
-    "Add and select a connection before uploading.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "アップロードする前に接続先を追加して選択してください。"
-          }
-        }
-      }
-    },
-    "Add and select a connection first.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "先に接続先を追加して選択してください。"
-          }
-        }
-      }
-    },
-    "Add Connection": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "接続先を追加"
-          }
-        }
-      }
-    },
-    "Add Items": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "項目を追加"
-          }
-        }
-      }
-    },
-    "Add URL": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "URLを追加"
-          }
-        }
-      }
-    },
-    "Adding files…": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ファイルを追加中…"
-          }
-        }
-      }
-    },
-    "Adding items…": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "項目を追加中…"
-          }
-        }
-      }
-    },
-    "Address": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "アドレス"
-          }
-        }
-      }
-    },
-    "Adds this tag": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "このタグを追加します"
-          }
-        }
-      }
-    },
-    "All": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "すべて"
-          }
-        }
-      }
-    },
-    "Already Selected": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "選択済み"
-          }
-        }
-      }
-    },
-    "Annotation": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "注釈"
-          }
-        }
-      }
-    },
-    "API token": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "APIトークン"
-          }
-        }
-      }
-    },
-    "API token (optional)": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "APIトークン（任意）"
-          }
-        }
-      }
-    },
-    "Attachment": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "添付ファイル"
-          }
-        }
-      }
-    },
-    "Back to Connections": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "接続先一覧に戻る"
-          }
-        }
-      }
-    },
-    "Bookmark": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ブックマーク"
-          }
-        }
-      }
-    },
-    "Cancel": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "キャンセル"
-          }
-        }
-      }
-    },
-    "Cancel Connection Test": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "接続テストをキャンセル"
-          }
-        }
-      }
-    },
-    "Cancel Sending": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "送信をキャンセル"
-          }
-        }
-      }
-    },
-    "Cancels the current request and keeps unsent items": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "現在の送信をキャンセルし、未送信の項目を残します"
-          }
-        }
-      }
-    },
-    "Check the protocol, host, port, and API token.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "プロトコル、ホスト、ポート、APIトークンを確認してください。"
-          }
-        }
-      }
-    },
-    "Checks this Eagle connection": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "この接続先への接続をテストします"
-          }
-        }
-      }
-    },
-    "Choose a connection, then tap Select.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "接続先を選び、「選択」をタップしてください。"
-          }
-        }
-      }
-    },
-    "Choose at least one file to send.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "送信するファイルを1つ以上選択してください。"
-          }
-        }
-      }
-    },
-    "Choose Connection": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "接続先を選択"
-          }
-        }
-      }
-    },
-    "Choose no more than %lld file at a time.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "一度に選択できるファイルは%lld件までです。"
-          }
-        }
-      }
-    },
-    "Choose no more than %lld files at a time.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "一度に選択できるファイルは%lld件までです。"
-          }
-        }
-      }
-    },
-    "Choose no more than %lld URL at a time.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "一度に選択できるURLは%lld件までです。"
-          }
-        }
-      }
-    },
-    "Choose no more than %lld URLs at a time.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "一度に選択できるURLは%lld件までです。"
-          }
-        }
-      }
-    },
-    "Choose or add an Eagle connection": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Eagleの接続先を選択または追加してください"
-          }
-        }
-      }
-    },
-    "Choose or Add Connection": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "接続先を選択または追加"
-          }
-        }
-      }
-    },
-    "Choose Photos, Files, or URL": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "写真、ファイル、またはURLを選択します"
-          }
-        }
-      }
-    },
-    "Collapsed": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "折りたたみ済み"
-          }
-        }
-      }
-    },
-    "Configure this share extension’s connection before uploading.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "アップロードする前に、この共有機能の接続先を設定してください。"
-          }
-        }
-      }
-    },
-    "Connected": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "接続済み"
-          }
-        }
-      }
-    },
-    "Connection": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "接続情報"
-          }
-        }
-      }
-    },
-    "Connection name": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "接続先名"
-          }
-        }
-      }
-    },
-    "Connection Required": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "接続先が必要です"
-          }
-        }
-      }
-    },
-    "Connections": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "接続先"
-          }
-        }
-      }
-    },
-    "Could Not Load Attachment": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "添付ファイルを読み込めませんでした"
-          }
-        }
-      }
-    },
-    "Couldn’t connect to Eagle.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Eagleに接続できませんでした。"
-          }
-        }
-      }
-    },
-    "Couldn’t Send": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "送信できませんでした"
-          }
-        }
-      }
-    },
-    "Couldn’t Send to Eagle": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Eagleに送信できませんでした"
-          }
-        }
-      }
-    },
-    "Create “%@”": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "「%@」を作成"
-          }
-        }
-      }
-    },
-    "Create %lld tags": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld個のタグを作成"
-          }
-        }
-      }
-    },
-    "Creates and selects the entered tag": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "入力したタグを作成して選択します"
-          }
-        }
-      }
-    },
-    "Delete": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "削除"
-          }
-        }
-      }
-    },
-    "Destination": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "送信先"
-          }
-        }
-      }
-    },
-    "Discard Changes": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "変更を破棄"
-          }
-        }
-      }
-    },
-    "Discard Changes?": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "変更を破棄しますか？"
-          }
-        }
-      }
-    },
-    "Dismiss message": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "メッセージを閉じる"
-          }
-        }
-      }
-    },
-    "Dismiss Message": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "メッセージを閉じる"
-          }
-        }
-      }
-    },
-    "Done": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "完了"
-          }
-        }
-      }
-    },
-    "Eagle API error (%lld): %@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "new",
-            "value": "Eagle API error (%1$lld): %2$@"
+    "%lld sent, %lld failed. Open Eagle Inbox for details." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld sent, %2$lld failed. Open Eagle Inbox for details."
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Eagle APIエラー（%1$lld）：%2$@"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld件を送信し、%2$lld件は送信できませんでした。詳細はEagle Inboxで確認してください。"
           }
         }
       }
     },
-    "Eagle Inbox": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Eagle Inbox"
+    "%lld tags" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld個のタグ"
           }
         }
       }
     },
-    "Eagle returned an unreadable response.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Eagleから読み取れない応答が返されました。"
+    "Add" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "追加"
           }
         }
       }
     },
-    "Edit %@": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@を編集"
+    "Add a connection first." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "先に接続先を追加してください。"
           }
         }
       }
     },
-    "Edit Connection": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "接続先を編集"
+    "Add an Eagle server to start uploading." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eagleサーバーを追加してアップロードを開始してください。"
           }
         }
       }
     },
-    "Enter a valid HTTP or HTTPS URL.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "有効なHTTPまたはHTTPSのURLを入力してください。"
+    "Add an item before sending" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "送信する前に項目を追加してください"
           }
         }
       }
     },
-    "Expanded, 3 settings": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "展開済み、3項目の設定"
+    "Add an item before uploading" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アップロードする前に項目を追加してください"
           }
         }
       }
     },
-    "Expected “%@”, but “%@” is open.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "new",
-            "value": "Expected “%1$@”, but “%2$@” is open."
+    "Add and select a connection before uploading." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アップロードする前に接続先を追加して選択してください。"
+          }
+        }
+      }
+    },
+    "Add and select a connection first." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "先に接続先を追加して選択してください。"
+          }
+        }
+      }
+    },
+    "Add Connection" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続先を追加"
+          }
+        }
+      }
+    },
+    "Add Items" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "項目を追加"
+          }
+        }
+      }
+    },
+    "Add URL" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URLを追加"
+          }
+        }
+      }
+    },
+    "Adding files…" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ファイルを追加中…"
+          }
+        }
+      }
+    },
+    "Adding items…" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "項目を追加中…"
+          }
+        }
+      }
+    },
+    "Address" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アドレス"
+          }
+        }
+      }
+    },
+    "Adds this tag" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このタグを追加します"
+          }
+        }
+      }
+    },
+    "All" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "すべて"
+          }
+        }
+      }
+    },
+    "Already Selected" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選択済み"
+          }
+        }
+      }
+    },
+    "Annotation" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "注釈"
+          }
+        }
+      }
+    },
+    "API token" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "APIトークン"
+          }
+        }
+      }
+    },
+    "API token (optional)" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "APIトークン（任意）"
+          }
+        }
+      }
+    },
+    "Attachment" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添付ファイル"
+          }
+        }
+      }
+    },
+    "Back to Connections" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続先一覧に戻る"
+          }
+        }
+      }
+    },
+    "Bookmark" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ブックマーク"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キャンセル"
+          }
+        }
+      }
+    },
+    "Cancel Connection Test" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続テストをキャンセル"
+          }
+        }
+      }
+    },
+    "Cancel Sending" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "送信をキャンセル"
+          }
+        }
+      }
+    },
+    "Cancels the current request and keeps unsent items" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "現在の送信をキャンセルし、未送信の項目を残します"
+          }
+        }
+      }
+    },
+    "Check the protocol, host, port, and API token." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プロトコル、ホスト、ポート、APIトークンを確認してください。"
+          }
+        }
+      }
+    },
+    "Checks this Eagle connection" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "この接続先への接続をテストします"
+          }
+        }
+      }
+    },
+    "Choose a connection, then tap Select." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続先を選び、「選択」をタップしてください。"
+          }
+        }
+      }
+    },
+    "Choose at least one file to send." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "送信するファイルを1つ以上選択してください。"
+          }
+        }
+      }
+    },
+    "Choose Connection" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続先を選択"
+          }
+        }
+      }
+    },
+    "Choose no more than %lld file at a time." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一度に選択できるファイルは%lld件までです。"
+          }
+        }
+      }
+    },
+    "Choose no more than %lld files at a time." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一度に選択できるファイルは%lld件までです。"
+          }
+        }
+      }
+    },
+    "Choose no more than %lld URL at a time." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一度に選択できるURLは%lld件までです。"
+          }
+        }
+      }
+    },
+    "Choose no more than %lld URLs at a time." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一度に選択できるURLは%lld件までです。"
+          }
+        }
+      }
+    },
+    "Choose or add an Eagle connection" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eagleの接続先を選択または追加してください"
+          }
+        }
+      }
+    },
+    "Choose or Add Connection" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続先を選択または追加"
+          }
+        }
+      }
+    },
+    "Choose Photos, Files, or URL" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "写真、ファイル、またはURLを選択します"
+          }
+        }
+      }
+    },
+    "Collapsed" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "折りたたみ済み"
+          }
+        }
+      }
+    },
+    "Configure this share extension’s connection before uploading." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アップロードする前に、この共有機能の接続先を設定してください。"
+          }
+        }
+      }
+    },
+    "Connected" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続済み"
+          }
+        }
+      }
+    },
+    "Connection" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続情報"
+          }
+        }
+      }
+    },
+    "Connection name" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続先名"
+          }
+        }
+      }
+    },
+    "Connection Required" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続先が必要です"
+          }
+        }
+      }
+    },
+    "Connections" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続先"
+          }
+        }
+      }
+    },
+    "Could Not Load Attachment" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添付ファイルを読み込めませんでした"
+          }
+        }
+      }
+    },
+    "Couldn’t connect to Eagle." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eagleに接続できませんでした。"
+          }
+        }
+      }
+    },
+    "Couldn’t Send" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "送信できませんでした"
+          }
+        }
+      }
+    },
+    "Couldn’t Send to Eagle" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eagleに送信できませんでした"
+          }
+        }
+      }
+    },
+    "Create “%@”" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「%@」を作成"
+          }
+        }
+      }
+    },
+    "Create %lld tags" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld個のタグを作成"
+          }
+        }
+      }
+    },
+    "Creates and selects the entered tag" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "入力したタグを作成して選択します"
+          }
+        }
+      }
+    },
+    "Delete" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "削除"
+          }
+        }
+      }
+    },
+    "Destination" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "送信先"
+          }
+        }
+      }
+    },
+    "Discard Changes" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "変更を破棄"
+          }
+        }
+      }
+    },
+    "Discard Changes?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "変更を破棄しますか？"
+          }
+        }
+      }
+    },
+    "Dismiss message" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メッセージを閉じる"
+          }
+        }
+      }
+    },
+    "Dismiss Message" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メッセージを閉じる"
+          }
+        }
+      }
+    },
+    "Done" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完了"
+          }
+        }
+      }
+    },
+    "Eagle API error (%lld): %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Eagle API error (%1$lld): %2$@"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "設定されているライブラリは「%1$@」ですが、現在は「%2$@」が開いています。"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eagle APIエラー（%1$lld）：%2$@"
           }
         }
       }
     },
-    "Failed": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "失敗"
+    "Eagle Inbox" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eagle Inbox"
           }
         }
       }
     },
-    "Failed: %@": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "失敗：%@"
+    "Eagle returned an unreadable response." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eagleから読み取れない応答が返されました。"
           }
         }
       }
     },
-    "File name": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ファイル名"
+    "Edit %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@を編集"
           }
         }
       }
     },
-    "Files": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ファイル"
+    "Edit Connection" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続先を編集"
           }
         }
       }
     },
-    "Files are being added to the upload queue": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ファイルを送信リストに追加しています"
+    "Enter a valid HTTP or HTTPS URL." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有効なHTTPまたはHTTPSのURLを入力してください。"
           }
         }
       }
     },
-    "Find the API token in Eagle → Settings → Developer.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "APIトークンは、Eagleの「設定」→「開発者」で確認できます。"
+    "Expanded, 3 settings" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "展開済み、3項目の設定"
           }
         }
       }
     },
-    "Finishing…": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "完了処理中…"
-          }
-        }
-      }
-    },
-    "Folders": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "フォルダ"
-          }
-        }
-      }
-    },
-    "Folders, annotation, and tags": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "フォルダ、注釈、タグ"
-          }
-        }
-      }
-    },
-    "Hide API token": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "APIトークンを非表示"
-          }
-        }
-      }
-    },
-    "Hides folders, annotation, and tags": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "フォルダ、注釈、タグを非表示にします"
-          }
-        }
-      }
-    },
-    "Host or IP address": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ホスト名またはIPアドレス"
-          }
-        }
-      }
-    },
-    "HTTPS is not the default protocol used by the Eagle desktop API.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "HTTPSはEagleデスクトップAPIのデフォルトプロトコルではありません。"
-          }
-        }
-      }
-    },
-    "Items are being added to the upload queue": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "項目を送信リストに追加しています"
-          }
-        }
-      }
-    },
-    "Keep Editing": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "編集を続ける"
-          }
-        }
-      }
-    },
-    "Library": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ライブラリ"
-          }
-        }
-      }
-    },
-    "Library Mismatch": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ライブラリが一致しません"
-          }
-        }
-      }
-    },
-    "Library mismatch.\nExpected “%@”, but “%@” is open.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "new",
-            "value": "Library mismatch.\nExpected “%1$@”, but “%2$@” is open."
+    "Expected “%@”, but “%@” is open." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Expected “%1$@”, but “%2$@” is open."
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ライブラリが一致しません。\n設定されているライブラリは「%1$@」ですが、現在は「%2$@」が開いています。"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定されているライブラリは「%1$@」ですが、現在は「%2$@」が開いています。"
           }
         }
       }
     },
-    "Loading folders…": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "フォルダを読み込み中…"
+    "Failed" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "失敗"
           }
         }
       }
     },
-    "Loading shared items…": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "共有項目を読み込み中…"
+    "Failed: %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "失敗：%@"
           }
         }
       }
     },
-    "Loading tags…": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "タグを読み込み中…"
+    "File name" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ファイル名"
           }
         }
       }
     },
-    "Metadata": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "メタデータ"
+    "Files" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ファイル"
           }
         }
       }
     },
-    "Metadata setting. Opens folder selection.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "メタデータ設定。フォルダの選択画面を開きます。"
+    "Files are being added to the upload queue" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ファイルを送信リストに追加しています"
           }
         }
       }
     },
-    "Metadata setting. Opens tag selection.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "メタデータ設定。タグの選択画面を開きます。"
+    "Find the API token in Eagle → Settings → Developer." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "APIトークンは、Eagleの「設定」→「開発者」で確認できます。"
           }
         }
       }
     },
-    "Metadata setting. Supports multiple lines.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "メタデータ設定。複数行入力できます。"
+    "Finishing…" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完了処理中…"
           }
         }
       }
     },
-    "My Eagle": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "マイEagle"
+    "Folders" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フォルダ"
           }
         }
       }
     },
-    "New Connection": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "新しい接続先"
+    "Folders, annotation, and tags" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フォルダ、注釈、タグ"
           }
         }
       }
     },
-    "New Tag": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "新しいタグ"
+    "Hide API token" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "APIトークンを非表示"
           }
         }
       }
     },
-    "No Connections": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "接続先がありません"
+    "Hides folders, annotation, and tags" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フォルダ、注釈、タグを非表示にします"
           }
         }
       }
     },
-    "No Folders Available": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "利用できるフォルダがありません"
+    "Host or IP address" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ホスト名またはIPアドレス"
           }
         }
       }
     },
-    "No folders were found in this Eagle library.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "このEagleライブラリにフォルダが見つかりませんでした。"
+    "HTTPS is not the default protocol used by the Eagle desktop API." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HTTPSはEagleデスクトップAPIのデフォルトプロトコルではありません。"
           }
         }
       }
     },
-    "No items yet": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "項目はまだありません"
+    "Items are being added to the upload queue" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "項目を送信リストに追加しています"
           }
         }
       }
     },
-    "No supported file or URL was shared.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "対応しているファイルまたはURLが共有されていません。"
+    "Keep Editing" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "編集を続ける"
           }
         }
       }
     },
-    "No supported files found in %@.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "「%@」に対応しているファイルが見つかりませんでした。"
+    "Library" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ライブラリ"
           }
         }
       }
     },
-    "No Tags Yet": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "タグがまだありません"
+    "Library Mismatch" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ライブラリが一致しません"
           }
         }
       }
     },
-    "None": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "なし"
-          }
-        }
-      }
-    },
-    "Not selected": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "未選択"
-          }
-        }
-      }
-    },
-    "Not verified": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "未確認"
-          }
-        }
-      }
-    },
-    "Open %@ in Eagle and try again. %@ is currently open.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "new",
-            "value": "Open %1$@ in Eagle and try again. %2$@ is currently open."
+    "Library mismatch.\nExpected “%@”, but “%@” is open." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Library mismatch.\nExpected “%1$@”, but “%2$@” is open."
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Eagleで「%1$@」を開いてから再試行してください。現在は「%2$@」が開いています。"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ライブラリが一致しません。\n設定されているライブラリは「%1$@」ですが、現在は「%2$@」が開いています。"
           }
         }
       }
     },
-    "Open Eagle Inbox and add or select a connection first.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Eagle Inboxを開き、先に接続先を追加または選択してください。"
+    "Loading folders…" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フォルダを読み込み中…"
           }
         }
       }
     },
-    "Optional": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "任意"
+    "Loading shared items…" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "共有項目を読み込み中…"
           }
         }
       }
     },
-    "Paste a URL": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "URLをペースト"
+    "Loading tags…" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "タグを読み込み中…"
           }
         }
       }
     },
-    "Photo": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "写真"
+    "Metadata" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メタデータ"
           }
         }
       }
     },
-    "Photos": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "写真"
+    "Metadata setting. Opens folder selection." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メタデータ設定。フォルダの選択画面を開きます。"
           }
         }
       }
     },
-    "Port": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ポート"
+    "Metadata setting. Opens tag selection." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メタデータ設定。タグの選択画面を開きます。"
           }
         }
       }
     },
-    "Preparing upload": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "アップロードを準備中"
+    "Metadata setting. Supports multiple lines." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メタデータ設定。複数行入力できます。"
           }
         }
       }
     },
-    "Preparing upload…": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "アップロードを準備中…"
+    "My Eagle" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "マイEagle"
           }
         }
       }
     },
-    "Protocol": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "プロトコル"
+    "New Connection" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新しい接続先"
           }
         }
       }
     },
-    "Provide at least one tag.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "タグを1つ以上指定してください。"
+    "New Tag" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新しいタグ"
           }
         }
       }
     },
-    "Provide at least one valid HTTP or HTTPS URL.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "有効なHTTPまたはHTTPSのURLを1つ以上入力してください。"
+    "No Connections" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続先がありません"
           }
         }
       }
     },
-    "Recent": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "最近使ったもの"
+    "No Folders Available" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "利用できるフォルダがありません"
           }
         }
       }
     },
-    "Remove %@": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@を削除"
+    "No folders were found in this Eagle library." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このEagleライブラリにフォルダが見つかりませんでした。"
           }
         }
       }
     },
-    "Removes this tag": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "このタグを削除します"
+    "No items yet" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "項目はまだありません"
           }
         }
       }
     },
-    "Save": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "保存"
+    "No supported file or URL was shared." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "対応しているファイルまたはURLが共有されていません。"
           }
         }
       }
     },
-    "Saved Connections": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "保存済みの接続先"
+    "No supported files found in %@." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「%@」に対応しているファイルが見つかりませんでした。"
           }
         }
       }
     },
-    "Saves web URLs as bookmarks in the selected Eagle connection.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Web URLを選択したEagleの接続先にブックマークとして保存します。"
+    "No Tags Yet" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "タグがまだありません"
           }
         }
       }
     },
-    "Saves web URLs as tagged bookmarks in the selected Eagle connection.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Web URLをタグ付きブックマークとして、選択したEagleの接続先に保存します。"
+    "None" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "なし"
           }
         }
       }
     },
-    "Search folders": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "フォルダを検索"
+    "Not selected" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未選択"
           }
         }
       }
     },
-    "Search or create a tag": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "タグを検索または作成"
+    "Not verified" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未確認"
           }
         }
       }
     },
-    "Search to create your first tag.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "検索欄に入力して最初のタグを作成できます。"
-          }
-        }
-      }
-    },
-    "Select": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "選択"
-          }
-        }
-      }
-    },
-    "Select %@": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@を選択"
-          }
-        }
-      }
-    },
-    "Select a connection before sending": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "送信する前に接続先を選択してください"
-          }
-        }
-      }
-    },
-    "Select a connection before uploading": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "アップロードする前に接続先を選択してください"
-          }
-        }
-      }
-    },
-    "Selected": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "選択済み"
-          }
-        }
-      }
-    },
-    "Send": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "送信"
-          }
-        }
-      }
-    },
-    "Send ${files} to Eagle": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "${files}をEagleに送信"
-          }
-        }
-      }
-    },
-    "Send ${files} to Eagle with ${tags}": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "${files}を${tags}付きでEagleに送信"
-          }
-        }
-      }
-    },
-    "Send ${urls} to Eagle": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "${urls}をEagleに送信"
-          }
-        }
-      }
-    },
-    "Send ${urls} to Eagle with ${tags}": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "${urls}を${tags}付きでEagleに送信"
-          }
-        }
-      }
-    },
-    "Send Files": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ファイルを送信"
-          }
-        }
-      }
-    },
-    "Send Files to Eagle": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ファイルをEagleに送信"
-          }
-        }
-      }
-    },
-    "Send Files to Eagle with Tags": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "タグ付きでファイルをEagleに送信"
-          }
-        }
-      }
-    },
-    "Send Files with Tags": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "タグ付きファイルを送信"
-          }
-        }
-      }
-    },
-    "Send to Eagle": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Eagleに送信"
-          }
-        }
-      }
-    },
-    "Send URLs": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "URLを送信"
-          }
-        }
-      }
-    },
-    "Send URLs to Eagle": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "URLをEagleに送信"
-          }
-        }
-      }
-    },
-    "Send URLs to Eagle with Tags": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "タグ付きでURLをEagleに送信"
-          }
-        }
-      }
-    },
-    "Send URLs with Tags": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "タグ付きURLを送信"
-          }
-        }
-      }
-    },
-    "Sending items to Eagle": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "項目をEagleに送信中"
-          }
-        }
-      }
-    },
-    "Sending was canceled. Check Eagle before retrying.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "送信をキャンセルしました。再試行する前に、Eagleで送信結果を確認してください。"
-          }
-        }
-      }
-    },
-    "Sending…": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "送信中…"
-          }
-        }
-      }
-    },
-    "Sends all pending items to Eagle": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "未送信の項目をすべてEagleに送信します"
-          }
-        }
-      }
-    },
-    "Sends photos, videos, audio, and PDFs to the selected Eagle connection.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "写真、ビデオ、音声、PDFを選択したEagleの接続先に送信します。"
-          }
-        }
-      }
-    },
-    "Sends photos, videos, audio, and PDFs with tags to the selected Eagle connection.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "写真、ビデオ、音声、PDFにタグを付けて、選択したEagleの接続先に送信します。"
-          }
-        }
-      }
-    },
-    "Sent %lld item to %@.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "new",
-            "value": "Sent %1$lld item to %2$@."
+    "Open %@ in Eagle and try again. %@ is currently open." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Open %1$@ in Eagle and try again. %2$@ is currently open."
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$lld件を%2$@に送信しました。"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eagleで「%1$@」を開いてから再試行してください。現在は「%2$@」が開いています。"
           }
         }
       }
     },
-    "Sent %lld items to %@.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "new",
-            "value": "Sent %1$lld items to %2$@."
+    "Open Eagle Inbox and add or select a connection first." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eagle Inboxを開き、先に接続先を追加または選択してください。"
+          }
+        }
+      }
+    },
+    "Optional" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "任意"
+          }
+        }
+      }
+    },
+    "Paste a URL" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URLをペースト"
+          }
+        }
+      }
+    },
+    "Photo" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "写真"
+          }
+        }
+      }
+    },
+    "Photos" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "写真"
+          }
+        }
+      }
+    },
+    "Port" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ポート"
+          }
+        }
+      }
+    },
+    "Preparing upload" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アップロードを準備中"
+          }
+        }
+      }
+    },
+    "Preparing upload…" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アップロードを準備中…"
+          }
+        }
+      }
+    },
+    "Protocol" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プロトコル"
+          }
+        }
+      }
+    },
+    "Provide at least one tag." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "タグを1つ以上指定してください。"
+          }
+        }
+      }
+    },
+    "Provide at least one valid HTTP or HTTPS URL." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有効なHTTPまたはHTTPSのURLを1つ以上入力してください。"
+          }
+        }
+      }
+    },
+    "Recent" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最近使ったもの"
+          }
+        }
+      }
+    },
+    "Remove %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@を削除"
+          }
+        }
+      }
+    },
+    "Removes this tag" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このタグを削除します"
+          }
+        }
+      }
+    },
+    "Save" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存"
+          }
+        }
+      }
+    },
+    "Saved Connections" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存済みの接続先"
+          }
+        }
+      }
+    },
+    "Saves web URLs as bookmarks in the selected Eagle connection." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Web URLを選択したEagleの接続先にブックマークとして保存します。"
+          }
+        }
+      }
+    },
+    "Saves web URLs as tagged bookmarks in the selected Eagle connection." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Web URLをタグ付きブックマークとして、選択したEagleの接続先に保存します。"
+          }
+        }
+      }
+    },
+    "Search folders" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フォルダを検索"
+          }
+        }
+      }
+    },
+    "Search or create a tag" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "タグを検索または作成"
+          }
+        }
+      }
+    },
+    "Search to create your first tag." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "検索欄に入力して最初のタグを作成できます。"
+          }
+        }
+      }
+    },
+    "Select" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選択"
+          }
+        }
+      }
+    },
+    "Select %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@を選択"
+          }
+        }
+      }
+    },
+    "Select a connection before sending" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "送信する前に接続先を選択してください"
+          }
+        }
+      }
+    },
+    "Select a connection before uploading" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アップロードする前に接続先を選択してください"
+          }
+        }
+      }
+    },
+    "Selected" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選択済み"
+          }
+        }
+      }
+    },
+    "Send" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "送信"
+          }
+        }
+      }
+    },
+    "Send ${files} to Eagle" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "${files}をEagleに送信"
+          }
+        }
+      }
+    },
+    "Send ${files} to Eagle with ${tags}" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "${files}を${tags}付きでEagleに送信"
+          }
+        }
+      }
+    },
+    "Send ${urls} to Eagle" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "${urls}をEagleに送信"
+          }
+        }
+      }
+    },
+    "Send ${urls} to Eagle with ${tags}" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "${urls}を${tags}付きでEagleに送信"
+          }
+        }
+      }
+    },
+    "Send Files" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ファイルを送信"
+          }
+        }
+      }
+    },
+    "Send Files to Eagle" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ファイルをEagleに送信"
+          }
+        }
+      }
+    },
+    "Send Files to Eagle with Tags" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "タグ付きでファイルをEagleに送信"
+          }
+        }
+      }
+    },
+    "Send Files with Tags" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "タグ付きファイルを送信"
+          }
+        }
+      }
+    },
+    "Send to Eagle" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eagleに送信"
+          }
+        }
+      }
+    },
+    "Send URLs" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URLを送信"
+          }
+        }
+      }
+    },
+    "Send URLs to Eagle" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URLをEagleに送信"
+          }
+        }
+      }
+    },
+    "Send URLs to Eagle with Tags" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "タグ付きでURLをEagleに送信"
+          }
+        }
+      }
+    },
+    "Send URLs with Tags" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "タグ付きURLを送信"
+          }
+        }
+      }
+    },
+    "Sending items to Eagle" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "項目をEagleに送信中"
+          }
+        }
+      }
+    },
+    "Sending was canceled. Check Eagle before retrying." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "送信をキャンセルしました。再試行する前に、Eagleで送信結果を確認してください。"
+          }
+        }
+      }
+    },
+    "Sending…" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "送信中…"
+          }
+        }
+      }
+    },
+    "Sends all pending items to Eagle" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未送信の項目をすべてEagleに送信します"
+          }
+        }
+      }
+    },
+    "Sends photos, videos, audio, and PDFs to the selected Eagle connection." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "写真、ビデオ、音声、PDFを選択したEagleの接続先に送信します。"
+          }
+        }
+      }
+    },
+    "Sends photos, videos, audio, and PDFs with tags to the selected Eagle connection." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "写真、ビデオ、音声、PDFにタグを付けて、選択したEagleの接続先に送信します。"
+          }
+        }
+      }
+    },
+    "Sent %lld item to %@." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Sent %1$lld item to %2$@."
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$lld件を%2$@に送信しました。"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld件を%2$@に送信しました。"
           }
         }
       }
     },
-    "Sent %lld of %lld item. %lld failed. %@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "new",
-            "value": "Sent %1$lld of %2$lld item. %3$lld failed. %4$@"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "全%2$lld件中%1$lld件を送信しました。%3$lld件は送信できませんでした。%4$@"
-          }
-        }
-      }
-    },
-    "Sent %lld of %lld items. %lld failed. %@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "new",
-            "value": "Sent %1$lld of %2$lld items. %3$lld failed. %4$@"
+    "Sent %lld items to %@." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Sent %1$lld items to %2$@."
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "全%2$lld件中%1$lld件を送信しました。%3$lld件は送信できませんでした。%4$@"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld件を%2$@に送信しました。"
           }
         }
       }
     },
-    "Sent %lld URL to %@.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "new",
-            "value": "Sent %1$lld URL to %2$@."
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$lld件のURLを%2$@に送信しました。"
-          }
-        }
-      }
-    },
-    "Sent %lld URLs to %@.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "new",
-            "value": "Sent %1$lld URLs to %2$@."
+    "Sent %lld of %lld item. %lld failed. %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Sent %1$lld of %2$lld item. %3$lld failed. %4$@"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$lld件のURLを%2$@に送信しました。"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全%2$lld件中%1$lld件を送信しました。%3$lld件は送信できませんでした。%4$@"
           }
         }
       }
     },
-    "Sent to Eagle": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Eagleに送信しました"
-          }
-        }
-      }
-    },
-    "Server": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "サーバー"
-          }
-        }
-      }
-    },
-    "Show API token": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "APIトークンを表示"
-          }
-        }
-      }
-    },
-    "Shows folders, annotation, and tags": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "フォルダ、注釈、タグを表示します"
-          }
-        }
-      }
-    },
-    "Split ${text} into Tags": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "${text}をタグに分割"
-          }
-        }
-      }
-    },
-    "Split Text into Tags": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "テキストをタグに分割"
-          }
-        }
-      }
-    },
-    "Splits text into tag names using commas and new lines.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "テキストをカンマと改行でタグ名に分割します。"
-          }
-        }
-      }
-    },
-    "Some Items Couldn’t Send": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "一部の項目を送信できませんでした"
-          }
-        }
-      }
-    },
-    "Status": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "状態"
-          }
-        }
-      }
-    },
-    "Stops the connection test": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "接続テストを停止します"
-          }
-        }
-      }
-    },
-    "Suggestions": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "候補"
-          }
-        }
-      }
-    },
-    "Tags": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "タグ"
-          }
-        }
-      }
-    },
-    "Tap Done to close.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "「完了」をタップして閉じてください。"
-          }
-        }
-      }
-    },
-    "Tap Select to confirm this connection.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "この接続先を確定するには、「選択」をタップします。"
-          }
-        }
-      }
-    },
-    "Test Connection": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "接続をテスト"
-          }
-        }
-      }
-    },
-    "Test this connection and save it before uploading.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "アップロードする前に、この接続先をテストして保存してください。"
-          }
-        }
-      }
-    },
-    "Testing": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "確認中"
-          }
-        }
-      }
-    },
-    "Testing %@": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@を確認中"
-          }
-        }
-      }
-    },
-    "Testing connection": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "接続を確認中"
-          }
-        }
-      }
-    },
-    "Text": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "テキスト"
-          }
-        }
-      }
-    },
-    "The API token could not be saved to Keychain (%d).": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "APIトークンをKeychainに保存できませんでした（%d）。"
-          }
-        }
-      }
-    },
-    "The connection changed while it was being verified. Try again.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "確認中に接続先が変更されました。再試行してください。"
-          }
-        }
-      }
-    },
-    "The connection result could not be saved.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "接続テストの結果を保存できませんでした。"
-          }
-        }
-      }
-    },
-    "The current Eagle library has no folders.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "現在のEagleライブラリにはフォルダがありません。"
-          }
-        }
-      }
-    },
-    "The item could not be sent.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "項目を送信できませんでした。"
-          }
-        }
-      }
-    },
-    "The photos, videos, audio, or PDFs to send.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "送信する写真、ビデオ、音声、PDFです。"
-          }
-        }
-      }
-    },
-    "The tags to apply to every sent item.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "送信するすべての項目に適用するタグです。"
-          }
-        }
-      }
-    },
-    "The text to split into tag names.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "タグ名に分割するテキストです。"
-          }
-        }
-      }
-    },
-    "The temporary upload body could not be created.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "一時的なアップロードデータを作成できませんでした。"
-          }
-        }
-      }
-    },
-    "The web URLs to save as Eagle bookmarks.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Eagleのブックマークとして保存するWeb URLです。"
-          }
-        }
-      }
-    },
-    "This bookmark is already in the queue.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "このブックマークはすでに送信リストにあります。"
-          }
-        }
-      }
-    },
-    "This connection is saved for “%@”, but “%@” is open.\n\nUpdate it to use “%@”?": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "new",
-            "value": "This connection is saved for “%1$@”, but “%2$@” is open.\n\nUpdate it to use “%3$@”?"
+    "Sent %lld of %lld items. %lld failed. %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Sent %1$lld of %2$lld items. %3$lld failed. %4$@"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "この接続先は「%1$@」用として保存されていますが、現在「%2$@」が開いています。\n\nこの接続先で使用するライブラリを「%3$@」に更新しますか？"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全%2$lld件中%1$lld件を送信しました。%3$lld件は送信できませんでした。%4$@"
           }
         }
       }
     },
-    "This connection was changed elsewhere. Reopen it and test again.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "この接続先の設定はほかで変更されました。開き直して、もう一度テストしてください。"
+    "Sent %lld URL to %@." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Sent %1$lld URL to %2$@."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld件のURLを%2$@に送信しました。"
           }
         }
       }
     },
-    "This connection was changed elsewhere. Reopen it and try again.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "この接続先の設定はほかで変更されました。開き直して、もう一度お試しください。"
+    "Sent %lld URLs to %@." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Sent %1$lld URLs to %2$@."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld件のURLを%2$@に送信しました。"
           }
         }
       }
     },
-    "Try Again": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "再試行"
+    "Sent to Eagle" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eagleに送信しました"
           }
         }
       }
     },
-    "Try sending the failed items again": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "送信できなかった項目を再送信します"
+    "Server" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サーバー"
           }
         }
       }
     },
-    "Ungrouped": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "グループなし"
+    "Show API token" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "APIトークンを表示"
           }
         }
       }
     },
-    "Untitled": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "名称未設定"
+    "Shows folders, annotation, and tags" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フォルダ、注釈、タグを表示します"
           }
         }
       }
     },
-    "Untitled Connection": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "名称未設定の接続先"
+    "Some Items Couldn’t Send" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一部の項目を送信できませんでした"
           }
         }
       }
     },
-    "Update Connection Library?": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "接続先のライブラリを更新しますか？"
+    "Split ${text} into Tags" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "${text}をタグに分割"
           }
         }
       }
     },
-    "Update Saved Library?": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "保存済みのライブラリを更新しますか？"
+    "Split Text into Tags" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "テキストをタグに分割"
           }
         }
       }
     },
-    "Update to “%@”": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "「%@」に更新"
+    "Splits text into tag names using commas and new lines." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "テキストをカンマと改行でタグ名に分割します。"
           }
         }
       }
     },
-    "Upload progress": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "アップロードの進行状況"
+    "Status" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "状態"
           }
         }
       }
     },
-    "Upload Queue": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "送信リスト"
+    "Stops the connection test" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続テストを停止します"
           }
         }
       }
     },
-    "Uploading · %lld%%": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "アップロード中 · %lld%%"
+    "Suggestions" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "候補"
           }
         }
       }
     },
-    "Uploads all pending items": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "未送信の項目をすべて送信します"
+    "Tags" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "タグ"
           }
         }
       }
     },
-    "URL": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "URL"
+    "Tap Done to close." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「完了」をタップして閉じてください。"
           }
         }
       }
     },
-    "URL error: %@": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "URLエラー：%@"
+    "Tap Select to confirm this connection." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "この接続先を確定するには、「選択」をタップします。"
           }
         }
       }
     },
-    "URLs": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "URL"
+    "Test Connection" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続をテスト"
           }
         }
       }
     },
-    "Use + to add items.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "＋ボタンで項目を追加してください。"
+    "Test this connection and save it before uploading." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アップロードする前に、この接続先をテストして保存してください。"
           }
         }
       }
     },
-    "Use Add Items to add content.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "「項目を追加」からコンテンツを追加してください。"
+    "Testing" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "確認中"
           }
         }
       }
     },
-    "Use HTTPS": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "HTTPSを使用"
+    "Testing %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@を確認中"
           }
         }
       }
     },
-    "Use HTTPS?": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "HTTPSを使用しますか？"
+    "Testing connection" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続を確認中"
           }
         }
       }
     },
-    "Verified": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "確認済み"
+    "Text" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "テキスト"
           }
         }
       }
     },
-    "Wait for the connection test to finish": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "接続テストが完了するまでお待ちください"
+    "The API token could not be saved to Keychain (%d)." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "APIトークンをKeychainに保存できませんでした（%d）。"
           }
         }
       }
     },
-    "Wait for the current operation to finish": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "現在の処理が完了するまでお待ちください"
+    "The connection changed while it was being verified. Try again." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "確認中に接続先が変更されました。再試行してください。"
           }
         }
       }
     },
-    "Warning: %@": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "警告：%@"
+    "The connection result could not be saved." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続テストの結果を保存できませんでした。"
           }
         }
       }
     },
-    "Web Bookmark URL": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "WebブックマークのURL"
+    "The current Eagle library has no folders." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "現在のEagleライブラリにはフォルダがありません。"
           }
         }
       }
     },
-    "Which files do you want to send?": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "送信するファイルを選択してください"
+    "The item could not be sent." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "項目を送信できませんでした。"
           }
         }
       }
     },
-    "Which URLs do you want to send?": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "送信するURLを選択してください"
+    "The photos, videos, audio, or PDFs to send." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "送信する写真、ビデオ、音声、PDFです。"
           }
         }
       }
     },
-    "Which text do you want to split into tags?": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "どのテキストをタグに分割しますか？"
+    "The tags to apply to every sent item." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "送信するすべての項目に適用するタグです。"
           }
         }
       }
     },
-    "Your changes will not be saved.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "変更内容は保存されません。"
+    "The temporary upload body could not be created." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一時的なアップロードデータを作成できませんでした。"
+          }
+        }
+      }
+    },
+    "The text to split into tag names." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "タグ名に分割するテキストです。"
+          }
+        }
+      }
+    },
+    "The web URLs to save as Eagle bookmarks." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eagleのブックマークとして保存するWeb URLです。"
+          }
+        }
+      }
+    },
+    "This bookmark is already in the queue." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このブックマークはすでに送信リストにあります。"
+          }
+        }
+      }
+    },
+    "This connection is saved for “%@”, but “%@” is open.\n\nUpdate it to use “%@”?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This connection is saved for “%1$@”, but “%2$@” is open.\n\nUpdate it to use “%3$@”?"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "この接続先は「%1$@」用として保存されていますが、現在「%2$@」が開いています。\n\nこの接続先で使用するライブラリを「%3$@」に更新しますか？"
+          }
+        }
+      }
+    },
+    "This connection was changed elsewhere. Reopen it and test again." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "この接続先の設定はほかで変更されました。開き直して、もう一度テストしてください。"
+          }
+        }
+      }
+    },
+    "This connection was changed elsewhere. Reopen it and try again." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "この接続先の設定はほかで変更されました。開き直して、もう一度お試しください。"
+          }
+        }
+      }
+    },
+    "Try Again" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "再試行"
+          }
+        }
+      }
+    },
+    "Try sending the failed items again" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "送信できなかった項目を再送信します"
+          }
+        }
+      }
+    },
+    "Ungrouped" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "グループなし"
+          }
+        }
+      }
+    },
+    "Untitled" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "名称未設定"
+          }
+        }
+      }
+    },
+    "Untitled Connection" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "名称未設定の接続先"
+          }
+        }
+      }
+    },
+    "Update Connection Library?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続先のライブラリを更新しますか？"
+          }
+        }
+      }
+    },
+    "Update Saved Library?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存済みのライブラリを更新しますか？"
+          }
+        }
+      }
+    },
+    "Update to “%@”" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「%@」に更新"
+          }
+        }
+      }
+    },
+    "Upload progress" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アップロードの進行状況"
+          }
+        }
+      }
+    },
+    "Upload Queue" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "送信リスト"
+          }
+        }
+      }
+    },
+    "Uploading · %lld%%" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アップロード中 · %lld%%"
+          }
+        }
+      }
+    },
+    "Uploads all pending items" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未送信の項目をすべて送信します"
+          }
+        }
+      }
+    },
+    "URL" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL"
+          }
+        }
+      }
+    },
+    "URL error: %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URLエラー：%@"
+          }
+        }
+      }
+    },
+    "URLs" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL"
+          }
+        }
+      }
+    },
+    "Use + to add items." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "＋ボタンで項目を追加してください。"
+          }
+        }
+      }
+    },
+    "Use Add Items to add content." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「項目を追加」からコンテンツを追加してください。"
+          }
+        }
+      }
+    },
+    "Use HTTPS" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HTTPSを使用"
+          }
+        }
+      }
+    },
+    "Use HTTPS?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HTTPSを使用しますか？"
+          }
+        }
+      }
+    },
+    "Verified" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "確認済み"
+          }
+        }
+      }
+    },
+    "Wait for the connection test to finish" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続テストが完了するまでお待ちください"
+          }
+        }
+      }
+    },
+    "Wait for the current operation to finish" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "現在の処理が完了するまでお待ちください"
+          }
+        }
+      }
+    },
+    "Warning: %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "警告：%@"
+          }
+        }
+      }
+    },
+    "Web Bookmark URL" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WebブックマークのURL"
+          }
+        }
+      }
+    },
+    "Which files do you want to send?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "送信するファイルを選択してください"
+          }
+        }
+      }
+    },
+    "Which text do you want to split into tags?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "どのテキストをタグに分割しますか？"
+          }
+        }
+      }
+    },
+    "Which URLs do you want to send?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "送信するURLを選択してください"
+          }
+        }
+      }
+    },
+    "Your changes will not be saved." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "変更内容は保存されません。"
           }
         }
       }
     }
   },
-  "version": "1.1"
+  "version" : "1.1"
 }

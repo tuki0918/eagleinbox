@@ -1,3 +1,4 @@
+import Foundation
 import PhotosUI
 import SwiftUI
 #if canImport(UIKit)
@@ -17,7 +18,6 @@ private enum ShareUploadFocusedInput: Hashable {
 }
 
 struct ShareUploadView: View {
-    @Environment(\.scenePhase) private var scenePhase
     @ObservedObject var model: ShareUploadViewModel
     @AppStorage("share.metadata-expanded") private var isMetadataExpanded = false
     @State private var isManagingConnections = false
@@ -30,8 +30,8 @@ struct ShareUploadView: View {
     @State private var isBookmarkSheetPresented = false
     @State private var bookmarkValidationMessage: String?
     @State private var photoSelection: [PhotosPickerItem] = []
-    @State private var hasLoadedInitialItems = false
     @State private var needsActivationRefresh = false
+    @State private var extensionHostDidResignActive = false
     @State private var uploadTask: Task<Void, Never>?
     @State private var photoImportTask: Task<Void, Never>?
     @FocusState private var isBookmarkURLFocused: Bool
@@ -78,36 +78,41 @@ struct ShareUploadView: View {
                     }
                 }
                 .task {
+                    requestActivationRefresh()
                     await model.load()
-                    guard !Task.isCancelled else { return }
-                    hasLoadedInitialItems = true
-                    if scenePhase == .active {
-                        needsActivationRefresh = true
-                        await performPendingActivationRefresh()
-                    }
                 }
-                .onChange(of: scenePhase) { oldValue, newValue in
-                    guard oldValue != newValue else { return }
-                    guard newValue == .active else {
-                        needsActivationRefresh = false
-                        return
-                    }
-                    needsActivationRefresh = true
-                    Task { @MainActor in
-                        await performPendingActivationRefresh()
-                    }
+                .onReceive(
+                    NotificationCenter.default.publisher(
+                        for: .NSExtensionHostWillResignActive
+                    )
+                ) { _ in
+                    extensionHostDidResignActive = true
+                }
+                .onReceive(
+                    NotificationCenter.default.publisher(
+                        for: .NSExtensionHostDidBecomeActive
+                    )
+                ) { _ in
+                    guard extensionHostDidResignActive else { return }
+                    extensionHostDidResignActive = false
+                    requestActivationRefresh()
                 }
                 .onChange(of: isActivationRefreshBusy) { _, isBusy in
                     guard !isBusy else { return }
-                    Task { @MainActor in
-                        await performPendingActivationRefresh()
-                    }
+                    performPendingActivationRefresh()
+                }
+                .onChange(of: model.pendingUploadLibraryMismatch) {
+                    _, mismatch in
+                    guard mismatch == nil else { return }
+                    performPendingActivationRefresh()
                 }
                 .onDisappear {
                     photoImportTask?.cancel()
                     photoImportTask = nil
                     cancelDestinationConnectionTest()
                     cancelUpload()
+                    needsActivationRefresh = false
+                    extensionHostDidResignActive = false
                 }
                 .sheet(
                     isPresented: $isManagingConnections,
@@ -184,24 +189,33 @@ struct ShareUploadView: View {
     }
 
     private var isActivationRefreshBusy: Bool {
-        model.isLoading
-            || model.isUploading
+        model.isUploading
             || model.isAddingItems
             || model.isTestingConnection
     }
 
     @MainActor
-    private func performPendingActivationRefresh() async {
+    private func requestActivationRefresh() {
+        needsActivationRefresh = true
+        performPendingActivationRefresh()
+    }
+
+    @MainActor
+    private func performPendingActivationRefresh() {
         guard needsActivationRefresh,
-              hasLoadedInitialItems,
-              scenePhase == .active,
+              !isManagingConnections,
+              model.pendingUploadLibraryMismatch == nil,
               !isActivationRefreshBusy else {
             return
         }
-        needsActivationRefresh = false
         model.reloadProfiles()
-        guard model.selectedProfile != nil else { return }
-        await model.testConnection()
+        guard model.selectedProfile != nil else {
+            needsActivationRefresh = false
+            return
+        }
+        if startDestinationConnectionTest() {
+            needsActivationRefresh = false
+        }
     }
 
     private var connectionSection: some View {
@@ -277,6 +291,7 @@ struct ShareUploadView: View {
                         .font(.footnote)
                         .foregroundStyle(.red)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .accessibilityIdentifier("share.connection.failure")
                 }
             } else {
                 Button {
@@ -430,23 +445,13 @@ struct ShareUploadView: View {
     private var operationMessageSection: some View {
         if let message = model.operationMessage {
             Section {
-                HStack(alignment: .firstTextBaseline, spacing: 12) {
-                    Label(message, systemImage: "exclamationmark.triangle.fill")
-                        .font(.footnote)
-                        .foregroundStyle(.red)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-
-                    Button {
-                        model.dismissOperationMessage(ifMatching: message)
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(.secondary)
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityLabel("Dismiss message")
+                OperationMessageCard(
+                    message: message,
+                    accessibilityPrefix: "share"
+                ) {
+                    model.dismissOperationMessage(ifMatching: message)
                 }
             }
-            .accessibilityIdentifier("share.operationMessage")
         }
     }
 
@@ -628,6 +633,7 @@ struct ShareUploadView: View {
                 }
                 .buttonStyle(SendActionButtonStyle())
                 .disabled(!isUploadEnabled)
+                .accessibilityIdentifier("share.upload.send")
                 .accessibilityLabel(uploadButtonTitle)
                 .accessibilityHint(uploadButtonAccessibilityHint)
 
@@ -704,6 +710,15 @@ struct ShareUploadView: View {
         return String(localized: "Send to Eagle")
     }
 
+    private var selectedConnectionAllowsUpload: Bool {
+        guard let profile = model.selectedProfile,
+              profile.connection.isValid,
+              profile.hasPinnedLibrary else {
+            return false
+        }
+        return model.connectionTestState(for: profile).allowsUpload
+    }
+
     private var hasFailedUploads: Bool {
         model.queue.contains {
             if case .failed = $0.state { return true }
@@ -720,18 +735,21 @@ struct ShareUploadView: View {
     }
 
     private var isUploadEnabled: Bool {
-        !model.isLoading
-            && !model.isUploading
-            && !model.isAddingItems
-            && !model.isTestingConnection
-            && model.selectedProfile != nil
-            && model.queue.contains { $0.state != .succeeded }
+        guard !model.isLoading,
+              !model.isUploading,
+              !model.isAddingItems,
+              !model.isTestingConnection,
+              model.queue.contains(where: { $0.state != .succeeded }) else {
+            return false
+        }
+        return selectedConnectionAllowsUpload
     }
 
     private var uploadButtonVisualState: SendActionVisualState {
         if model.isAddingItems { return .adding }
         if model.isUploading { return .sending }
         if hasSendFailure { return .failed }
+        if !selectedConnectionAllowsUpload { return .disabled }
         return isUploadEnabled ? .ready : .disabled
     }
 
@@ -746,19 +764,36 @@ struct ShareUploadView: View {
         if model.isUploading {
             return String(localized: "Sending items to Eagle")
         }
-        if hasSendFailure {
-            return String(localized: "Try sending the failed items again")
-        }
         if model.queue.isEmpty {
             return String(localized: "Add an item before sending")
         }
         if model.selectedProfile == nil {
             return String(localized: "Select a connection before sending")
         }
-        if model.isTestingConnection {
-            return String(localized: "Wait for the connection test to finish")
+        if let connectionHint = connectionUploadAccessibilityHint {
+            return connectionHint
+        }
+        if hasSendFailure {
+            return String(localized: "Try sending the failed items again")
         }
         return String(localized: "Sends all pending items to Eagle")
+    }
+
+    private var connectionUploadAccessibilityHint: String? {
+        guard let profile = model.selectedProfile else { return nil }
+        guard profile.connection.isValid, profile.hasPinnedLibrary else {
+            return String(localized: "Not verified")
+        }
+        switch model.connectionTestState(for: profile) {
+        case .unverified:
+            return String(localized: "Not verified")
+        case .testing:
+            return String(localized: "Wait for the connection test to finish")
+        case let .failed(message):
+            return message
+        case .succeeded, .warning:
+            return nil
+        }
     }
 
     private var tagSelectionSummary: String {
@@ -831,16 +866,27 @@ struct ShareUploadView: View {
 
     private func testSelectedConnectionAfterConnectionsDismiss() {
         guard let profileID = profileIDToTestAfterConnectionsDismiss else {
+            performPendingActivationRefresh()
             return
         }
         profileIDToTestAfterConnectionsDismiss = nil
 
-        guard model.selectedProfileID == profileID else { return }
+        guard model.selectedProfileID == profileID else {
+            performPendingActivationRefresh()
+            return
+        }
+        // A test for the explicitly selected profile supersedes a pending
+        // generic activation refresh.
+        needsActivationRefresh = false
         startDestinationConnectionTest(profileID: profileID)
     }
 
-    private func startDestinationConnectionTest(profileID: UUID? = nil) {
-        cancelDestinationConnectionTest()
+    @discardableResult
+    private func startDestinationConnectionTest(profileID: UUID? = nil) -> Bool {
+        guard destinationConnectionTestTask == nil,
+              !model.isTestingConnection else {
+            return false
+        }
 
         let testID = UUID()
         destinationConnectionTestID = testID
@@ -849,7 +895,9 @@ struct ShareUploadView: View {
             guard destinationConnectionTestID == testID else { return }
             destinationConnectionTestTask = nil
             destinationConnectionTestID = nil
+            performPendingActivationRefresh()
         }
+        return true
     }
 
     private func cancelDestinationConnectionTest() {

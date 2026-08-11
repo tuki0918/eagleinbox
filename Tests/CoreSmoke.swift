@@ -532,6 +532,16 @@ enum CoreSmoke {
             preconditionFailure("A library mismatch must be represented as a warning.")
         }
         precondition(warningMessage == mismatch.warningMessage)
+        precondition(!legacyProfile.hasPinnedLibrary)
+        precondition(pinnedProfile.hasPinnedLibrary)
+        var whitespaceLibraryProfile = legacyProfile
+        whitespaceLibraryProfile.expectedLibraryName = "   "
+        precondition(!whitespaceLibraryProfile.hasPinnedLibrary)
+        precondition(!ConnectionTestState.unverified.allowsUpload)
+        precondition(!ConnectionTestState.testing.allowsUpload)
+        precondition(ConnectionTestState.succeeded.allowsUpload)
+        precondition(warningState.allowsUpload)
+        precondition(!ConnectionTestState.failed("offline").allowsUpload)
 
         let successfulNotification = try requiredNotificationResult(
             .completed(sent: 2, failed: 0)

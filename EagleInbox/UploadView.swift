@@ -225,6 +225,7 @@ struct UploadView: View {
                         .font(.footnote)
                         .foregroundStyle(.red)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .accessibilityIdentifier("upload.connection.failure")
                 }
             } else {
                 Button {
@@ -531,31 +532,14 @@ struct UploadView: View {
 
     @ViewBuilder
     private var operationMessageSection: some View {
-        if let message = model.operationMessage,
-           message != model.connectionMessage {
+        if let message = model.operationMessage {
             Section {
-                HStack(alignment: .top, spacing: 12) {
-                    Image(systemName: "exclamationmark.triangle.fill")
-                        .foregroundStyle(.orange)
-                        .accessibilityHidden(true)
-
-                    Text(message)
-                        .font(.footnote)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-
-                    Button {
-                        model.dismissOperationMessage(ifMatching: message)
-                    } label: {
-                        Image(systemName: "xmark")
-                            .frame(width: 32, height: 32)
-                            .contentShape(Rectangle())
-                    }
-                    .buttonStyle(.plain)
-                    .foregroundStyle(.secondary)
-                    .accessibilityLabel("Dismiss Message")
-                    .accessibilityIdentifier("upload.operationMessage.dismiss")
+                OperationMessageCard(
+                    message: message,
+                    accessibilityPrefix: "upload"
+                ) {
+                    model.dismissOperationMessage(ifMatching: message)
                 }
-                .accessibilityIdentifier("upload.operationMessage")
             }
         }
     }
@@ -584,6 +568,7 @@ struct UploadView: View {
                 }
                 .buttonStyle(SendActionButtonStyle())
                 .disabled(!isUploadEnabled)
+                .accessibilityIdentifier("upload.send")
                 .accessibilityLabel(uploadButtonTitle)
                 .accessibilityHint(uploadButtonAccessibilityHint)
 
@@ -666,10 +651,21 @@ struct UploadView: View {
         return String(localized: "Send to Eagle")
     }
 
+    private var selectedConnectionAllowsUpload: Bool {
+        guard let profile = model.selectedProfile,
+              profile.connection.isValid,
+              profile.hasPinnedLibrary else {
+            return false
+        }
+        return model.connectionTestState(for: profile).allowsUpload
+    }
+
     private var isUploadEnabled: Bool {
-        model.pendingUploadCount > 0
-            && !model.isWorking
-            && model.selectedProfile != nil
+        guard model.pendingUploadCount > 0,
+              !model.isWorking else {
+            return false
+        }
+        return selectedConnectionAllowsUpload
     }
 
     private var isUploadingItems: Bool {
@@ -680,6 +676,7 @@ struct UploadView: View {
         if model.isImportingFiles { return .adding }
         if isUploadingItems { return .sending }
         if hasSendFailure { return .failed }
+        if !selectedConnectionAllowsUpload { return .disabled }
         return isUploadEnabled ? .ready : .disabled
     }
 
@@ -696,14 +693,17 @@ struct UploadView: View {
         if isUploadingItems {
             return String(localized: "Sending items to Eagle")
         }
-        if hasSendFailure {
-            return String(localized: "Try sending the failed items again")
-        }
         if model.pendingUploadCount == 0 {
             return String(localized: "Add an item before uploading")
         }
         if model.selectedProfile == nil {
             return String(localized: "Select a connection before uploading")
+        }
+        if let connectionHint = connectionUploadAccessibilityHint {
+            return connectionHint
+        }
+        if hasSendFailure {
+            return String(localized: "Try sending the failed items again")
         }
         if model.isWorking {
             return String(
@@ -711,6 +711,23 @@ struct UploadView: View {
             )
         }
         return String(localized: "Uploads all pending items")
+    }
+
+    private var connectionUploadAccessibilityHint: String? {
+        guard let profile = model.selectedProfile else { return nil }
+        guard profile.connection.isValid, profile.hasPinnedLibrary else {
+            return String(localized: "Not verified")
+        }
+        switch model.connectionTestState(for: profile) {
+        case .unverified:
+            return String(localized: "Not verified")
+        case .testing:
+            return String(localized: "Wait for the connection test to finish")
+        case let .failed(message):
+            return message
+        case .succeeded, .warning:
+            return nil
+        }
     }
 
     private var trimmedBookmarkURL: String {

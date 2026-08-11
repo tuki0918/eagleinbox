@@ -124,6 +124,47 @@ struct SendActionButtonStyle: ButtonStyle {
     }
 }
 
+struct OperationMessageCard: View {
+    let message: String
+    let accessibilityPrefix: String
+    let dismiss: () -> Void
+
+    var body: some View {
+        ZStack {
+            Text(message)
+                .font(.footnote)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 56)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .accessibilityIdentifier(
+                    "\(accessibilityPrefix).operationMessage.text"
+                )
+
+            HStack(spacing: 0) {
+                Image(systemName: "exclamationmark.triangle.fill")
+                    .foregroundStyle(.orange)
+                    .frame(width: 44, height: 44)
+                    .accessibilityHidden(true)
+
+                Spacer(minLength: 0)
+
+                Button(action: dismiss) {
+                    Image(systemName: "xmark")
+                        .frame(width: 44, height: 44)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(.secondary)
+                .accessibilityLabel("Dismiss Message")
+                .accessibilityIdentifier(
+                    "\(accessibilityPrefix).operationMessage.dismiss"
+                )
+            }
+        }
+        .frame(maxWidth: .infinity, minHeight: 44)
+    }
+}
+
 private struct SendingGlyph: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var isAnimating = false

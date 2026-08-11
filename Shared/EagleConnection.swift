@@ -156,6 +156,13 @@ struct EagleConnectionProfile: Identifiable, Equatable, Sendable {
         }
         return String(localized: "\(displayName) - \(expectedLibraryName)")
     }
+
+    var hasPinnedLibrary: Bool {
+        guard let expectedLibraryName else { return false }
+        return !expectedLibraryName
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .isEmpty
+    }
 }
 
 struct EagleConnectionStatus: Equatable, Sendable {
@@ -250,6 +257,17 @@ enum ConnectionTestState: Equatable, Sendable {
     case succeeded
     case warning(String)
     case failed(String)
+
+    var allowsUpload: Bool {
+        switch self {
+        case .succeeded, .warning:
+            // A library mismatch remains uploadable through its confirmation
+            // alert. All other non-success states require a new test first.
+            return true
+        case .unverified, .testing, .failed:
+            return false
+        }
+    }
 }
 
 struct ConnectionSettingsSnapshot: Equatable, Sendable {
