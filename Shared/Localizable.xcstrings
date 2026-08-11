@@ -345,6 +345,16 @@
         }
       }
     },
+    "An optional annotation to apply to every sent item." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "送信するすべての項目に適用する任意の注釈です。"
+          }
+        }
+      }
+    },
     "API token" : {
       "localizations" : {
         "ja" : {
@@ -1430,12 +1440,12 @@
         }
       }
     },
-    "Saves web URLs as tagged bookmarks in the selected Eagle connection." : {
+    "Saves web URLs as bookmarks with optional tags and an optional annotation in the selected Eagle connection." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Web URLをタグ付きブックマークとして、選択したEagleの接続先に保存します。"
+            "value" : "Web URLに必要に応じてタグと注釈を付け、選択したEagleの接続先にブックマークとして保存します。"
           }
         }
       }
@@ -1540,12 +1550,12 @@
         }
       }
     },
-    "Send ${files} to Eagle with ${tags}" : {
+    "Send ${files} to Eagle with ${tags}, ${annotation}" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "${files}を${tags}付きでEagleに送信"
+            "value" : "${files}をEagleに送信（タグ：${tags}、注釈：${annotation}）"
           }
         }
       }
@@ -1560,12 +1570,12 @@
         }
       }
     },
-    "Send ${urls} to Eagle with ${tags}" : {
+    "Send ${urls} to Eagle with ${tags}, ${annotation}" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "${urls}を${tags}付きでEagleに送信"
+            "value" : "${urls}をEagleに送信（タグ：${tags}、注釈：${annotation}）"
           }
         }
       }
@@ -1590,22 +1600,22 @@
         }
       }
     },
-    "Send Files to Eagle with Tags" : {
+    "Send Files to Eagle with Tags, Annotation" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "タグ付きでファイルをEagleに送信"
+            "value" : "タグ・注釈を指定してファイルをEagleに送信"
           }
         }
       }
     },
-    "Send Files with Tags" : {
+    "Send Files with Tags, Annotation" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "タグ付きファイルを送信"
+            "value" : "タグ・注釈を指定してファイルを送信"
           }
         }
       }
@@ -1640,22 +1650,22 @@
         }
       }
     },
-    "Send URLs to Eagle with Tags" : {
+    "Send URLs to Eagle with Tags, Annotation" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "タグ付きでURLをEagleに送信"
+            "value" : "タグ・注釈を指定してURLをEagleに送信"
           }
         }
       }
     },
-    "Send URLs with Tags" : {
+    "Send URLs with Tags, Annotation" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "タグ付きURLを送信"
+            "value" : "タグ・注釈を指定してURLを送信"
           }
         }
       }
@@ -1710,12 +1720,12 @@
         }
       }
     },
-    "Sends photos, videos, audio, and PDFs with tags to the selected Eagle connection." : {
+    "Sends photos, videos, audio, and PDFs with optional tags and an optional annotation to the selected Eagle connection." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "写真、ビデオ、音声、PDFにタグを付けて、選択したEagleの接続先に送信します。"
+            "value" : "写真、ビデオ、音声、PDFに必要に応じてタグと注釈を付け、選択したEagleの接続先に送信します。"
           }
         }
       }
@@ -2076,12 +2086,12 @@
         }
       }
     },
-    "The tags to apply to every sent item." : {
+    "Optional tags to apply to every sent item." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "送信するすべての項目に適用するタグです。"
+            "value" : "送信するすべての項目に適用する任意のタグです。"
           }
         }
       }

@@ -82,16 +82,16 @@ Messages for loading shared content, connection status, and folder retrieval are
 
 The main app exposes five App Intents. They appear in Apple Shortcuts and can be used in a shortcut assigned to the iPhone Action Button.
 
-- `Send Files to Eagle` and `Send URLs to Eagle` send without tag parameters
-- `Send Files to Eagle with Tags` and `Send URLs to Eagle with Tags` require a tag list and show it directly in the action summary
+- `Send Files to Eagle` and `Send URLs to Eagle` send without metadata parameters
+- `Send Files to Eagle with Tags, Annotation` and `Send URLs to Eagle with Tags, Annotation` accept optional tags and an optional annotation
 - `Split Text into Tags` converts comma- or newline-separated text into a reusable tag-list output
 
 - Use the connection currently selected in the shared settings store
 - Run without opening the main app
 - Revalidate the connection and expected library before sending
 - Reject a library mismatch instead of allowing an unattended one-time override
-- Apply required tag names to every item only in the two `with Tags` intents
-- Do not expose folder or annotation parameters
+- Apply optional tag names and an optional annotation to every item only in the two metadata intents
+- Do not expose folder parameters
 - Copy each shortcut file into temporary storage, upload it, and delete the copy before processing the next file
 - Continue through a batch and report partial failures to Shortcuts
 

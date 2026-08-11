@@ -63,16 +63,16 @@ Allow local network access when prompted. Notifications are optional and do not 
 Eagle Inbox provides five actions in Apple Shortcuts:
 
 - `Send URLs to Eagle` saves HTTP and HTTPS URLs as Eagle bookmarks
-- `Send URLs to Eagle with Tags` saves URLs with a required list of tags
+- `Send URLs to Eagle with Tags, Annotation` saves URLs with optional tags and an optional annotation
 - `Send Files to Eagle` accepts photos, videos, audio, and PDFs
-- `Send Files to Eagle with Tags` sends supported files with a required list of tags
+- `Send Files to Eagle with Tags, Annotation` sends supported files with optional tags and an optional annotation
 - `Split Text into Tags` turns comma- or newline-separated text into a tag list
 
 All send actions use the connection currently selected in Eagle Inbox and run without opening the app. The selected connection must have been tested and the expected Eagle library must be open.
 
 | Shortcut example | Assign it to the Action Button |
 | --- | --- |
-| ![Send Screenshot to Eagle with Tags in Apple Shortcuts](./Docs/Screenshots/shortcuts-send-screenshot-with-tags.png) | ![Send Files to Eagle assigned to the iPhone Action Button](./Docs/Screenshots/action-button-shortcut.png) |
+| ![Send Screenshot to Eagle with OCR text connected to Annotation in Apple Shortcuts](./Docs/Screenshots/shortcuts-send-screenshot-with-tags.png) | ![Send Files to Eagle assigned to the iPhone Action Button](./Docs/Screenshots/action-button-shortcut.png) |
 
 ## Features
 

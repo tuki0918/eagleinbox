@@ -37,18 +37,26 @@ struct SendFilesToEagleIntent: AppIntent {
 }
 
 struct SendFilesToEagleWithTagsIntent: AppIntent {
-    static let title: LocalizedStringResource = "Send Files to Eagle with Tags"
+    static let title: LocalizedStringResource =
+        "Send Files to Eagle with Tags, Annotation"
     static let description = IntentDescription(
-        "Sends photos, videos, audio, and PDFs with tags to the selected Eagle connection."
+        "Sends photos, videos, audio, and PDFs with optional tags and an optional annotation to the selected Eagle connection."
     )
     static let openAppWhenRun = false
 
     @Parameter(
         title: "Tags",
-        description: "The tags to apply to every sent item.",
+        description: "Optional tags to apply to every sent item.",
         inputConnectionBehavior: .connectToPreviousIntentResult
     )
-    var tags: [String]
+    var tags: [String]?
+
+    @Parameter(
+        title: "Annotation",
+        description: "An optional annotation to apply to every sent item.",
+        inputOptions: .init(multiline: true, autocorrect: true)
+    )
+    var annotation: String?
 
     @Parameter(
         title: "Files",
@@ -64,13 +72,16 @@ struct SendFilesToEagleWithTagsIntent: AppIntent {
     var files: [IntentFile]
 
     static var parameterSummary: some ParameterSummary {
-        Summary("Send \(\.$files) to Eagle with \(\.$tags)")
+        Summary(
+            "Send \(\.$files) to Eagle with \(\.$tags), \(\.$annotation)"
+        )
     }
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
         let dialog = try await EagleShortcutSender.send(
             files: files,
-            tags: try EagleShortcutSender.requiredTags(tags)
+            tags: EagleShortcutSender.normalizedTags(tags),
+            annotation: EagleShortcutSender.normalizedAnnotation(annotation)
         )
         return .result(dialog: dialog)
     }
@@ -105,18 +116,26 @@ struct SendURLsToEagleIntent: AppIntent {
 }
 
 struct SendURLsToEagleWithTagsIntent: AppIntent {
-    static let title: LocalizedStringResource = "Send URLs to Eagle with Tags"
+    static let title: LocalizedStringResource =
+        "Send URLs to Eagle with Tags, Annotation"
     static let description = IntentDescription(
-        "Saves web URLs as tagged bookmarks in the selected Eagle connection."
+        "Saves web URLs as bookmarks with optional tags and an optional annotation in the selected Eagle connection."
     )
     static let openAppWhenRun = false
 
     @Parameter(
         title: "Tags",
-        description: "The tags to apply to every sent item.",
+        description: "Optional tags to apply to every sent item.",
         inputConnectionBehavior: .connectToPreviousIntentResult
     )
-    var tags: [String]
+    var tags: [String]?
+
+    @Parameter(
+        title: "Annotation",
+        description: "An optional annotation to apply to every sent item.",
+        inputOptions: .init(multiline: true, autocorrect: true)
+    )
+    var annotation: String?
 
     @Parameter(
         title: "URLs",
@@ -126,13 +145,16 @@ struct SendURLsToEagleWithTagsIntent: AppIntent {
     var urls: [URL]
 
     static var parameterSummary: some ParameterSummary {
-        Summary("Send \(\.$urls) to Eagle with \(\.$tags)")
+        Summary(
+            "Send \(\.$urls) to Eagle with \(\.$tags), \(\.$annotation)"
+        )
     }
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
         let dialog = try await EagleShortcutSender.send(
             urls: urls,
-            tags: try EagleShortcutSender.requiredTags(tags)
+            tags: EagleShortcutSender.normalizedTags(tags),
+            annotation: EagleShortcutSender.normalizedAnnotation(annotation)
         )
         return .result(dialog: dialog)
     }
@@ -169,17 +191,23 @@ struct SplitTextIntoTagsIntent: AppIntent {
 }
 
 private enum EagleShortcutSender {
-    static func requiredTags(_ input: [String]) throws -> [String] {
-        let tags = EagleTagInput.names(from: input)
-        guard !tags.isEmpty else {
-            throw EagleShortcutError.noTags
+    static func normalizedTags(_ input: [String]?) -> [String] {
+        EagleTagInput.names(from: input)
+    }
+
+    static func normalizedAnnotation(_ input: String?) -> String? {
+        guard let annotation = input?.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        ), !annotation.isEmpty else {
+            return nil
         }
-        return tags
+        return annotation
     }
 
     static func send(
         files: [IntentFile],
-        tags: [String]
+        tags: [String],
+        annotation: String? = nil
     ) async throws -> IntentDialog {
         guard !files.isEmpty else {
             throw EagleShortcutError.noInput
@@ -201,7 +229,8 @@ private enum EagleShortcutSender {
                 defer { materializedFile.removeTemporaryCopy() }
                 try await uploader.upload(
                     materializedFile.uploadItem,
-                    tags: tags
+                    tags: tags,
+                    annotation: annotation
                 )
                 batch.recordSuccess()
             } catch is CancellationError {
@@ -227,7 +256,8 @@ private enum EagleShortcutSender {
 
     static func send(
         urls: [URL],
-        tags: [String]
+        tags: [String],
+        annotation: String? = nil
     ) async throws -> IntentDialog {
         guard !urls.isEmpty else {
             throw EagleShortcutError.noValidWebURL
@@ -268,7 +298,11 @@ private enum EagleShortcutSender {
                 source: .bookmark(url)
             )
             do {
-                try await uploader.upload(item, tags: tags)
+                try await uploader.upload(
+                    item,
+                    tags: tags,
+                    annotation: annotation
+                )
                 batch.recordSuccess()
             } catch is CancellationError {
                 throw CancellationError()
@@ -306,10 +340,10 @@ struct EagleInboxShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: SendURLsToEagleWithTagsIntent(),
             phrases: [
-                "Send tagged URLs with \(.applicationName)",
-                "Save tagged links with \(.applicationName)"
+                "Send URLs with extra options using \(.applicationName)",
+                "Save links with extra options using \(.applicationName)"
             ],
-            shortTitle: "Send URLs with Tags",
+            shortTitle: "Send URLs with Tags, Annotation",
             systemImageName: "tag"
         )
         AppShortcut(
@@ -324,10 +358,10 @@ struct EagleInboxShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: SendFilesToEagleWithTagsIntent(),
             phrases: [
-                "Send tagged files with \(.applicationName)",
-                "Send tagged media with \(.applicationName)"
+                "Send files with extra options using \(.applicationName)",
+                "Send media with extra options using \(.applicationName)"
             ],
-            shortTitle: "Send Files with Tags",
+            shortTitle: "Send Files with Tags, Annotation",
             systemImageName: "tag"
         )
         AppShortcut(
@@ -391,7 +425,8 @@ private struct EagleShortcutUploader {
 
     func upload(
         _ item: EagleShortcutUploadItem,
-        tags: [String]
+        tags: [String],
+        annotation: String?
     ) async throws {
         _ = try await client.upload(
             source: item.source,
@@ -400,7 +435,7 @@ private struct EagleShortcutUploader {
                 website: nil,
                 tags: tags,
                 folders: [],
-                annotation: nil
+                annotation: annotation
             )
         )
     }

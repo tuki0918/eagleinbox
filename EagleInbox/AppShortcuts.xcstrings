@@ -24,15 +24,15 @@
         }
       }
     },
-    "Send tagged files with ${applicationName}" : {
+    "Send files with extra options using ${applicationName}" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringSet" : {
             "state" : "translated",
             "values" : [
-              "Send tagged files with ${applicationName}",
-              "Send tagged media with ${applicationName}"
+              "Send files with extra options using ${applicationName}",
+              "Send media with extra options using ${applicationName}"
             ]
           }
         },
@@ -40,22 +40,22 @@
           "stringSet" : {
             "state" : "translated",
             "values" : [
-              "${applicationName}でタグ付きファイルを送信",
-              "${applicationName}でタグ付きメディアを送信"
+              "${applicationName}の追加オプションでファイルを送信",
+              "${applicationName}の追加オプションでメディアを送信"
             ]
           }
         }
       }
     },
-    "Send tagged URLs with ${applicationName}" : {
+    "Send URLs with extra options using ${applicationName}" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringSet" : {
             "state" : "translated",
             "values" : [
-              "Send tagged URLs with ${applicationName}",
-              "Save tagged links with ${applicationName}"
+              "Send URLs with extra options using ${applicationName}",
+              "Save links with extra options using ${applicationName}"
             ]
           }
         },
@@ -63,8 +63,8 @@
           "stringSet" : {
             "state" : "translated",
             "values" : [
-              "${applicationName}でタグ付きURLを送信",
-              "${applicationName}でタグ付きリンクを保存"
+              "${applicationName}の追加オプションでURLを送信",
+              "${applicationName}の追加オプションでリンクを保存"
             ]
           }
         }

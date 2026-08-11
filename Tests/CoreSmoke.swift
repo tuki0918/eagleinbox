@@ -636,11 +636,12 @@ enum CoreSmoke {
             website: "https://unused.example.com",
             tags: ["reference"],
             folders: [],
-            annotation: nil
+            annotation: "Saved from Shortcuts"
         ).bookmarkJSONObject(url: URL(string: "https://www.example.com")!)
         precondition(bookmark["bookmarkURL"] as? String == "https://www.example.com")
         precondition(bookmark["name"] as? String == "Example Site")
         precondition(bookmark["tags"] as? [String] == ["reference"])
+        precondition(bookmark["annotation"] as? String == "Saved from Shortcuts")
         precondition(bookmark["website"] == nil)
 
         let identityA = MediaFileSupport.bookmarkIdentity(
