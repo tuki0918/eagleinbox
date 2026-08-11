@@ -28,50 +28,51 @@ struct SendFilesToEagleIntent: AppIntent {
     }
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
-        guard !files.isEmpty else {
-            throw EagleShortcutError.noInput
-        }
-        guard files.count <= EagleShortcutUploader.maximumFileCount else {
-            throw EagleShortcutError.tooManyFiles(
-                maximum: EagleShortcutUploader.maximumFileCount
-            )
-        }
-
-        let uploader = try await EagleShortcutUploader.verified()
-        var batch = EagleShortcutBatchResult()
-
-        for file in files {
-            try Task.checkCancellation()
-            let displayName = EagleShortcutFile.displayName(for: file)
-            do {
-                let materializedFile = try EagleShortcutFile(file)
-                defer { materializedFile.removeTemporaryCopy() }
-                try await uploader.upload(materializedFile.uploadItem)
-                batch.recordSuccess()
-            } catch is CancellationError {
-                throw CancellationError()
-            } catch {
-                batch.recordFailure(
-                    itemName: displayName,
-                    error: error
-                )
-            }
-        }
-
-        try batch.throwIfNeeded()
-        let dialog: IntentDialog
-        if batch.sent == 1 {
-            dialog = IntentDialog(
-                "Sent \(batch.sent) item to \(uploader.destinationName)."
-            )
-        } else {
-            dialog = IntentDialog(
-                "Sent \(batch.sent) items to \(uploader.destinationName)."
-            )
-        }
-        return .result(
-            dialog: dialog
+        let dialog = try await EagleShortcutSender.send(
+            files: files,
+            tags: []
         )
+        return .result(dialog: dialog)
+    }
+}
+
+struct SendFilesToEagleWithTagsIntent: AppIntent {
+    static let title: LocalizedStringResource = "Send Files to Eagle with Tags"
+    static let description = IntentDescription(
+        "Sends photos, videos, audio, and PDFs with tags to the selected Eagle connection."
+    )
+    static let openAppWhenRun = false
+
+    @Parameter(
+        title: "Tags",
+        description: "The tags to apply to every sent item.",
+        inputConnectionBehavior: .connectToPreviousIntentResult
+    )
+    var tags: [String]
+
+    @Parameter(
+        title: "Files",
+        description: "The photos, videos, audio, or PDFs to send.",
+        supportedTypeIdentifiers: [
+            "public.image",
+            "public.movie",
+            "public.audio",
+            "com.adobe.pdf"
+        ],
+        requestValueDialog: "Which files do you want to send?"
+    )
+    var files: [IntentFile]
+
+    static var parameterSummary: some ParameterSummary {
+        Summary("Send \(\.$files) to Eagle with \(\.$tags)")
+    }
+
+    func perform() async throws -> some IntentResult & ProvidesDialog {
+        let dialog = try await EagleShortcutSender.send(
+            files: files,
+            tags: try EagleShortcutSender.requiredTags(tags)
+        )
+        return .result(dialog: dialog)
     }
 }
 
@@ -95,6 +96,139 @@ struct SendURLsToEagleIntent: AppIntent {
     }
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
+        let dialog = try await EagleShortcutSender.send(
+            urls: urls,
+            tags: []
+        )
+        return .result(dialog: dialog)
+    }
+}
+
+struct SendURLsToEagleWithTagsIntent: AppIntent {
+    static let title: LocalizedStringResource = "Send URLs to Eagle with Tags"
+    static let description = IntentDescription(
+        "Saves web URLs as tagged bookmarks in the selected Eagle connection."
+    )
+    static let openAppWhenRun = false
+
+    @Parameter(
+        title: "Tags",
+        description: "The tags to apply to every sent item.",
+        inputConnectionBehavior: .connectToPreviousIntentResult
+    )
+    var tags: [String]
+
+    @Parameter(
+        title: "URLs",
+        description: "The web URLs to save as Eagle bookmarks.",
+        requestValueDialog: "Which URLs do you want to send?"
+    )
+    var urls: [URL]
+
+    static var parameterSummary: some ParameterSummary {
+        Summary("Send \(\.$urls) to Eagle with \(\.$tags)")
+    }
+
+    func perform() async throws -> some IntentResult & ProvidesDialog {
+        let dialog = try await EagleShortcutSender.send(
+            urls: urls,
+            tags: try EagleShortcutSender.requiredTags(tags)
+        )
+        return .result(dialog: dialog)
+    }
+}
+
+struct SplitTextIntoTagsIntent: AppIntent {
+    static let title: LocalizedStringResource = "Split Text into Tags"
+    static let description = IntentDescription(
+        "Splits text into tag names using commas and new lines.",
+        resultValueName: "Tags"
+    )
+    static let openAppWhenRun = false
+
+    @Parameter(
+        title: "Text",
+        description: "The text to split into tag names.",
+        inputOptions: .init(multiline: true, autocorrect: false),
+        requestValueDialog: "Which text do you want to split into tags?",
+        inputConnectionBehavior: .connectToPreviousIntentResult
+    )
+    var text: String
+
+    static var parameterSummary: some ParameterSummary {
+        Summary("Split \(\.$text) into Tags")
+    }
+
+    func perform() async throws -> some IntentResult & ReturnsValue<[String]> {
+        let tags = EagleTagInput.names(from: text)
+        guard !tags.isEmpty else {
+            throw EagleShortcutError.noTags
+        }
+        return .result(value: tags)
+    }
+}
+
+private enum EagleShortcutSender {
+    static func requiredTags(_ input: [String]) throws -> [String] {
+        let tags = EagleTagInput.names(from: input)
+        guard !tags.isEmpty else {
+            throw EagleShortcutError.noTags
+        }
+        return tags
+    }
+
+    static func send(
+        files: [IntentFile],
+        tags: [String]
+    ) async throws -> IntentDialog {
+        guard !files.isEmpty else {
+            throw EagleShortcutError.noInput
+        }
+        guard files.count <= EagleShortcutUploader.maximumFileCount else {
+            throw EagleShortcutError.tooManyFiles(
+                maximum: EagleShortcutUploader.maximumFileCount
+            )
+        }
+
+        let uploader = try await EagleShortcutUploader.verified()
+        var batch = EagleShortcutBatchResult()
+
+        for file in files {
+            try Task.checkCancellation()
+            let displayName = EagleShortcutFile.displayName(for: file)
+            do {
+                let materializedFile = try EagleShortcutFile(file)
+                defer { materializedFile.removeTemporaryCopy() }
+                try await uploader.upload(
+                    materializedFile.uploadItem,
+                    tags: tags
+                )
+                batch.recordSuccess()
+            } catch is CancellationError {
+                throw CancellationError()
+            } catch {
+                batch.recordFailure(
+                    itemName: displayName,
+                    error: error
+                )
+            }
+        }
+
+        try batch.throwIfNeeded()
+        if batch.sent == 1 {
+            return IntentDialog(
+                "Sent \(batch.sent) item to \(uploader.destinationName)."
+            )
+        }
+        return IntentDialog(
+            "Sent \(batch.sent) items to \(uploader.destinationName)."
+        )
+    }
+
+    static func send(
+        urls: [URL],
+        tags: [String]
+    ) async throws -> IntentDialog {
         guard !urls.isEmpty else {
             throw EagleShortcutError.noValidWebURL
         }
@@ -127,7 +261,6 @@ struct SendURLsToEagleIntent: AppIntent {
         }
 
         let uploader = try await EagleShortcutUploader.verified()
-
         for url in validURLs {
             try Task.checkCancellation()
             let item = EagleShortcutUploadItem(
@@ -135,7 +268,7 @@ struct SendURLsToEagleIntent: AppIntent {
                 source: .bookmark(url)
             )
             do {
-                try await uploader.upload(item)
+                try await uploader.upload(item, tags: tags)
                 batch.recordSuccess()
             } catch is CancellationError {
                 throw CancellationError()
@@ -148,24 +281,37 @@ struct SendURLsToEagleIntent: AppIntent {
         }
 
         try batch.throwIfNeeded()
-        let dialog: IntentDialog
         if batch.sent == 1 {
-            dialog = IntentDialog(
+            return IntentDialog(
                 "Sent \(batch.sent) URL to \(uploader.destinationName)."
             )
-        } else {
-            dialog = IntentDialog(
-                "Sent \(batch.sent) URLs to \(uploader.destinationName)."
-            )
         }
-        return .result(
-            dialog: dialog
+        return IntentDialog(
+            "Sent \(batch.sent) URLs to \(uploader.destinationName)."
         )
     }
 }
 
 struct EagleInboxShortcuts: AppShortcutsProvider {
     static var appShortcuts: [AppShortcut] {
+        AppShortcut(
+            intent: SendURLsToEagleIntent(),
+            phrases: [
+                "Send URLs with \(.applicationName)",
+                "Save links with \(.applicationName)"
+            ],
+            shortTitle: "Send URLs",
+            systemImageName: "link"
+        )
+        AppShortcut(
+            intent: SendURLsToEagleWithTagsIntent(),
+            phrases: [
+                "Send tagged URLs with \(.applicationName)",
+                "Save tagged links with \(.applicationName)"
+            ],
+            shortTitle: "Send URLs with Tags",
+            systemImageName: "tag"
+        )
         AppShortcut(
             intent: SendFilesToEagleIntent(),
             phrases: [
@@ -176,13 +322,22 @@ struct EagleInboxShortcuts: AppShortcutsProvider {
             systemImageName: "square.and.arrow.up"
         )
         AppShortcut(
-            intent: SendURLsToEagleIntent(),
+            intent: SendFilesToEagleWithTagsIntent(),
             phrases: [
-                "Send URLs with \(.applicationName)",
-                "Save links with \(.applicationName)"
+                "Send tagged files with \(.applicationName)",
+                "Send tagged media with \(.applicationName)"
             ],
-            shortTitle: "Send URLs",
-            systemImageName: "link"
+            shortTitle: "Send Files with Tags",
+            systemImageName: "tag"
+        )
+        AppShortcut(
+            intent: SplitTextIntoTagsIntent(),
+            phrases: [
+                "Split text into tags with \(.applicationName)",
+                "Make tags from text with \(.applicationName)"
+            ],
+            shortTitle: "Split Text into Tags",
+            systemImageName: "textformat"
         )
     }
 
@@ -234,13 +389,16 @@ private struct EagleShortcutUploader {
         )
     }
 
-    func upload(_ item: EagleShortcutUploadItem) async throws {
+    func upload(
+        _ item: EagleShortcutUploadItem,
+        tags: [String]
+    ) async throws {
         _ = try await client.upload(
             source: item.source,
             metadata: EagleUploadMetadata(
                 name: item.name,
                 website: nil,
-                tags: [],
+                tags: tags,
                 folders: [],
                 annotation: nil
             )
@@ -356,6 +514,7 @@ private struct EagleShortcutBatchResult {
 
 private enum EagleShortcutError: LocalizedError {
     case noInput
+    case noTags
     case noValidWebURL
     case noConnection
     case tooManyFiles(maximum: Int)
@@ -368,6 +527,8 @@ private enum EagleShortcutError: LocalizedError {
         switch self {
         case .noInput:
             return String(localized: "Choose at least one file to send.")
+        case .noTags:
+            return String(localized: "Provide at least one tag.")
         case .noValidWebURL:
             return String(
                 localized: "Provide at least one valid HTTP or HTTPS URL."

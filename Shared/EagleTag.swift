@@ -105,6 +105,23 @@ struct EagleTag: Identifiable, Equatable, Sendable {
     }
 }
 
+enum EagleTagInput {
+    static func names(from input: [String]) -> [String] {
+        var seen: Set<String> = []
+        return input
+            .flatMap { MediaFileSupport.list(from: $0) }
+            .filter { seen.insert(EagleTag.normalized($0)).inserted }
+    }
+
+    static func names(from input: [String]?) -> [String] {
+        names(from: input ?? [])
+    }
+
+    static func names(from text: String) -> [String] {
+        names(from: text.components(separatedBy: .newlines))
+    }
+}
+
 struct EagleTagGroup: Identifiable, Equatable, Sendable {
     let id: String
     let name: String

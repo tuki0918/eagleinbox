@@ -123,7 +123,8 @@ At minimum, verify the following on a physical device or through TestFlight:
 - Canceling an upload in progress, retaining unsent items, and retrying failed items
 - Per-item progress for a large video, including preparing, uploading, and finishing states
 - Photos, files, URLs, and the share extension
-- `Send Files to Eagle` and `Send URLs to Eagle` in Apple Shortcuts, including an Action Button workflow on a physical iPhone
+- All five Eagle Inbox actions in Apple Shortcuts: simple file/URL sends without tag fields; both `with Tags` actions with one or multiple tags; and `Split Text into Tags` with comma-separated, newline-separated, blank, and duplicate values
+- An OCR workflow that connects extracted text to `Split Text into Tags`, its output to a `with Tags` action, and the original image to the file input; also verify existing saved simple shortcuts, Japanese labels, and an Action Button workflow on a physical iPhone
 - Connection sharing between the main app and share extension
 - iPad in iPhone compatibility mode
 - Running as a Designed for iPhone app on an Apple Silicon Mac

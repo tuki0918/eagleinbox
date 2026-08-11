@@ -438,6 +438,17 @@ enum CoreSmoke {
         precondition(japaneseSuggestions.map(\.name) == ["デザイン"])
         precondition(EagleTag.normalized("Ｃａｆé") == "cafe")
 
+        let enteredTags = EagleTagInput.names(
+            from: [" Reference, Design ", "", "design", "Ｃａｆé", "cafe"]
+        )
+        precondition(enteredTags == ["Reference", "Design", "Ｃａｆé"])
+        precondition(EagleTagInput.names(from: nil).isEmpty)
+
+        let splitTags = EagleTagInput.names(
+            from: " Reference, Design \n\ndesign\r\nＣａｆé, cafe "
+        )
+        precondition(splitTags == ["Reference", "Design", "Ｃａｆé"])
+
         // Keep the original labeled initializer call source-compatible when the
         // optional expected-library pin is omitted.
         let legacyProfile = EagleConnectionProfile(
@@ -577,8 +588,21 @@ enum CoreSmoke {
         let object = try JSONSerialization.jsonObject(with: Data(contentsOf: bodyURL))
         let dictionary = try requiredDictionary(object)
         precondition(dictionary["name"] as? String == "smoke")
+        precondition(dictionary["tags"] as? [String] == ["test"])
+        precondition(dictionary["folders"] as? [String] == ["FOLDER"])
         precondition(dictionary["annotation"] as? String == "first line\nsecond line")
         precondition(dictionary["base64"] as? String == "data:image/png;base64,AAECAwQF")
+
+        let metadataWithoutOptionalValues = EagleUploadMetadata(
+            name: "plain",
+            website: nil,
+            tags: [],
+            folders: [],
+            annotation: nil
+        ).jsonObject()
+        precondition(metadataWithoutOptionalValues["tags"] == nil)
+        precondition(metadataWithoutOptionalValues["folders"] == nil)
+        precondition(metadataWithoutOptionalValues["annotation"] == nil)
 
         let missingMediaURL = FileManager.default.temporaryDirectory
             .appendingPathComponent("eagle-inbox-missing-\(UUID().uuidString).bin")

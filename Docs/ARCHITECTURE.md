@@ -80,16 +80,22 @@ Messages for loading shared content, connection status, and folder retrieval are
 
 ## Shortcuts and Action Button
 
-The main app exposes separate App Intents for supported files and web URLs. They appear in Apple Shortcuts and can be used in a shortcut assigned to the iPhone Action Button.
+The main app exposes five App Intents. They appear in Apple Shortcuts and can be used in a shortcut assigned to the iPhone Action Button.
+
+- `Send Files to Eagle` and `Send URLs to Eagle` send without tag parameters
+- `Send Files to Eagle with Tags` and `Send URLs to Eagle with Tags` require a tag list and show it directly in the action summary
+- `Split Text into Tags` converts comma- or newline-separated text into a reusable tag-list output
 
 - Use the connection currently selected in the shared settings store
 - Run without opening the main app
 - Revalidate the connection and expected library before sending
 - Reject a library mismatch instead of allowing an unattended one-time override
+- Apply required tag names to every item only in the two `with Tags` intents
+- Do not expose folder or annotation parameters
 - Copy each shortcut file into temporary storage, upload it, and delete the copy before processing the next file
 - Continue through a batch and report partial failures to Shortcuts
 
-Shortcut uploads intentionally do not reuse the main app's in-memory queue or metadata. They accept up to 50 files or 20 URLs per run.
+Shortcut uploads intentionally do not reuse the main app's in-memory queue or metadata selections. They accept up to 50 files or 20 URLs per run. The text splitter trims empty values and removes normalized duplicates while preserving the first spelling and order.
 
 ## Data and Security
 

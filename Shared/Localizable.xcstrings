@@ -1349,6 +1349,16 @@
         }
       }
     },
+    "Provide at least one tag.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "タグを1つ以上指定してください。"
+          }
+        }
+      }
+    },
     "Provide at least one valid HTTP or HTTPS URL.": {
       "localizations": {
         "ja": {
@@ -1415,6 +1425,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Web URLを選択したEagleの接続先にブックマークとして保存します。"
+          }
+        }
+      }
+    },
+    "Saves web URLs as tagged bookmarks in the selected Eagle connection.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Web URLをタグ付きブックマークとして、選択したEagleの接続先に保存します。"
           }
         }
       }
@@ -1519,12 +1539,32 @@
         }
       }
     },
+    "Send ${files} to Eagle with ${tags}": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "${files}を${tags}付きでEagleに送信"
+          }
+        }
+      }
+    },
     "Send ${urls} to Eagle": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
             "value": "${urls}をEagleに送信"
+          }
+        }
+      }
+    },
+    "Send ${urls} to Eagle with ${tags}": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "${urls}を${tags}付きでEagleに送信"
           }
         }
       }
@@ -1545,6 +1585,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "ファイルをEagleに送信"
+          }
+        }
+      }
+    },
+    "Send Files to Eagle with Tags": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "タグ付きでファイルをEagleに送信"
+          }
+        }
+      }
+    },
+    "Send Files with Tags": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "タグ付きファイルを送信"
           }
         }
       }
@@ -1575,6 +1635,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "URLをEagleに送信"
+          }
+        }
+      }
+    },
+    "Send URLs to Eagle with Tags": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "タグ付きでURLをEagleに送信"
+          }
+        }
+      }
+    },
+    "Send URLs with Tags": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "タグ付きURLを送信"
           }
         }
       }
@@ -1625,6 +1705,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "写真、ビデオ、音声、PDFを選択したEagleの接続先に送信します。"
+          }
+        }
+      }
+    },
+    "Sends photos, videos, audio, and PDFs with tags to the selected Eagle connection.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "写真、ビデオ、音声、PDFにタグを付けて、選択したEagleの接続先に送信します。"
           }
         }
       }
@@ -1765,6 +1855,36 @@
         }
       }
     },
+    "Split ${text} into Tags": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "${text}をタグに分割"
+          }
+        }
+      }
+    },
+    "Split Text into Tags": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "テキストをタグに分割"
+          }
+        }
+      }
+    },
+    "Splits text into tag names using commas and new lines.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "テキストをカンマと改行でタグ名に分割します。"
+          }
+        }
+      }
+    },
     "Some Items Couldn’t Send": {
       "localizations": {
         "ja": {
@@ -1885,6 +2005,16 @@
         }
       }
     },
+    "Text": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "テキスト"
+          }
+        }
+      }
+    },
     "The API token could not be saved to Keychain (%d).": {
       "localizations": {
         "ja": {
@@ -1941,6 +2071,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "送信する写真、ビデオ、音声、PDFです。"
+          }
+        }
+      }
+    },
+    "The tags to apply to every sent item.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "送信するすべての項目に適用するタグです。"
+          }
+        }
+      }
+    },
+    "The text to split into tag names.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "タグ名に分割するテキストです。"
           }
         }
       }
@@ -2267,6 +2417,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "送信するURLを選択してください"
+          }
+        }
+      }
+    },
+    "Which text do you want to split into tags?": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "どのテキストをタグに分割しますか？"
           }
         }
       }

@@ -60,12 +60,19 @@ Allow local network access when prompted. Notifications are optional and do not 
 
 ### 4. Use Shortcuts or the Action Button
 
-Eagle Inbox provides two actions in Apple Shortcuts:
+Eagle Inbox provides five actions in Apple Shortcuts:
 
-- `Send Files to Eagle` accepts photos, videos, audio, and PDFs from a previous action
 - `Send URLs to Eagle` saves HTTP and HTTPS URLs as Eagle bookmarks
+- `Send URLs to Eagle with Tags` saves URLs with a required list of tags
+- `Send Files to Eagle` accepts photos, videos, audio, and PDFs
+- `Send Files to Eagle with Tags` sends supported files with a required list of tags
+- `Split Text into Tags` turns comma- or newline-separated text into a tag list
 
-Both actions use the connection currently selected in Eagle Inbox and run without opening the app. The selected connection must have been tested and the expected Eagle library must be open.
+The two simple send actions do not show tag settings. The two `with Tags` actions apply the same tags to every item in the action. Folder and annotation parameters are not included.
+
+All send actions use the connection currently selected in Eagle Inbox and run without opening the app. The selected connection must have been tested and the expected Eagle library must be open.
+
+For OCR tags, connect `Extract Text from Image` to `Split Text into Tags`, then connect its `Tags` output to a `with Tags` action. In a screenshot workflow, set the send action's file input to the original screenshot and its tag input to the splitter output.
 
 For example, create a shortcut with `Take Photo` followed by `Send Files to Eagle`. On an iPhone with an Action Button, choose that shortcut under Settings → Action Button → Shortcut. You can also leave the action input set to `Ask Each Time` to choose content when the shortcut runs.
 

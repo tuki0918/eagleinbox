@@ -24,6 +24,52 @@
         }
       }
     },
+    "Send tagged files with ${applicationName}" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Send tagged files with ${applicationName}",
+              "Send tagged media with ${applicationName}"
+            ]
+          }
+        },
+        "ja" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName}でタグ付きファイルを送信",
+              "${applicationName}でタグ付きメディアを送信"
+            ]
+          }
+        }
+      }
+    },
+    "Send tagged URLs with ${applicationName}" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Send tagged URLs with ${applicationName}",
+              "Save tagged links with ${applicationName}"
+            ]
+          }
+        },
+        "ja" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName}でタグ付きURLを送信",
+              "${applicationName}でタグ付きリンクを保存"
+            ]
+          }
+        }
+      }
+    },
     "Send URLs with ${applicationName}" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -42,6 +88,29 @@
             "values" : [
               "${applicationName}でURLを送信",
               "${applicationName}でリンクを保存"
+            ]
+          }
+        }
+      }
+    },
+    "Split text into tags with ${applicationName}" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Split text into tags with ${applicationName}",
+              "Make tags from text with ${applicationName}"
+            ]
+          }
+        },
+        "ja" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName}でテキストをタグに分割",
+              "${applicationName}でテキストからタグを作成"
             ]
           }
         }
