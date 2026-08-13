@@ -1,11 +1,12 @@
 import AppIntents
 import Foundation
+import StoreKit
 import UniformTypeIdentifiers
 
 struct SendFilesToEagleIntent: AppIntent {
     static let title: LocalizedStringResource = "Send Files to Eagle"
     static let description = IntentDescription(
-        "Sends photos, videos, audio, and PDFs to the selected Eagle connection."
+        "Requires Eagle Inbox Pro. Sends photos, videos, audio, and PDFs to the selected Eagle connection."
     )
     static let openAppWhenRun = false
 
@@ -28,6 +29,7 @@ struct SendFilesToEagleIntent: AppIntent {
     }
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
+        try await ProShortcutEntitlementValidator.requireAccess()
         let dialog = try await EagleShortcutSender.send(
             files: files,
             tags: []
@@ -40,7 +42,7 @@ struct SendFilesToEagleWithTagsIntent: AppIntent {
     static let title: LocalizedStringResource =
         "Send Files to Eagle with Tags, Annotation"
     static let description = IntentDescription(
-        "Sends photos, videos, audio, and PDFs with optional tags and an optional annotation to the selected Eagle connection."
+        "Requires Eagle Inbox Pro. Sends photos, videos, audio, and PDFs with optional tags and an optional annotation to the selected Eagle connection."
     )
     static let openAppWhenRun = false
 
@@ -78,6 +80,7 @@ struct SendFilesToEagleWithTagsIntent: AppIntent {
     }
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
+        try await ProShortcutEntitlementValidator.requireAccess()
         let dialog = try await EagleShortcutSender.send(
             files: files,
             tags: EagleShortcutSender.normalizedTags(tags),
@@ -90,7 +93,7 @@ struct SendFilesToEagleWithTagsIntent: AppIntent {
 struct SendURLsToEagleIntent: AppIntent {
     static let title: LocalizedStringResource = "Send URLs to Eagle"
     static let description = IntentDescription(
-        "Saves web URLs as bookmarks in the selected Eagle connection."
+        "Requires Eagle Inbox Pro. Saves web URLs as bookmarks in the selected Eagle connection."
     )
     static let openAppWhenRun = false
 
@@ -107,6 +110,7 @@ struct SendURLsToEagleIntent: AppIntent {
     }
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
+        try await ProShortcutEntitlementValidator.requireAccess()
         let dialog = try await EagleShortcutSender.send(
             urls: urls,
             tags: []
@@ -119,7 +123,7 @@ struct SendURLsToEagleWithTagsIntent: AppIntent {
     static let title: LocalizedStringResource =
         "Send URLs to Eagle with Tags, Annotation"
     static let description = IntentDescription(
-        "Saves web URLs as bookmarks with optional tags and an optional annotation in the selected Eagle connection."
+        "Requires Eagle Inbox Pro. Saves web URLs as bookmarks with optional tags and an optional annotation in the selected Eagle connection."
     )
     static let openAppWhenRun = false
 
@@ -151,6 +155,7 @@ struct SendURLsToEagleWithTagsIntent: AppIntent {
     }
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
+        try await ProShortcutEntitlementValidator.requireAccess()
         let dialog = try await EagleShortcutSender.send(
             urls: urls,
             tags: EagleShortcutSender.normalizedTags(tags),
@@ -163,7 +168,7 @@ struct SendURLsToEagleWithTagsIntent: AppIntent {
 struct SplitTextIntoTagsIntent: AppIntent {
     static let title: LocalizedStringResource = "Split Text into Tags"
     static let description = IntentDescription(
-        "Splits text into tag names using commas and new lines.",
+        "Requires Eagle Inbox Pro. Splits text into tag names using commas and new lines.",
         resultValueName: "Tags"
     )
     static let openAppWhenRun = false
@@ -182,11 +187,34 @@ struct SplitTextIntoTagsIntent: AppIntent {
     }
 
     func perform() async throws -> some IntentResult & ReturnsValue<[String]> {
+        try await ProShortcutEntitlementValidator.requireAccess()
         let tags = EagleTagInput.names(from: text)
         guard !tags.isEmpty else {
             throw EagleShortcutError.noTags
         }
         return .result(value: tags)
+    }
+}
+
+private enum ProShortcutEntitlementValidator {
+    static func requireAccess(
+        entitlementStore: ProEntitlementStore = ProEntitlementStore()
+    ) async throws {
+        var hasVerifiedProEntitlement = false
+
+        for await result in Transaction.currentEntitlements {
+            guard case let .verified(transaction) = result,
+                  transaction.productID == SharedIdentifiers.proProductID,
+                  transaction.revocationDate == nil else {
+                continue
+            }
+            hasVerifiedProEntitlement = true
+        }
+
+        entitlementStore.save(isPro: hasVerifiedProEntitlement)
+        guard hasVerifiedProEntitlement else {
+            throw ProFeatureAccessError.shortcutsRequirePro
+        }
     }
 }
 
@@ -393,6 +421,7 @@ private struct EagleShortcutUploader {
     static func verified(
         settingsStore: SharedSettingsStore = SharedSettingsStore()
     ) async throws -> EagleShortcutUploader {
+        try ProAccessPolicy.requireProForShortcuts()
         let snapshot = settingsStore.load()
         let profile = snapshot.selectedProfileID.flatMap { selectedID in
             snapshot.profiles.first(where: { $0.id == selectedID })

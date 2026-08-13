@@ -13,6 +13,8 @@
 		A10000000000000000000004 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000004 /* SettingsView.swift */; };
 		A10000000000000000000005 /* UploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000005 /* UploadView.swift */; };
 		A10000000000000000000006 /* EagleShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000000000000000000000C /* EagleShortcuts.swift */; };
+		A10000000000000000000007 /* ProPurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000000000000000000000F /* ProPurchaseManager.swift */; };
+		A10000000000000000000008 /* ProUpgradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000010 /* ProUpgradeView.swift */; };
 		A10000000000000000000011 /* SharedIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000021 /* SharedIdentifiers.swift */; };
 		A10000000000000000000012 /* EagleConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000022 /* EagleConnection.swift */; };
 		A10000000000000000000013 /* EagleClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000023 /* EagleClientError.swift */; };
@@ -28,6 +30,7 @@
 		A1000000000000000000001D /* ConnectionEditorDraft.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000000000000000000002D /* ConnectionEditorDraft.swift */; };
 		A1000000000000000000001E /* ConnectionEditorComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000000000000000000002E /* ConnectionEditorComponents.swift */; };
 		A1000000000000000000001F /* TagSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000000000000000000002F /* TagSelectionView.swift */; };
+		A10000000000000000000020 /* ProEntitlementStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000033 /* ProEntitlementStore.swift */; };
 		A10000000000000000000021 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000008 /* Assets.xcassets */; };
 		A10000000000000000000022 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000009 /* PrivacyInfo.xcprivacy */; };
 		A10000000000000000000023 /* IMG_0001.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C1000000000000000000000A /* IMG_0001.jpg */; };
@@ -55,6 +58,7 @@
 		B1000000000000000000001D /* ConnectionEditorDraft.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000000000000000000002D /* ConnectionEditorDraft.swift */; };
 		B1000000000000000000001E /* ConnectionEditorComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000000000000000000002E /* ConnectionEditorComponents.swift */; };
 		B1000000000000000000001F /* TagSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000000000000000000002F /* TagSelectionView.swift */; };
+		B10000000000000000000020 /* ProEntitlementStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000033 /* ProEntitlementStore.swift */; };
 		B10000000000000000000021 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000017 /* PrivacyInfo.xcprivacy */; };
 		B10000000000000000000022 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000030 /* Localizable.xcstrings */; };
 		B10000000000000000000023 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000018 /* InfoPlist.xcstrings */; };
@@ -98,15 +102,17 @@
 		C10000000000000000000003 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C10000000000000000000004 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C10000000000000000000005 /* UploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadView.swift; sourceTree = "<group>"; };
-		C1000000000000000000000C /* EagleShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EagleShortcuts.swift; sourceTree = "<group>"; };
 		C10000000000000000000006 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C10000000000000000000007 /* EagleInbox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EagleInbox.entitlements; sourceTree = "<group>"; };
 		C10000000000000000000008 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C10000000000000000000009 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		C1000000000000000000000A /* IMG_0001.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_0001.jpg; sourceTree = "<group>"; };
 		C1000000000000000000000B /* IMG_0111.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_0111.jpg; sourceTree = "<group>"; };
+		C1000000000000000000000C /* EagleShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EagleShortcuts.swift; sourceTree = "<group>"; };
 		C1000000000000000000000D /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		C1000000000000000000000E /* AppShortcuts.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = AppShortcuts.xcstrings; sourceTree = "<group>"; };
+		C1000000000000000000000F /* ProPurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProPurchaseManager.swift; sourceTree = "<group>"; };
+		C10000000000000000000010 /* ProUpgradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProUpgradeView.swift; sourceTree = "<group>"; };
 		C10000000000000000000011 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		C10000000000000000000012 /* ShareMediaLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareMediaLoader.swift; sourceTree = "<group>"; };
 		C10000000000000000000013 /* ShareUploadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareUploadViewModel.swift; sourceTree = "<group>"; };
@@ -133,8 +139,10 @@
 		C10000000000000000000030 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		C10000000000000000000031 /* EagleInbox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EagleInbox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C10000000000000000000032 /* EagleInboxShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = EagleInboxShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		C10000000000000000000033 /* ProEntitlementStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProEntitlementStore.swift; sourceTree = "<group>"; };
 		C10000000000000000000041 /* ConnectionsNavigationUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionsNavigationUITests.swift; sourceTree = "<group>"; };
 		C10000000000000000000042 /* EagleInboxUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EagleInboxUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D6684D9F302D910F00D3CC05 /* EagleInboxProducts.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = EagleInboxProducts.storekit; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +173,7 @@
 		D10000000000000000000001 = {
 			isa = PBXGroup;
 			children = (
+				D6684D9F302D910F00D3CC05 /* EagleInboxProducts.storekit */,
 				D10000000000000000000002 /* EagleInbox */,
 				D10000000000000000000003 /* EagleInboxShare */,
 				D10000000000000000000006 /* EagleInboxUITests */,
@@ -182,6 +191,8 @@
 				C10000000000000000000004 /* SettingsView.swift */,
 				C10000000000000000000005 /* UploadView.swift */,
 				C1000000000000000000000C /* EagleShortcuts.swift */,
+				C1000000000000000000000F /* ProPurchaseManager.swift */,
+				C10000000000000000000010 /* ProUpgradeView.swift */,
 				C1000000000000000000000E /* AppShortcuts.xcstrings */,
 				C1000000000000000000000D /* InfoPlist.xcstrings */,
 				C10000000000000000000008 /* Assets.xcassets */,
@@ -226,9 +237,20 @@
 				C1000000000000000000002D /* ConnectionEditorDraft.swift */,
 				C1000000000000000000002E /* ConnectionEditorComponents.swift */,
 				C1000000000000000000002F /* TagSelectionView.swift */,
+				C10000000000000000000033 /* ProEntitlementStore.swift */,
 				C10000000000000000000030 /* Localizable.xcstrings */,
 			);
 			path = Shared;
+			sourceTree = "<group>";
+		};
+		D10000000000000000000005 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C10000000000000000000031 /* EagleInbox.app */,
+				C10000000000000000000032 /* EagleInboxShare.appex */,
+				C10000000000000000000042 /* EagleInboxUITests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		D10000000000000000000006 /* EagleInboxUITests */ = {
@@ -246,16 +268,6 @@
 				C1000000000000000000000B /* IMG_0111.jpg */,
 			);
 			path = ScreenshotFixtures;
-			sourceTree = "<group>";
-		};
-		D10000000000000000000005 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C10000000000000000000031 /* EagleInbox.app */,
-				C10000000000000000000032 /* EagleInboxShare.appex */,
-				C10000000000000000000042 /* EagleInboxUITests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -403,6 +415,8 @@
 				A10000000000000000000004 /* SettingsView.swift in Sources */,
 				A10000000000000000000005 /* UploadView.swift in Sources */,
 				A10000000000000000000006 /* EagleShortcuts.swift in Sources */,
+				A10000000000000000000007 /* ProPurchaseManager.swift in Sources */,
+				A10000000000000000000008 /* ProUpgradeView.swift in Sources */,
 				A10000000000000000000011 /* SharedIdentifiers.swift in Sources */,
 				A10000000000000000000012 /* EagleConnection.swift in Sources */,
 				A10000000000000000000013 /* EagleClientError.swift in Sources */,
@@ -418,6 +432,7 @@
 				A1000000000000000000001D /* ConnectionEditorDraft.swift in Sources */,
 				A1000000000000000000001E /* ConnectionEditorComponents.swift in Sources */,
 				A1000000000000000000001F /* TagSelectionView.swift in Sources */,
+				A10000000000000000000020 /* ProEntitlementStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,6 +459,7 @@
 				B1000000000000000000001D /* ConnectionEditorDraft.swift in Sources */,
 				B1000000000000000000001E /* ConnectionEditorComponents.swift in Sources */,
 				B1000000000000000000001F /* TagSelectionView.swift in Sources */,
+				B10000000000000000000020 /* ProEntitlementStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

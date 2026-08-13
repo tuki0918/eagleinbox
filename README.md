@@ -6,7 +6,7 @@
 
 Eagle Inbox is an iOS app for sending photos, files, URLs, and other supported media from your device to [Eagle](https://eagle.cool/) over the same local network or to an Eagle API-compatible endpoint.
 
-You can also send items directly from the share sheet in Photos, Files, Safari, and other apps, or from Apple Shortcuts and the iPhone Action Button.
+You can also send items directly from the share sheet in Photos, Files, Safari, and other apps. Eagle Inbox Pro unlocks Apple Shortcuts, the iPhone Action Button, and additional saved connections with one non-subscription purchase.
 
 <p align="center">
   <img src="./Docs/AppStore/Final/01-send-items.png" alt="Send photos, files, and URLs straight to Eagle" width="23%">
@@ -58,9 +58,9 @@ Tap `Send to Eagle` when the queue is ready. You can also open Eagle Inbox from 
 
 Allow local network access when prompted. Notifications are optional and do not affect uploads.
 
-### 4. Use Shortcuts or the Action Button
+### 4. Unlock Shortcuts or the Action Button with Pro
 
-Eagle Inbox provides five actions in Apple Shortcuts:
+Eagle Inbox Pro provides five actions in Apple Shortcuts:
 
 - `Send URLs to Eagle` saves HTTP and HTTPS URLs as Eagle bookmarks
 - `Send URLs to Eagle with Tags, Annotation` saves URLs with optional tags and an optional annotation
@@ -79,12 +79,15 @@ All send actions use the connection currently selected in Eagle Inbox and run wi
 - Send photos, videos, audio, PDFs, and URLs to Eagle
 - Connect to Eagle or a compatible endpoint over HTTP or HTTPS
 - Add items from the share sheet
-- Send items from Apple Shortcuts and Action Button workflows
-- Save and switch between multiple connections
+- Save one connection and use all core upload and metadata features for free
+- Send items from Apple Shortcuts and Action Button workflows with Eagle Inbox Pro
+- Save and switch between unlimited connections with Eagle Inbox Pro
 - Apply folders, an annotation, and tags to an entire batch
 - Preview queued items with thumbnails, cancel uploads, and retry failures
 - Verify the destination Eagle library before uploading
 - Use the app, share extension, notifications, and Shortcuts in English or Japanese
+
+Eagle Inbox Pro is a one-time purchase, not a subscription. The free app includes one connection, direct uploads, the share extension, batch uploads, folders, annotations, and tags.
 
 ## Requirements
 

@@ -1182,6 +1182,7 @@ private struct ShareConnectionsView: View {
     @ObservedObject var model: ShareUploadViewModel
     @State private var navigationPath: [ShareConnectionEditorRoute] = []
     @State private var pendingProfileID: UUID?
+    @State private var isConnectionManagementAlertPresented = false
     let onSelectionConfirmed: (UUID) -> Void
 
     var body: some View {
@@ -1207,23 +1208,53 @@ private struct ShareConnectionsView: View {
                             }
 
                             Button {
-                                showEditor(for: .newDefault(), isNew: true)
+                                requestNewConnection()
                             } label: {
-                                Label("Add Connection", systemImage: "plus.circle.fill")
-                                    .frame(
-                                        maxWidth: .infinity,
-                                        minHeight: 44,
-                                        alignment: .leading
+                                HStack(spacing: 12) {
+                                    Label(
+                                        model.canAddConnection
+                                            ? String(localized: "Add Connection")
+                                            : String(localized: "Manage Additional Connections"),
+                                        systemImage: model.canAddConnection
+                                            ? "plus.circle.fill"
+                                            : "arrow.up.forward.app"
                                     )
-                                    .contentShape(Rectangle())
+                                    Spacer(minLength: 8)
+                                }
+                                .frame(
+                                    maxWidth: .infinity,
+                                    minHeight: 44,
+                                    alignment: .leading
+                                )
+                                .contentShape(Rectangle())
                             }
                             .buttonStyle(.plain)
                             .foregroundStyle(Color.accentColor)
                             .disabled(isBusy)
+                            .accessibilityLabel(
+                                model.canAddConnection
+                                    ? String(localized: "Add Connection")
+                                    : String(
+                                        localized: "Manage Additional Connections in Eagle Inbox"
+                                    )
+                            )
+                            .accessibilityHint(
+                                model.canAddConnection
+                                    ? String(localized: "Opens the connection editor.")
+                                    : String(
+                                        localized: "Open Eagle Inbox to manage additional connections."
+                                    )
+                            )
                         } header: {
                             Text("Saved Connections")
                         } footer: {
-                            Text("Choose a connection, then tap Select.")
+                            if model.hasProAccess {
+                                Text("Choose a connection, then tap Select.")
+                            } else {
+                                Text(
+                                    "Additional connections are managed in the Eagle Inbox app."
+                                )
+                            }
                         }
                     }
                 }
@@ -1249,12 +1280,28 @@ private struct ShareConnectionsView: View {
                 }
             }
         }
+        .alert(
+            "Open Eagle Inbox",
+            isPresented: $isConnectionManagementAlertPresented
+        ) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(
+                "Additional connections are managed in the Eagle Inbox app. Your current connection is still available."
+            )
+        }
     }
 
     private func connectionRow(_ profile: EagleConnectionProfile) -> some View {
-        HStack(spacing: 12) {
+        let isLocked = !model.canSelectProfile(profile.id)
+
+        return HStack(spacing: 12) {
             Button {
-                pendingProfileID = profile.id
+                if isLocked {
+                    isConnectionManagementAlertPresented = true
+                } else {
+                    pendingProfileID = profile.id
+                }
             } label: {
                 HStack(spacing: 12) {
                     if isTesting(profile) {
@@ -1262,14 +1309,16 @@ private struct ShareConnectionsView: View {
                             .frame(width: 22, height: 22)
                             .tint(Color.accentColor)
                     } else {
-                        Image(
-                            systemName: pendingSelectionID == profile.id
-                                ? "checkmark.circle.fill"
-                                : "circle"
-                        )
+                        Image(systemName: isLocked
+                            ? "lock.fill"
+                            : pendingSelectionID == profile.id
+                            ? "checkmark.circle.fill"
+                            : "circle")
                         .font(.title3)
                         .foregroundStyle(
-                            pendingSelectionID == profile.id
+                            isLocked
+                                ? Color.secondary
+                                : pendingSelectionID == profile.id
                                 ? Color.accentColor
                                 : Color.secondary
                         )
@@ -1295,10 +1344,20 @@ private struct ShareConnectionsView: View {
                     ? String(localized: "Testing \(profile.displayTitle)")
                     : pendingSelectionID == profile.id
                     ? String(localized: "\(profile.displayTitle), selected")
+                    : isLocked
+                    ? String(
+                        localized: "\(profile.displayTitle), manage in Eagle Inbox"
+                    )
                     : String(localized: "Select \(profile.displayTitle)")
             )
             .accessibilityValue(profile.connection.displayEndpoint)
-            .accessibilityHint("Tap Select to confirm this connection.")
+            .accessibilityHint(
+                isLocked
+                    ? String(
+                        localized: "Open Eagle Inbox to manage this connection."
+                    )
+                    : String(localized: "Tap Select to confirm this connection.")
+            )
 
             Button {
                 showEditor(for: profile, isNew: false)
@@ -1337,16 +1396,24 @@ private struct ShareConnectionsView: View {
         )
     }
 
+    private func requestNewConnection() {
+        guard model.canAddConnection else {
+            isConnectionManagementAlertPresented = true
+            return
+        }
+        showEditor(for: .newDefault(), isNew: true)
+    }
+
     private var pendingSelectionID: UUID? {
         if let pendingProfileID,
-           model.profiles.contains(where: { $0.id == pendingProfileID }) {
+           model.canSelectProfile(pendingProfileID) {
             return pendingProfileID
         }
         if let selectedProfileID = model.selectedProfileID,
-           model.profiles.contains(where: { $0.id == selectedProfileID }) {
+           model.canSelectProfile(selectedProfileID) {
             return selectedProfileID
         }
-        return model.profiles.first?.id
+        return model.profiles.first(where: { model.canSelectProfile($0.id) })?.id
     }
 
     private var isBusy: Bool {
@@ -1355,10 +1422,14 @@ private struct ShareConnectionsView: View {
 
     private func confirmSelection() {
         guard !isBusy,
-              let profileID = pendingSelectionID,
-              model.selectProfile(profileID) else {
+              let profileID = pendingSelectionID else {
             return
         }
+        guard model.canSelectProfile(profileID) else {
+            isConnectionManagementAlertPresented = true
+            return
+        }
+        guard model.selectProfile(profileID) else { return }
         onSelectionConfirmed(profileID)
         dismiss()
     }
@@ -1373,6 +1444,7 @@ private struct ShareConnectionsView: View {
     private func horizontalContentInset(for width: CGFloat) -> CGFloat {
         max(16, (width - 760) / 2)
     }
+
 }
 
 private struct ShareConnectionEditorView: View {

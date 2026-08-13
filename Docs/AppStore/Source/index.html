@@ -150,6 +150,51 @@
       transform: translateY(5px);
     }
 
+    .pro-badge {
+      position: absolute;
+      top: 48px;
+      left: 48px;
+      z-index: 1;
+      min-width: 220px;
+      height: 96px;
+      padding: 0 28px;
+      border: 0;
+      border-radius: 999px;
+      background: #171a2b;
+      color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Zen Maru Gothic", sans-serif;
+      font-size: 0;
+      text-align: center;
+    }
+
+    .pro-badge::before {
+      content: "♛";
+      display: inline-block;
+      margin-right: 14px;
+      color: #fbbf24;
+      font-size: 42px;
+      line-height: 1;
+      transform: translateY(-4px);
+    }
+
+    .pro-badge::after {
+      content: attr(data-label);
+      display: inline-block;
+      color: #fff;
+      font-size: 40px;
+      font-weight: 900;
+      letter-spacing: 0.125em;
+      line-height: 1;
+      transform: translateY(-6px);
+    }
+
+    .pro-badge[hidden] {
+      display: none;
+    }
+
     .screen-wrap {
       position: absolute;
       left: 165px;
@@ -229,6 +274,7 @@
 </head>
 <body>
   <main class="canvas">
+    <div class="pro-badge" id="pro-badge" hidden></div>
     <header>
       <h1 id="headline"></h1>
       <p class="subtitle" id="subtitle"></p>
@@ -277,6 +323,7 @@
         theme: "sky",
         headline: "One press.\nStraight to Eagle.",
         subtitle: "Run a Shortcut from the Action Button.",
+        badge: "PRO",
         layout: "single",
         screen: "../../Screenshots/action-button-shortcut.png"
       }
@@ -290,6 +337,9 @@
     document.body.dataset.singleLine = String(!slide.headline.includes("\n"));
     document.getElementById("headline").textContent = slide.headline;
     document.getElementById("subtitle").textContent = slide.subtitle;
+    const badge = document.getElementById("pro-badge");
+    badge.dataset.label = slide.badge || "";
+    badge.hidden = !slide.badge;
     document.getElementById("screen").src = slide.screen;
     document.getElementById("screen-left").src = slide.screen;
     document.getElementById("screen-right").src = slide.secondaryScreen || slide.screen;

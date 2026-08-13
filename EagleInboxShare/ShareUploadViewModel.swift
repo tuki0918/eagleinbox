@@ -83,7 +83,8 @@ final class ShareUploadViewModel: ObservableObject {
     @Published private var connectionTestStates: [UUID: ConnectionTestState] = [:]
 
     private weak var extensionContext: NSExtensionContext?
-    private let settingsStore = SharedSettingsStore()
+    private let settingsStore: SharedSettingsStore
+    private let entitlementStore: ProEntitlementStore
     private let uploadNotifier: any UploadNotifying
     private let temporaryFileOwner = ShareTemporaryFileOwner()
     private var folderLoadToken: UUID?
@@ -99,9 +100,13 @@ final class ShareUploadViewModel: ObservableObject {
 
     init(
         extensionContext: NSExtensionContext?,
+        settingsStore: SharedSettingsStore = SharedSettingsStore(),
+        entitlementStore: ProEntitlementStore = ProEntitlementStore(),
         uploadNotifier: any UploadNotifying = SystemUploadNotifier()
     ) {
         self.extensionContext = extensionContext
+        self.settingsStore = settingsStore
+        self.entitlementStore = entitlementStore
         self.uploadNotifier = uploadNotifier
         let snapshot = settingsStore.load()
         profiles = snapshot.profiles
@@ -111,6 +116,26 @@ final class ShareUploadViewModel: ObservableObject {
     var selectedProfile: EagleConnectionProfile? {
         guard let selectedProfileID else { return profiles.first }
         return profiles.first(where: { $0.id == selectedProfileID }) ?? profiles.first
+    }
+
+    var hasProAccess: Bool {
+        entitlementStore.hasProAccess
+    }
+
+    var canAddConnection: Bool {
+        ProAccessPolicy.canAddConnection(
+            profileCount: profiles.count,
+            hasProAccess: hasProAccess
+        )
+    }
+
+    func canSelectProfile(_ id: UUID) -> Bool {
+        ProAccessPolicy.canSelectConnection(
+            id,
+            profiles: profiles,
+            selectedProfileID: selectedProfileID,
+            hasProAccess: hasProAccess
+        )
     }
 
     func connectionTestState(for profile: EagleConnectionProfile) -> ConnectionTestState {
@@ -142,8 +167,13 @@ final class ShareUploadViewModel: ObservableObject {
 
     func reloadProfiles() {
         guard !isUploading, !isAddingItems, !isTestingConnection else { return }
+        applySettingsSnapshot(settingsStore.load())
+    }
+
+    private func applySettingsSnapshot(
+        _ snapshot: ConnectionSettingsSnapshot
+    ) {
         let previousProfile = selectedProfile
-        let snapshot = settingsStore.load()
         profiles = snapshot.profiles
         selectedProfileID = snapshot.selectedProfileID
         pendingUploadLibraryMismatch = nil
@@ -169,23 +199,26 @@ final class ShareUploadViewModel: ObservableObject {
               profiles.contains(where: { $0.id == id }) else {
             return false
         }
-        pendingUploadLibraryMismatch = nil
-        guard selectedProfileID != id else { return true }
-        let previousSelectedProfileID = selectedProfileID
-        selectedProfileID = id
-        connectionMessage = nil
-        if let persistenceError = persistProfiles() {
-            connectionMessage = persistenceError.localizedDescription
-            selectedProfileID = previousSelectedProfileID
+        guard canSelectProfile(id) else {
+            connectionMessage = String(
+                localized: "Additional connections are managed in Eagle Inbox."
+            )
             return false
         }
-        if let previousSelectedProfileID {
-            clearSendConnectionFailure(for: previousSelectedProfileID)
+        pendingUploadLibraryMismatch = nil
+        do {
+            let snapshot = try settingsStore.selectProfile(
+                id,
+                allowsChangingSelection: hasProAccess
+            )
+            applySettingsSnapshot(snapshot)
+            connectionMessage = nil
+            operationMessage = nil
+            return true
+        } catch {
+            handleSettingsMutationFailure(error)
+            return false
         }
-        operationMessage = nil
-        didLastSendFail = false
-        resetFolders()
-        return true
     }
 
     func dismissOperationMessage(ifMatching currentMessage: String) {
@@ -204,6 +237,23 @@ final class ShareUploadViewModel: ObservableObject {
         verifiedConnection: EagleConnection? = nil,
         connectionWasVerified: Bool = false
     ) -> Bool {
+        let baseline = profiles.first(where: { $0.id == profile.id })
+        return persistProfile(
+            profile,
+            baseline: baseline,
+            isNew: baseline == nil,
+            verifiedConnection: verifiedConnection,
+            connectionWasVerified: connectionWasVerified
+        )
+    }
+
+    private func persistProfile(
+        _ profile: EagleConnectionProfile,
+        baseline: EagleConnectionProfile?,
+        isNew: Bool,
+        verifiedConnection: EagleConnection?,
+        connectionWasVerified: Bool
+    ) -> Bool {
         guard profile.connection.isValid else {
             connectionMessage = EagleClientError.invalidConnection.localizedDescription
             return false
@@ -213,53 +263,61 @@ final class ShareUploadViewModel: ObservableObject {
         }
         pendingUploadLibraryMismatch = nil
 
-        let previousProfiles = profiles
         var normalized = profile
         normalized.name = profile.displayName
         normalized.connection = profile.connection.normalizedForStorage
         let normalizedVerifiedConnection = verifiedConnection?.normalizedForStorage
-        let isNewProfile = !profiles.contains(where: { $0.id == profile.id })
         var connectionChanged = false
         var expectedLibraryChanged = false
-        if let index = profiles.firstIndex(where: { $0.id == profile.id }) {
-            let existingProfile = profiles[index]
+        if !isNew, let baseline {
             let canReplaceExpectedLibrary = normalizedVerifiedConnection == normalized.connection
                 && normalized.expectedLibraryName != nil
                 && normalized.expectedLibraryName == normalized.libraryName
-            if let expectedLibraryName = existingProfile.expectedLibraryName,
+            if let expectedLibraryName = baseline.expectedLibraryName,
                !canReplaceExpectedLibrary {
                 normalized.expectedLibraryName = expectedLibraryName
             }
-            expectedLibraryChanged = existingProfile.expectedLibraryName
+            expectedLibraryChanged = baseline.expectedLibraryName
                 != normalized.expectedLibraryName
-            if existingProfile.connection != normalized.connection {
-                connectionChanged = true
-            }
+            connectionChanged = baseline.connection != normalized.connection
         }
         if normalizedVerifiedConnection != normalized.connection {
             normalized.libraryName = nil
         }
-        if let index = profiles.firstIndex(where: { $0.id == profile.id }) {
-            profiles[index] = normalized
-        } else {
-            profiles.append(normalized)
+
+        let snapshot: ConnectionSettingsSnapshot
+        do {
+            if isNew {
+                snapshot = try settingsStore.insertProfile(
+                    normalized,
+                    maximumProfileCount: hasProAccess
+                        ? nil
+                        : ProAccessPolicy.freeConnectionLimit
+                )
+            } else if let baseline {
+                snapshot = try settingsStore.replaceProfile(
+                    normalized,
+                    baseline: baseline
+                )
+            } else {
+                throw SharedSettingsMutationError.changedOrRemoved
+            }
+        } catch {
+            handleSettingsMutationFailure(error)
+            return false
         }
+
+        applySettingsSnapshot(snapshot)
         let isSelected = selectedProfileID == normalized.id
         let shouldClearSendFailure = isSelected
             && (connectionChanged || expectedLibraryChanged)
-        let shouldResetFolders = isSelected
-            && (connectionChanged || expectedLibraryChanged)
-        if let persistenceError = persistProfiles() {
-            connectionMessage = persistenceError.localizedDescription
-            profiles = previousProfiles
-            return false
-        }
+        let shouldResetFolders = shouldClearSendFailure
         if connectionWasVerified,
            normalizedVerifiedConnection == normalized.connection,
            normalized.libraryName != nil {
             connectionTestStates[normalized.id] = .succeeded
             clearSendConnectionFailure(for: normalized.id)
-        } else if isNewProfile || connectionChanged || expectedLibraryChanged {
+        } else if isNew || connectionChanged || expectedLibraryChanged {
             connectionTestStates.removeValue(forKey: normalized.id)
         }
         if shouldResetFolders {
@@ -281,17 +339,10 @@ final class ShareUploadViewModel: ObservableObject {
         verifiedConnection: EagleConnection?,
         connectionWasVerified: Bool
     ) -> Bool {
-        let storedProfile = settingsStore.load().profiles.first(where: {
-            $0.id == baseline.id
-        })
-        guard isNew ? storedProfile == nil : storedProfile == baseline else {
-            connectionMessage = String(
-                localized: "This connection was changed elsewhere. Reopen it and try again."
-            )
-            return false
-        }
-        return upsertProfile(
+        persistProfile(
             profile,
+            baseline: isNew ? nil : baseline,
+            isNew: isNew,
             verifiedConnection: verifiedConnection,
             connectionWasVerified: connectionWasVerified
         )
@@ -302,25 +353,15 @@ final class ShareUploadViewModel: ObservableObject {
             return
         }
         pendingUploadLibraryMismatch = nil
-        let previousProfiles = profiles
-        let previousSelectedProfileID = selectedProfileID
-        profiles.removeAll(where: { $0.id == id })
-        let didDeleteSelectedProfile = selectedProfileID == id
-        if selectedProfileID == id {
-            selectedProfileID = profiles.first?.id
-        }
-        if let persistenceError = persistProfiles() {
-            connectionMessage = persistenceError.localizedDescription
-            profiles = previousProfiles
-            selectedProfileID = previousSelectedProfileID
+        do {
+            let snapshot = try settingsStore.deleteProfile(id)
+            applySettingsSnapshot(snapshot)
+        } catch {
+            handleSettingsMutationFailure(error)
             return
         }
         connectionTestStates.removeValue(forKey: id)
-        if didDeleteSelectedProfile {
-            clearSendConnectionFailure(for: id)
-            didLastSendFail = false
-            resetFolders()
-        }
+        clearSendConnectionFailure(for: id)
     }
 
     var hasLoadedFoldersForSelectedProfile: Bool {
@@ -564,26 +605,40 @@ final class ShareUploadViewModel: ObservableObject {
                 return
             }
 
-            let previousProfile = profiles[index]
             let previousLibraryName = profiles[index].libraryName
-            if profiles[index].expectedLibraryName == nil {
-                profiles[index].expectedLibraryName = status.libraryName
+            let updatedSnapshot: ConnectionSettingsSnapshot
+            do {
+                updatedSnapshot = try settingsStore
+                    .recordSuccessfulConnectionTest(
+                        profileID: id,
+                        testedConnection: testedConnection,
+                        testedExpectedLibraryName: testedExpectedLibraryName,
+                        detectedLibraryName: status.libraryName
+                    )
+            } catch {
+                let message: String
+                if error is SharedSettingsMutationError {
+                    message = String(
+                        localized: "This connection was changed elsewhere. Reopen it and test again."
+                    )
+                } else {
+                    message = error.localizedDescription
+                }
+                applySettingsSnapshot(settingsStore.load())
+                if profiles.contains(where: { $0.id == id }) {
+                    connectionTestStates[id] = .failed(message)
+                    connectionMessage = message
+                    if sendConnectionFailure?.profileID == id {
+                        applySendConnectionFailure(message, profileID: id)
+                    }
+                }
+                return
             }
-            profiles[index].libraryName = status.libraryName
+            applySettingsSnapshot(updatedSnapshot)
             if let previousLibraryName,
                previousLibraryName != status.libraryName,
                selectedProfile?.id == id {
                 resetFolders()
-            }
-            if let persistenceError = persistProfiles() {
-                profiles[index] = previousProfile
-                let message = persistenceError.localizedDescription
-                connectionTestStates[id] = .failed(message)
-                connectionMessage = message
-                if sendConnectionFailure?.profileID == id {
-                    applySendConnectionFailure(message, profileID: id)
-                }
-                return
             }
             connectionTestStates[id] = .succeeded
             connectionMessage = nil
@@ -1027,17 +1082,19 @@ final class ShareUploadViewModel: ObservableObject {
         )
     }
 
-    private func persistProfiles() -> (any Error)? {
-        do {
-            try settingsStore.save(
-                ConnectionSettingsSnapshot(
-                    profiles: profiles,
-                    selectedProfileID: selectedProfileID
-                )
+    private func handleSettingsMutationFailure(_ error: Error) {
+        applySettingsSnapshot(settingsStore.load())
+        switch error as? SharedSettingsMutationError {
+        case .profileLimitReached, .selectionNotAllowed:
+            connectionMessage = String(
+                localized: "Additional connections are managed in Eagle Inbox."
             )
-            return nil
-        } catch {
-            return error
+        case .alreadyExists, .changedOrRemoved:
+            connectionMessage = String(
+                localized: "This connection was changed elsewhere. Reopen it and try again."
+            )
+        case nil:
+            connectionMessage = error.localizedDescription
         }
     }
 

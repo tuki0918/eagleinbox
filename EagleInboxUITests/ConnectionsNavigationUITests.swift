@@ -53,6 +53,78 @@ final class ConnectionsNavigationUITests: XCTestCase {
         XCTAssertEqual(nameField.value as? String, "My Eagle UITEST")
     }
 
+    func testSecondConnectionOpensProUpgrade() {
+        launchApp(seedConnection: true)
+        openConnections()
+
+        app.buttons["connections.add"].tap()
+
+        XCTAssertTrue(
+            app.descendants(matching: .any)["pro.title"].waitForExistence(
+                timeout: Self.waitTimeout
+            )
+        )
+        XCTAssertTrue(app.staticTexts["Unlimited Connections"].exists)
+        XCTAssertTrue(
+            app.staticTexts[
+                "Unlock unlimited connections and all Shortcut actions."
+            ].exists
+        )
+        XCTAssertTrue(app.staticTexts["All Shortcut Actions"].exists)
+        XCTAssertTrue(
+            app.staticTexts[
+                "Send files and URLs with tags and an annotation."
+            ].exists
+        )
+        XCTAssertTrue(
+            app.staticTexts[
+                "Send files and URLs without opening the app."
+            ].exists
+        )
+        XCTAssertTrue(app.buttons["pro.purchase"].exists)
+        XCTAssertTrue(app.buttons["pro.restore"].exists)
+        XCTAssertTrue(app.buttons["Restore Purchases"].exists)
+
+        app.buttons["Not Now"].tap()
+        XCTAssertTrue(
+            app.navigationBars["Connections"].waitForExistence(
+                timeout: Self.waitTimeout
+            )
+        )
+    }
+
+    func testJapaneseProUpgradeLocalization() {
+        launchApp(
+            seedConnection: true,
+            language: "ja",
+            locale: "ja_JP"
+        )
+        openConnections(expectedTitle: "接続先")
+        app.buttons["connections.add"].tap()
+
+        XCTAssertTrue(
+            app.descendants(matching: .any)["pro.title"].waitForExistence(
+                timeout: Self.waitTimeout
+            )
+        )
+        for text in [
+            "接続先を無制限に追加し、すべてのショートカット機能を利用できます。",
+            "Eagleの接続先をいくつでも登録・切り替えできます。",
+            "ショートカット機能",
+            "タグや注釈を付け、ファイルやURLを送信できます。",
+            "アプリを開かず、ファイルやURLを送信できます。",
+            "買い切りで、継続料金はかかりません。"
+        ] {
+            XCTAssertTrue(
+                app.staticTexts[text].waitForExistence(
+                    timeout: Self.waitTimeout
+                ),
+                "Expected localized Pro copy: \(text)"
+            )
+        }
+        XCTAssertTrue(app.buttons["購入を復元"].exists)
+    }
+
     func testHTTPSSelectionRequiresConfirmation() {
         launchApp()
         openConnections()
@@ -266,7 +338,7 @@ final class ConnectionsNavigationUITests: XCTestCase {
     func testShareMenuShowsUploadToEagle() {
         // Launch the containing app once so iOS installs its bundled share
         // extension before Safari builds the activity list.
-        launchApp()
+        launchApp(pro: true)
         app.terminate()
 
         let safari = XCUIApplication(
@@ -313,7 +385,7 @@ final class ConnectionsNavigationUITests: XCTestCase {
     }
 
     func testReadmeAddItemsMenuAndSeededQueueScreenshots() {
-        launchApp()
+        launchApp(pro: true)
         XCTAssertTrue(
             app.staticTexts["Connection Required"].waitForExistence(
                 timeout: Self.waitTimeout
@@ -342,7 +414,7 @@ final class ConnectionsNavigationUITests: XCTestCase {
         attachScreenshot(named: "connections-empty")
 
         app.terminate()
-        launchApp(seedConnection: true)
+        launchApp(seedConnection: true, pro: true)
 
         let addItemsButton = app.buttons["Add Items"]
         XCTAssertTrue(
@@ -359,7 +431,7 @@ final class ConnectionsNavigationUITests: XCTestCase {
         attachScreenshot(named: "add-items-menu")
 
         app.terminate()
-        launchApp(seedConnection: true)
+        launchApp(seedConnection: true, pro: true)
 
         let connectionStatusButton = app.buttons["Test Connection"]
         XCTAssertTrue(
@@ -402,7 +474,11 @@ final class ConnectionsNavigationUITests: XCTestCase {
         attachScreenshot(named: "metadata-expanded")
 
         app.terminate()
-        launchApp(seedConnection: true, seedUploadQueue: true)
+        launchApp(
+            seedConnection: true,
+            seedUploadQueue: true,
+            pro: true
+        )
 
         let queuedItemCount = app.staticTexts["upload.queue.count"]
         XCTAssertTrue(
@@ -574,7 +650,11 @@ final class ConnectionsNavigationUITests: XCTestCase {
     }
 
     func testReadmeLibraryMismatchScreenshot() {
-        launchApp(seedConnection: true, seedLibraryMismatch: true)
+        launchApp(
+            seedConnection: true,
+            seedLibraryMismatch: true,
+            pro: true
+        )
 
         let warning = app.staticTexts.matching(
             NSPredicate(format: "label CONTAINS %@", "Library mismatch.")
@@ -592,7 +672,8 @@ final class ConnectionsNavigationUITests: XCTestCase {
         launchApp(
             seedConnection: true,
             seedUploadQueue: true,
-            seedUploadLibraryMismatchDialog: true
+            seedUploadLibraryMismatchDialog: true,
+            pro: true
         )
 
         let alert = app.alerts["Library Mismatch"]
@@ -617,7 +698,7 @@ final class ConnectionsNavigationUITests: XCTestCase {
     }
 
     func testTagSelectionSupportsSuggestionsAndNewTags() {
-        launchApp(seedConnection: true, seedTags: true)
+        launchApp(seedConnection: true, seedTags: true, pro: true)
 
         let metadataButton = app.buttons["Metadata"]
         XCTAssertTrue(
@@ -719,7 +800,7 @@ final class ConnectionsNavigationUITests: XCTestCase {
     }
 
     func testFolderSelectionShowsSelectedRecentAndAllSections() {
-        launchApp(seedConnection: true, seedFolders: true)
+        launchApp(seedConnection: true, seedFolders: true, pro: true)
 
         let metadataButton = app.buttons["Metadata"]
         XCTAssertTrue(
@@ -827,6 +908,7 @@ final class ConnectionsNavigationUITests: XCTestCase {
         seedUnverifiedConnection: Bool = false,
         seedConnectionFailure: Bool = false,
         seedRecoveredSendConnection: Bool = false,
+        pro: Bool = false,
         language: String = "en",
         locale: String = "en_US"
     ) {
@@ -872,6 +954,9 @@ final class ConnectionsNavigationUITests: XCTestCase {
                 "--ui-testing-seeded-recovered-send-connection"
             )
         }
+        if pro {
+            app.launchArguments.append("--ui-testing-pro")
+        }
         app.launch()
     }
 
@@ -889,7 +974,7 @@ final class ConnectionsNavigationUITests: XCTestCase {
     private func openSeededConnectionEditor(
         captureScreenshots: Bool = false
     ) {
-        launchApp(seedConnection: true)
+        launchApp(seedConnection: true, pro: captureScreenshots)
         XCTAssertTrue(
             app.buttons["upload.connection.open"].waitForExistence(
                 timeout: Self.waitTimeout

@@ -11,6 +11,7 @@ private let canvasSize = NSSize(width: canvasWidth, height: canvasHeight)
 private struct Slide {
     let headline: String
     let subtitle: String
+    let badge: String?
     let source: String
     let secondarySource: String?
     let output: String
@@ -80,6 +81,73 @@ private func textWidth(
             string: text,
             attributes: [.font: font, .kern: tracking]
         ).size().width
+    )
+}
+
+private func drawBadge(
+    _ text: String,
+    top: CGFloat,
+    font: NSFont
+) {
+    let tracking: CGFloat = 4
+    let height: CGFloat = 96
+    let crownWidth: CGFloat = 42
+    let spacing: CGFloat = 14
+    let labelWidth = textWidth(text, font: font, tracking: tracking)
+    let contentWidth = crownWidth + spacing + labelWidth
+    let width = max(220, contentWidth + 56)
+    let x: CGFloat = 48
+    let rect = topRect(x, top, width, height)
+    let path = roundedPath(rect, radius: height / 2)
+
+    NSColor(hex: 0x171A2B).setFill()
+    path.fill()
+
+    let contentX = x + (width - contentWidth) / 2
+    let crownRect = topRect(contentX, top + 23, crownWidth, 42)
+    if let symbol = NSImage(
+        systemSymbolName: "crown.fill",
+        accessibilityDescription: nil
+    )?.withSymbolConfiguration(
+        NSImage.SymbolConfiguration(pointSize: 38, weight: .semibold)
+    ) {
+        let tintedSymbol = NSImage(size: crownRect.size)
+        tintedSymbol.lockFocus()
+        symbol.draw(
+            in: NSRect(origin: .zero, size: crownRect.size),
+            from: NSRect(origin: .zero, size: symbol.size),
+            operation: .sourceOver,
+            fraction: 1,
+            respectFlipped: false,
+            hints: [.interpolation: NSImageInterpolation.high]
+        )
+        NSGraphicsContext.current?.compositingOperation = .sourceIn
+        NSColor(hex: 0xFBBF24).setFill()
+        NSBezierPath(rect: NSRect(origin: .zero, size: crownRect.size)).fill()
+        tintedSymbol.unlockFocus()
+        tintedSymbol.draw(
+            in: crownRect,
+            from: NSRect(origin: .zero, size: tintedSymbol.size),
+            operation: .sourceOver,
+            fraction: 1,
+            respectFlipped: false,
+            hints: [.interpolation: NSImageInterpolation.high]
+        )
+    }
+
+    drawText(
+        text,
+        rect: topRect(
+            contentX + crownWidth + spacing,
+            top + 9,
+            labelWidth + 4,
+            66
+        ),
+        font: font,
+        color: NSColor.white,
+        lineHeight: 64,
+        tracking: tracking,
+        alignment: .left
     )
 }
 
@@ -165,7 +233,8 @@ private func render(
     slide: Slide,
     root: URL,
     headlineFont: NSFont,
-    subtitleFont: NSFont
+    subtitleFont: NSFont,
+    badgeFont: NSFont
 ) throws {
     let colorSpace = CGColorSpaceCreateDeviceRGB()
     let bitmapInfo = CGBitmapInfo.byteOrder32Big.rawValue | CGImageAlphaInfo.noneSkipLast.rawValue
@@ -230,6 +299,14 @@ private func render(
         tracking: subtitleTracking
     )
 
+    if let badge = slide.badge {
+        drawBadge(
+            badge,
+            top: 48,
+            font: badgeFont
+        )
+    }
+
     if let secondarySource = slide.secondarySource {
         let cardWidth: CGFloat = 820
         let innerWidth = cardWidth - 30
@@ -291,6 +368,10 @@ let subtitleFont = try loadFont(
     at: root.appendingPathComponent("Docs/AppStore/Source/Fonts/ZenMaruGothic-Bold.ttf"),
     size: 42
 )
+let badgeFont = try loadFont(
+    at: root.appendingPathComponent("Docs/AppStore/Source/Fonts/ZenMaruGothic-Black.ttf"),
+    size: 40
+)
 
 private let vividBackground = [
     NSColor(hex: 0x007A8A),
@@ -302,6 +383,7 @@ private let slides: [Slide] = [
     Slide(
         headline: "Straight to Eagle.",
         subtitle: "Pick your media and send it all together.",
+        badge: nil,
         source: "Docs/Screenshots/upload-queue-photo-url.png",
         secondarySource: nil,
         output: "Docs/AppStore/Final/01-send-items.png",
@@ -311,6 +393,7 @@ private let slides: [Slide] = [
     Slide(
         headline: "Quick access from\nthe Share Sheet.",
         subtitle: "Share photos, files, and web pages.",
+        badge: nil,
         source: "Docs/Screenshots/share-menu.png",
         secondarySource: nil,
         output: "Docs/AppStore/Final/02-share-sheet.png",
@@ -320,6 +403,7 @@ private let slides: [Slide] = [
     Slide(
         headline: "Tags and folders.",
         subtitle: "Apply Eagle tags and folders before sending.",
+        badge: nil,
         source: "Docs/Screenshots/folders-selected-recent-all.png",
         secondarySource: "Docs/Screenshots/tags-selected.png",
         output: "Docs/AppStore/Final/03-organize-tags.png",
@@ -329,6 +413,7 @@ private let slides: [Slide] = [
     Slide(
         headline: "One press.\nStraight to Eagle.",
         subtitle: "Run a Shortcut from the Action Button.",
+        badge: "PRO",
         source: "Docs/Screenshots/action-button-shortcut.png",
         secondarySource: nil,
         output: "Docs/AppStore/Final/04-action-button.png",
@@ -337,12 +422,26 @@ private let slides: [Slide] = [
     )
 ]
 
-for slide in slides {
+private let requestedOutput = CommandLine.arguments.dropFirst().first
+private let slidesToRender = requestedOutput.map { output in
+    slides.filter { $0.output.hasSuffix(output) }
+} ?? slides
+
+guard !slidesToRender.isEmpty else {
+    throw NSError(
+        domain: "EagleInboxStoreRender",
+        code: 8,
+        userInfo: [NSLocalizedDescriptionKey: "No slide matches \(requestedOutput ?? "")"]
+    )
+}
+
+for slide in slidesToRender {
     try render(
         slide: slide,
         root: root,
         headlineFont: headlineFont,
-        subtitleFont: subtitleFont
+        subtitleFont: subtitleFont,
+        badgeFont: badgeFont
     )
     print("Rendered \(slide.output)")
 }

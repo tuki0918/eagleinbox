@@ -18,10 +18,12 @@ private enum UploadFocusedInput: Hashable {
 
 struct UploadView: View {
     @EnvironmentObject private var model: AppModel
+    @EnvironmentObject private var purchases: ProPurchaseManager
     @AppStorage("upload.metadata-expanded") private var isMetadataExpanded = false
     @State private var isPhotoPickerPresented = false
     @State private var isFileImporterPresented = false
     @State private var isConnectionsPresented = false
+    @State private var isProUpgradePresented = false
     @State private var profileIDToTestAfterConnectionsDismiss: UUID?
     @State private var bookmarkURL = ""
     @State private var isBookmarkSheetPresented = false
@@ -51,6 +53,7 @@ struct UploadView: View {
                         for: .scrollContent
                     )
                     .navigationTitle("Eagle Inbox")
+                    .navigationBarTitleDisplayMode(.large)
                     .scrollDismissesKeyboard(.interactively)
                     .refreshable {
                         await refreshDestination()
@@ -96,6 +99,9 @@ struct UploadView: View {
                     ) {
                         bookmarkSheet
                     }
+                    .sheet(isPresented: $isProUpgradePresented) {
+                        ProUpgradeView()
+                    }
                     .onChange(of: photoSelection) { _, newValue in
                         guard !newValue.isEmpty else { return }
                         Task {
@@ -125,6 +131,26 @@ struct UploadView: View {
                         Text(mismatch.uploadConfirmationMessage)
                     }
                     .toolbar {
+                        if #available(iOS 26.0, *) {
+                            if !purchases.hasProAccess {
+                                ToolbarItem(placement: .largeTitle) {
+                                    HStack(alignment: .center, spacing: 8) {
+                                        Text("Eagle Inbox")
+                                            .font(.largeTitle.bold())
+                                        freePlanButton
+                                        Spacer(minLength: 0)
+                                    }
+                                    .frame(
+                                        maxWidth: .infinity,
+                                        alignment: .leading
+                                    )
+                                }
+                            }
+                        } else if !purchases.hasProAccess {
+                            ToolbarItem(placement: .topBarLeading) {
+                                freePlanButton
+                            }
+                        }
                         ToolbarItem(placement: .primaryAction) {
                             addItemsMenu
                         }
@@ -153,6 +179,21 @@ struct UploadView: View {
                 }
             }
         }
+    }
+
+    private var freePlanButton: some View {
+        Button {
+            isProUpgradePresented = true
+        } label: {
+            AccessPlanBadge(plan: .free)
+                .offset(y: 2)
+                .frame(minWidth: 44, minHeight: 44)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("Free plan")
+        .accessibilityHint("Opens the Pro upgrade.")
+        .accessibilityIdentifier("pro.open")
     }
 
     private var connectionSection: some View {

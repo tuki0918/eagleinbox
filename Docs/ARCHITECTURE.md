@@ -16,9 +16,9 @@ The main app and share extension are implemented as iOS apps.
 
 | Path / target | Responsibility |
 | --- | --- |
-| `EagleInbox/` | Main SwiftUI app, connection management, upload screen, and App Intents for Shortcuts |
+| `EagleInbox/` | Main SwiftUI app, StoreKit purchase flow, connection management, upload screen, and App Intents for Shortcuts |
 | `EagleInboxShare/` | iOS share extension and shared-content loading |
-| `Shared/` | Connection persistence, Keychain access, Eagle API client, shared models, and shared UI |
+| `Shared/` | Connection and Pro-state persistence, Keychain access, Eagle API client, shared models, and shared UI |
 | `EagleInboxUITests/` | XCUITests for Connections and the Connection Editor |
 | `Tests/CoreSmoke.swift` | Foundation-based smoke tests for shared logic |
 | `Design/` | App icon design source |
@@ -35,7 +35,10 @@ A connection stores a name, HTTP or HTTPS scheme, host, port, optional API token
 - Use the same connections in the main app and share extension
 - Reset folder selections and loaded folder and tag suggestions when the connection changes
 - Normalize the host and token before updating in-memory state and persistence
-- Compare the stored profile with the editor baseline before saving, so one target cannot overwrite a newer edit from the other target
+- Apply add, edit, select, delete, and connection-test updates as cross-process locked mutations against the latest stored snapshot
+- Compare only the edited profile with its stored baseline, preserve unrelated records and the latest selected ID, and remove a Keychain token only for an explicit deletion
+
+The free app can create and use one connection. Eagle Inbox Pro can create and switch between unlimited connections. If a free installation already contains multiple records, keep every record visible and editable, but allow only the currently selected record to be used. Never filter the persisted array to enforce this limit because saving a filtered array also removes the omitted profiles' Keychain tokens.
 
 Connection checks time out after five seconds. The main app checks again at launch, when returning to the foreground, after pull-to-refresh, and after confirming a connection selection. It also verifies the connection and library immediately before each upload.
 
@@ -78,15 +81,30 @@ The share extension uses the main app's connections through the App Group and Ke
 
 Messages for loading shared content, connection status, and folder retrieval are stored separately so one operation does not overwrite another operation's result. Closing the share view deletes temporary files retained for retry.
 
+## Eagle Inbox Pro
+
+Eagle Inbox Pro is the non-consumable in-app purchase `com.tuki0918.EagleInbox.pro`. It unlocks unlimited connections and all five App Intents; direct uploads, the share extension, batch uploads, folders, annotations, and tags remain free.
+
+- Treat verified StoreKit transactions in the main app as the source of truth
+- Process current entitlements, unfinished transactions, and transaction updates
+- Mirror only the verified Pro boolean and verification date to App Group `UserDefaults`
+- Let the share extension read that mirror without presenting purchase UI
+- Let every App Intent verify current StoreKit entitlements and refresh the mirror before doing any file or network work
+- Keep all App Shortcuts registered so existing workflows remain intact, then check Pro at the beginning of every `perform()`
+- On refund, revocation, or failed restoration, preserve every saved connection and only reapply the usage limit
+
+The App Group value is an offline capability mirror, not a purchase ledger. Opening the main app refreshes it from StoreKit.
+
 ## Shortcuts and Action Button
 
-The main app exposes five App Intents. They appear in Apple Shortcuts and can be used in a shortcut assigned to the iPhone Action Button.
+The main app exposes five Pro App Intents. They remain visible in Apple Shortcuts and can be used in a shortcut assigned to the iPhone Action Button after Pro is unlocked.
 
 - `Send Files to Eagle` and `Send URLs to Eagle` send without metadata parameters
 - `Send Files to Eagle with Tags, Annotation` and `Send URLs to Eagle with Tags, Annotation` accept optional tags and an optional annotation
 - `Split Text into Tags` converts comma- or newline-separated text into a reusable tag-list output
 
 - Use the connection currently selected in the shared settings store
+- Reject the action before resolving files, testing the connection, or sending data when Pro is not unlocked
 - Run without opening the main app
 - Revalidate the connection and expected library before sending
 - Reject a library mismatch instead of allowing an unattended one-time override
@@ -101,6 +119,7 @@ Shortcut uploads intentionally do not reuse the main app's in-memory queue or me
 
 - API tokens: shared Keychain access group
 - Connection metadata: App Group `UserDefaults`
+- Verified Pro capability mirror: App Group `UserDefaults`
 - Queue and metadata: memory only
 - Upload copies and Base64 request bodies: OS-managed temporary storage
 - URL previews: Link Presentation may access the destination URL

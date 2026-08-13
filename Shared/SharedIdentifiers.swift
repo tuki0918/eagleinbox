@@ -6,4 +6,5 @@ enum SharedIdentifiers {
     static let defaults = UserDefaults(suiteName: appGroup) ?? .standard
     static let keychainGroupInfoKey = "EagleInboxKeychainAccessGroup"
     static let tokenService = "com.tuki0918.EagleInbox.connections"
+    static let proProductID = "com.tuki0918.EagleInbox.pro"
 }

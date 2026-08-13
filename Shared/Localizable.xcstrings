@@ -63,6 +63,26 @@
         }
       }
     },
+    "%@, manage in Eagle Inbox" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@、Eagle Inboxで管理"
+          }
+        }
+      }
+    },
+    "%@, requires Eagle Inbox Pro" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@、Eagle Inbox Proが必要です"
+          }
+        }
+      }
+    },
     "%@, selected" : {
       "localizations" : {
         "ja" : {
@@ -175,6 +195,16 @@
         }
       }
     },
+    "Action Button Ready" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アクションボタンに対応"
+          }
+        }
+      }
+    },
     "Add" : {
       "localizations" : {
         "ja" : {
@@ -255,6 +285,16 @@
         }
       }
     },
+    "Add Connection, requires Eagle Inbox Pro" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続先を追加、Eagle Inbox Proが必要です"
+          }
+        }
+      }
+    },
     "Add Items" : {
       "localizations" : {
         "ja" : {
@@ -295,6 +335,46 @@
         }
       }
     },
+    "Additional connections are managed in Eagle Inbox." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "追加の接続先はEagle Inboxで管理します。"
+          }
+        }
+      }
+    },
+    "Additional connections are managed in the Eagle Inbox app." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "追加の接続先はEagle Inboxアプリで管理します。"
+          }
+        }
+      }
+    },
+    "Additional connections are managed in the Eagle Inbox app. Your current connection is still available." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "追加の接続先はEagle Inboxアプリで管理します。現在の接続先は引き続き利用できます。"
+          }
+        }
+      }
+    },
+    "Additional connections require Eagle Inbox Pro." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続先を追加するにはEagle Inbox Proが必要です。"
+          }
+        }
+      }
+    },
     "Address" : {
       "localizations" : {
         "ja" : {
@@ -325,6 +405,16 @@
         }
       }
     },
+    "All Shortcut Actions" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ショートカット機能"
+          }
+        }
+      }
+    },
     "Already Selected" : {
       "localizations" : {
         "ja" : {
@@ -335,22 +425,22 @@
         }
       }
     },
-    "Annotation" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "注釈"
-          }
-        }
-      }
-    },
     "An optional annotation to apply to every sent item." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "送信するすべての項目に適用する任意の注釈です。"
+          }
+        }
+      }
+    },
+    "Annotation" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "注釈"
           }
         }
       }
@@ -802,6 +892,37 @@
         }
       }
     },
+    "Eagle Inbox Pro" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eagle Inbox Pro"
+          }
+        }
+      }
+    },
+    "Eagle Inbox Pro is temporarily unavailable. Check your connection and try again." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eagle Inbox Proは現在ご利用いただけません。接続状況を確認して、もう一度お試しください。"
+          }
+        }
+      }
+    },
+    "Eagle Inbox, Pro plan" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eagle Inbox、Proプラン"
+          }
+        }
+      }
+    },
     "Eagle returned an unreadable response." : {
       "localizations" : {
         "ja" : {
@@ -958,6 +1079,16 @@
         }
       }
     },
+    "Free plan" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無料プラン"
+          }
+        }
+      }
+    },
     "Hide API token" : {
       "localizations" : {
         "ja" : {
@@ -1064,6 +1195,16 @@
         }
       }
     },
+    "Loading Price…" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "価格を読み込み中…"
+          }
+        }
+      }
+    },
     "Loading shared items…" : {
       "localizations" : {
         "ja" : {
@@ -1080,6 +1221,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "タグを読み込み中…"
+          }
+        }
+      }
+    },
+    "Make sure you’re signed in with the Apple Account used to buy Eagle Inbox Pro." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eagle Inbox Proを購入したApple Accountでサインインしていることを確認してください。"
+          }
+        }
+      }
+    },
+    "Manage Additional Connections" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "追加の接続先を管理"
+          }
+        }
+      }
+    },
+    "Manage Additional Connections in Eagle Inbox" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eagle Inboxで追加の接続先を管理"
           }
         }
       }
@@ -1194,6 +1365,16 @@
         }
       }
     },
+    "No Purchase Found" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "購入履歴が見つかりません"
+          }
+        }
+      }
+    },
     "No supported file or URL was shared." : {
       "localizations" : {
         "ja" : {
@@ -1234,6 +1415,16 @@
         }
       }
     },
+    "Not Now" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あとで"
+          }
+        }
+      }
+    },
     "Not selected" : {
       "localizations" : {
         "ja" : {
@@ -1254,6 +1445,26 @@
         }
       }
     },
+    "OK" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
+    },
+    "One-time purchase. No recurring fees." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "買い切りで、継続料金はかかりません。"
+          }
+        }
+      }
+    },
     "Open %@ in Eagle and try again. %@ is currently open." : {
       "localizations" : {
         "en" : {
@@ -1270,6 +1481,16 @@
         }
       }
     },
+    "Open Eagle Inbox" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eagle Inboxを開く"
+          }
+        }
+      }
+    },
     "Open Eagle Inbox and add or select a connection first." : {
       "localizations" : {
         "ja" : {
@@ -1280,12 +1501,62 @@
         }
       }
     },
+    "Open Eagle Inbox to manage additional connections." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eagle Inboxを開いて追加の接続先を管理します。"
+          }
+        }
+      }
+    },
+    "Open Eagle Inbox to manage this connection." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eagle Inboxを開いてこの接続先を管理します。"
+          }
+        }
+      }
+    },
+    "Opens the connection editor." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続先の編集画面を開きます。"
+          }
+        }
+      }
+    },
+    "Opens the Pro upgrade." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proの購入画面を開きます。"
+          }
+        }
+      }
+    },
     "Optional" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "任意"
+          }
+        }
+      }
+    },
+    "Optional tags to apply to every sent item." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "送信するすべての項目に適用する任意のタグです。"
           }
         }
       }
@@ -1350,6 +1621,27 @@
         }
       }
     },
+    "Pro" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pro"
+          }
+        }
+      }
+    },
+    "Pro plan" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proプラン"
+          }
+        }
+      }
+    },
     "Protocol" : {
       "localizations" : {
         "ja" : {
@@ -1376,6 +1668,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "有効なHTTPまたはHTTPSのURLを1つ以上入力してください。"
+          }
+        }
+      }
+    },
+    "Purchase Couldn’t Be Completed" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "購入を完了できませんでした"
+          }
+        }
+      }
+    },
+    "Purchase Pending" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "購入の承認待ち"
           }
         }
       }
@@ -1410,12 +1722,82 @@
         }
       }
     },
+    "Requires Eagle Inbox Pro. Saves web URLs as bookmarks in the selected Eagle connection." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eagle Inbox Proが必要です。Web URLを選択したEagleの接続先にブックマークとして保存します。"
+          }
+        }
+      }
+    },
+    "Requires Eagle Inbox Pro. Saves web URLs as bookmarks with optional tags and an optional annotation in the selected Eagle connection." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eagle Inbox Proが必要です。Web URLを任意のタグと注釈付きのブックマークとして、選択したEagleの接続先に保存します。"
+          }
+        }
+      }
+    },
+    "Requires Eagle Inbox Pro. Sends photos, videos, audio, and PDFs to the selected Eagle connection." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eagle Inbox Proが必要です。写真、ビデオ、音声、PDFを選択したEagleの接続先に送信します。"
+          }
+        }
+      }
+    },
+    "Requires Eagle Inbox Pro. Sends photos, videos, audio, and PDFs with optional tags and an optional annotation to the selected Eagle connection." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eagle Inbox Proが必要です。写真、ビデオ、音声、PDFに任意のタグと注釈を付けて、選択したEagleの接続先に送信します。"
+          }
+        }
+      }
+    },
+    "Requires Eagle Inbox Pro. Splits text into tag names using commas and new lines." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eagle Inbox Proが必要です。テキストをカンマと改行でタグ名に分割します。"
+          }
+        }
+      }
+    },
+    "Restore Purchases" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "購入を復元"
+          }
+        }
+      }
+    },
     "Save" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "保存"
+          }
+        }
+      }
+    },
+    "Save and switch between as many Eagle destinations as you need." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eagleの接続先をいくつでも登録・切り替えできます。"
           }
         }
       }
@@ -1431,6 +1813,7 @@
       }
     },
     "Saves web URLs as bookmarks in the selected Eagle connection." : {
+      "extractionState" : "stale",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
@@ -1441,6 +1824,7 @@
       }
     },
     "Saves web URLs as bookmarks with optional tags and an optional annotation in the selected Eagle connection." : {
+      "extractionState" : "stale",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
@@ -1590,6 +1974,26 @@
         }
       }
     },
+    "Send files and URLs with tags and an annotation." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "タグや注釈を付け、ファイルやURLを送信できます。"
+          }
+        }
+      }
+    },
+    "Send files and URLs without opening the app." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アプリを開かず、ファイルやURLを送信できます。"
+          }
+        }
+      }
+    },
     "Send Files to Eagle" : {
       "localizations" : {
         "ja" : {
@@ -1711,6 +2115,7 @@
       }
     },
     "Sends photos, videos, audio, and PDFs to the selected Eagle connection." : {
+      "extractionState" : "stale",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
@@ -1721,6 +2126,7 @@
       }
     },
     "Sends photos, videos, audio, and PDFs with optional tags and an optional annotation to the selected Eagle connection." : {
+      "extractionState" : "stale",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
@@ -1897,6 +2303,7 @@
       }
     },
     "Splits text into tag names using commas and new lines." : {
+      "extractionState" : "stale",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
@@ -2036,6 +2443,16 @@
         }
       }
     },
+    "The App Store could not verify this purchase. Please try again." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App Storeでこの購入を確認できませんでした。もう一度お試しください。"
+          }
+        }
+      }
+    },
     "The connection changed while it was being verified. Try again." : {
       "localizations" : {
         "ja" : {
@@ -2047,6 +2464,7 @@
       }
     },
     "The connection result could not be saved." : {
+      "extractionState" : "stale",
       "localizations" : {
         "ja" : {
           "stringUnit" : {
@@ -2086,12 +2504,22 @@
         }
       }
     },
-    "Optional tags to apply to every sent item." : {
+    "The Pro plan unlocks unlimited connections." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "送信するすべての項目に適用する任意のタグです。"
+            "value" : "Proプランでは、接続先を無制限に追加できます。"
+          }
+        }
+      }
+    },
+    "The purchase could not be completed. Please try again." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "購入を完了できませんでした。もう一度お試しください。"
           }
         }
       }
@@ -2122,6 +2550,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Eagleのブックマークとして保存するWeb URLです。"
+          }
+        }
+      }
+    },
+    "This action requires Eagle Inbox Pro." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このアクションにはEagle Inbox Proが必要です。"
           }
         }
       }
@@ -2198,6 +2636,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "グループなし"
+          }
+        }
+      }
+    },
+    "Unlimited Connections" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続先を無制限に追加"
+          }
+        }
+      }
+    },
+    "Unlock for %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@でProを購入"
+          }
+        }
+      }
+    },
+    "Unlock unlimited connections and all Shortcut actions." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続先を無制限に追加し、すべてのショートカット機能を利用できます。"
           }
         }
       }
@@ -2448,6 +2916,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "変更内容は保存されません。"
+          }
+        }
+      }
+    },
+    "Your purchase is waiting for approval. Pro will unlock automatically after it is approved." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "購入は承認待ちです。承認されるとProが自動的に有効になります。"
           }
         }
       }

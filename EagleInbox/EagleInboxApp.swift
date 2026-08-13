@@ -26,21 +26,31 @@ struct EagleInboxApp: App {
     @UIApplicationDelegateAdaptor(AppNotificationDelegate.self)
     private var notificationDelegate
     @StateObject private var model: AppModel
+    @StateObject private var purchases: ProPurchaseManager
 
     init() {
-        _model = StateObject(wrappedValue: Self.makeAppModel())
+        let dependencies = Self.makeDependencies()
+        _model = StateObject(wrappedValue: dependencies.model)
+        _purchases = StateObject(wrappedValue: dependencies.purchases)
     }
 
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(model)
+                .environmentObject(purchases)
                 .preferredColorScheme(.light)
+                .task {
+                    await purchases.prepare()
+                }
         }
     }
 
     @MainActor
-    private static func makeAppModel() -> AppModel {
+    private static func makeDependencies() -> (
+        model: AppModel,
+        purchases: ProPurchaseManager
+    ) {
 #if DEBUG
         let arguments = ProcessInfo.processInfo.arguments
         if arguments.contains("--ui-testing") {
@@ -52,6 +62,12 @@ struct EagleInboxApp: App {
             let settingsStore = SharedSettingsStore(
                 defaultsSuiteName: suiteName,
                 tokenService: "com.tuki0918.EagleInbox.UITests.connections"
+            )
+            let entitlementStore = ProEntitlementStore(
+                defaultsSuiteName: suiteName
+            )
+            entitlementStore.save(
+                isPro: arguments.contains("--ui-testing-pro")
             )
             let snapshot: ConnectionSettingsSnapshot
             if arguments.contains("--ui-testing-seeded-unverified-connection") {
@@ -91,9 +107,10 @@ struct EagleInboxApp: App {
                     selectedProfileID: nil
                 )
             }
-            try? settingsStore.save(snapshot)
+            _ = try? settingsStore.replaceAllForUITesting(snapshot)
             let model = AppModel(
                 settingsStore: settingsStore,
+                entitlementStore: entitlementStore,
                 allowsAutomaticConnectionRefresh: false
             )
             if arguments.contains("--ui-testing-seeded-unverified-connection") {
@@ -131,10 +148,20 @@ struct EagleInboxApp: App {
                     actualLibraryName: "Reference"
                 )
             }
-            return model
+            return (
+                model,
+                ProPurchaseManager(
+                    entitlementStore: entitlementStore,
+                    isStoreKitEnabled: false
+                )
+            )
         }
 #endif
-        return AppModel()
+        let entitlementStore = ProEntitlementStore()
+        return (
+            AppModel(entitlementStore: entitlementStore),
+            ProPurchaseManager(entitlementStore: entitlementStore)
+        )
     }
 
 #if DEBUG

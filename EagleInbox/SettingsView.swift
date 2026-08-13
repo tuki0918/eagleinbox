@@ -3,8 +3,11 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var model: AppModel
+    @EnvironmentObject private var purchases: ProPurchaseManager
     @State private var editorRoute: ConnectionEditorRoute?
     @State private var pendingProfileID: UUID?
+    @State private var isProUpgradePresented = false
+    @State private var shouldAddConnectionAfterUpgrade = false
     let onSelectionConfirmed: (UUID) -> Void
 
     var body: some View {
@@ -31,20 +34,50 @@ struct SettingsView: View {
                             }
 
                             Button {
-                                presentNewConnectionEditor()
+                                requestNewConnection()
                             } label: {
-                                Label("Add Connection", systemImage: "plus.circle.fill")
-                                    .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
-                                    .contentShape(Rectangle())
+                                HStack(spacing: 12) {
+                                    Label(
+                                        "Add Connection",
+                                        systemImage: "plus.circle.fill"
+                                    )
+                                    Spacer(minLength: 8)
+                                    if !model.canAddConnection {
+                                        proCrown
+                                            .frame(width: 44, height: 44)
+                                    }
+                                }
+                                .frame(
+                                    maxWidth: .infinity,
+                                    minHeight: 44,
+                                    alignment: .leading
+                                )
+                                .contentShape(Rectangle())
                             }
                             .buttonStyle(.plain)
                             .foregroundStyle(Color.accentColor)
                             .disabled(model.isWorking)
+                            .accessibilityLabel(
+                                model.canAddConnection
+                                    ? String(localized: "Add Connection")
+                                    : String(
+                                        localized: "Add Connection, requires Eagle Inbox Pro"
+                                    )
+                            )
+                            .accessibilityHint(
+                                model.canAddConnection
+                                    ? String(localized: "Opens the connection editor.")
+                                    : String(localized: "Opens the Pro upgrade.")
+                            )
                             .accessibilityIdentifier("connections.add")
                         } header: {
                             Text("Saved Connections")
                         } footer: {
-                            Text("Choose a connection, then tap Select.")
+                            if model.hasProAccess {
+                                Text("Choose a connection, then tap Select.")
+                            } else {
+                                Text("The Pro plan unlocks unlimited connections.")
+                            }
                         }
                     }
                 }
@@ -72,12 +105,25 @@ struct SettingsView: View {
                 )
             }
         }
+        .sheet(
+            isPresented: $isProUpgradePresented,
+            onDismiss: handleProUpgradeDismissal
+        ) {
+            ProUpgradeView()
+        }
     }
 
     private func connectionRow(_ profile: EagleConnectionProfile) -> some View {
-        HStack(spacing: 12) {
+        let isLocked = !model.canSelectProfile(profile.id)
+
+        return HStack(spacing: 12) {
             Button {
-                pendingProfileID = profile.id
+                if isLocked {
+                    shouldAddConnectionAfterUpgrade = false
+                    isProUpgradePresented = true
+                } else {
+                    pendingProfileID = profile.id
+                }
             } label: {
                 HStack(spacing: 12) {
                     if isTesting(profile) {
@@ -85,14 +131,16 @@ struct SettingsView: View {
                             .frame(width: 22, height: 22)
                             .tint(Color.accentColor)
                     } else {
-                        Image(
-                            systemName: pendingSelectionID == profile.id
-                                ? "checkmark.circle.fill"
-                                : "circle"
-                        )
+                        Image(systemName: isLocked
+                            ? "lock.fill"
+                            : pendingSelectionID == profile.id
+                            ? "checkmark.circle.fill"
+                            : "circle")
                         .font(.title3)
                         .foregroundStyle(
-                            pendingSelectionID == profile.id
+                            isLocked
+                                ? Color.secondary
+                                : pendingSelectionID == profile.id
                                 ? Color.accentColor
                                 : Color.secondary
                         )
@@ -107,6 +155,9 @@ struct SettingsView: View {
                             .lineLimit(1)
                     }
                     Spacer(minLength: 0)
+                    if isLocked {
+                        proCrown
+                    }
                 }
                 .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
                 .contentShape(Rectangle())
@@ -122,12 +173,20 @@ struct SettingsView: View {
                     ? String(
                         localized: "\(profile.displayTitle), selected"
                     )
+                    : isLocked
+                    ? String(
+                        localized: "\(profile.displayTitle), requires Eagle Inbox Pro"
+                    )
                     : String(
                         localized: "Select \(profile.displayTitle)"
                     )
             )
             .accessibilityValue(profile.connection.displayEndpoint)
-            .accessibilityHint("Tap Select to confirm this connection.")
+            .accessibilityHint(
+                isLocked
+                    ? String(localized: "Opens the Pro upgrade.")
+                    : String(localized: "Tap Select to confirm this connection.")
+            )
             .accessibilityIdentifier(
                 "connections.row.\(profile.id.uuidString)"
             )
@@ -173,22 +232,45 @@ struct SettingsView: View {
         )
     }
 
+    private func requestNewConnection() {
+        guard model.canAddConnection else {
+            shouldAddConnectionAfterUpgrade = true
+            isProUpgradePresented = true
+            return
+        }
+        presentNewConnectionEditor()
+    }
+
+    private func handleProUpgradeDismissal() {
+        let shouldContinue = shouldAddConnectionAfterUpgrade
+            && purchases.hasProAccess
+        shouldAddConnectionAfterUpgrade = false
+        if shouldContinue {
+            presentNewConnectionEditor()
+        }
+    }
+
     private var pendingSelectionID: UUID? {
         if let pendingProfileID,
-           model.profiles.contains(where: { $0.id == pendingProfileID }) {
+           model.canSelectProfile(pendingProfileID) {
             return pendingProfileID
         }
         if let selectedProfileID = model.selectedProfileID,
-           model.profiles.contains(where: { $0.id == selectedProfileID }) {
+           model.canSelectProfile(selectedProfileID) {
             return selectedProfileID
         }
-        return model.profiles.first?.id
+        return model.profiles.first(where: { model.canSelectProfile($0.id) })?.id
     }
 
     private func confirmSelection() {
         guard !model.isWorking else { return }
-        guard let profileID = pendingSelectionID,
-              model.selectProfile(profileID) else {
+        guard let profileID = pendingSelectionID else { return }
+        guard model.canSelectProfile(profileID) else {
+            shouldAddConnectionAfterUpgrade = false
+            isProUpgradePresented = true
+            return
+        }
+        guard model.selectProfile(profileID) else {
             return
         }
         onSelectionConfirmed(profileID)
@@ -205,6 +287,14 @@ struct SettingsView: View {
     private func horizontalContentInset(for width: CGFloat) -> CGFloat {
         max(16, (width - 760) / 2)
     }
+
+    private var proCrown: some View {
+        Image(systemName: "crown.fill")
+            .font(.caption.weight(.semibold))
+            .foregroundStyle(Color.accentColor)
+            .accessibilityHidden(true)
+    }
+
 }
 
 private struct ConnectionEditorRoute: Hashable {

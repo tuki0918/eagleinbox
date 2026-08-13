@@ -15,6 +15,12 @@ This document covers how to build, test, and release Eagle Inbox. See [ARCHITECT
 3. Confirm that App Groups and Keychain Sharing match for both targets.
 4. Run the `EagleInbox` scheme on a physical iPhone or in Simulator. The share extension is built at the same time and embedded in the main app.
 
+### Eagle Inbox Pro
+
+Create a non-consumable in-app purchase in App Store Connect with product ID `com.tuki0918.EagleInbox.pro`. Configure its display name, description, availability, and price there; the app always displays StoreKit's localized price rather than a hard-coded amount.
+
+For local purchase testing, create or synchronize a StoreKit configuration in Xcode with the same product ID and select it under Scheme → Run → Options → StoreKit Configuration. Test the free state, successful purchase, cancellation, pending approval, restoration, revocation, and product-load failure before using Sandbox or TestFlight.
+
 ## Localization
 
 English is the source language and Japanese is the supported translation. iOS selects the system language by default; users can override it for Eagle Inbox under Settings → Apps → Eagle Inbox → Language.
@@ -80,6 +86,7 @@ swiftc \
   -o /tmp/eagle-inbox-core-smoke \
   Tests/CoreSmoke.swift \
   Shared/SharedIdentifiers.swift \
+  Shared/ProEntitlementStore.swift \
   Shared/SharedSettingsStore.swift \
   Shared/EagleConnection.swift \
   Shared/ConnectionEditorDraft.swift \
@@ -96,7 +103,7 @@ swiftc \
 
 ### UI Tests
 
-`EagleInboxUITests` verifies navigation from Connections to the Connection Editor, text entry on the first tap, connection-test cancellation during its start delay, confirmation before discarding unsaved changes, appearance in Safari's share menu, and the deterministic states used for README screenshots. It uses dedicated `UserDefaults` and Keychain namespaces and does not access saved user connections or a real Eagle server.
+`EagleInboxUITests` verifies navigation from Connections to the Connection Editor, the Pro upgrade for a second connection, text entry on the first tap, connection-test cancellation during its start delay, confirmation before discarding unsaved changes, appearance in Safari's share menu, and the deterministic states used for README screenshots. It uses dedicated `UserDefaults` and Keychain namespaces, forces a free entitlement without contacting StoreKit, and does not access saved user connections or a real Eagle server.
 
 ```sh
 xcodebuild test \
@@ -126,6 +133,11 @@ At minimum, verify the following on a physical device or through TestFlight:
 - All five Eagle Inbox actions in Apple Shortcuts: simple file/URL sends without metadata fields; both `with Tags, Annotation` actions with neither optional value, tags only, an annotation only, and both values; and `Split Text into Tags` with comma-separated, newline-separated, blank, and duplicate values
 - An OCR workflow that connects extracted text to `Split Text into Tags`, its output to a `with Tags, Annotation` action, and the original image to the file input; also verify existing saved simple shortcuts and saved `with Tags` shortcuts from the previous version, Japanese labels, and an Action Button workflow on a physical iPhone
 - Connection sharing between the main app and share extension
+- Free access to one connection and all direct-upload, share-extension, batch, folder, annotation, and tag features
+- The second connection opening the Pro upgrade in the main app and a functional Pro-required message in the share extension
+- A successful Pro purchase and restore unlocking unlimited connections without deleting or rewriting existing connection records
+- Cancellation, pending approval, relaunch, offline launch, refund, and revocation returning to a consistent entitlement state
+- All five Shortcuts failing before any file or network work in the free state, showing the localized Pro-required error instead of an internal error type, and running after Pro is unlocked
 - iPad in iPhone compatibility mode
 - Running as a Designed for iPhone app on an Apple Silicon Mac
 
@@ -137,6 +149,9 @@ Before submitting a release:
 - [ ] Increment the build number for every upload
 - [ ] Verify the distribution certificate, provisioning profiles, App Group, and Keychain access group for the production team
 - [ ] Test both the main app and share extension through TestFlight
+- [ ] Create the non-consumable `com.tuki0918.EagleInbox.pro`, complete its review metadata, and submit it with the app version
+- [ ] Verify that screenshots and the description mark Shortcuts, Action Button, and unlimited connections as requiring Eagle Inbox Pro
+- [ ] Verify purchase, restoration, pending approval, and revoked-entitlement behavior with the production product identifier
 - [ ] Make the App Privacy answers in App Store Connect match the implementation
 - [ ] Prepare the Privacy Policy URL, Support URL, description, screenshots, and Review Notes
 - [ ] Add a Privacy Policy link in an easy-to-find location within the app
@@ -144,7 +159,7 @@ Before submitting a release:
 - [ ] Run Archive, Validate App, and Upload in Xcode Organizer
 - [ ] Choose a license before making the repository public
 
-The Review Notes should explain that Eagle 4.0 Build 21 or later must be running on another device, that both devices must be on the same local network, that some connections require an API token, and why the app validates the destination library.
+The Review Notes should explain that Eagle 4.0 Build 21 or later must be running on another device, that both devices must be on the same local network, that some connections require an API token, and why the app validates the destination library. Also explain that Pro unlocks only Eagle Inbox's own upload automation and does not sell or alter the operating system's Shortcuts or Action Button functionality.
 
 ### Screenshots
 

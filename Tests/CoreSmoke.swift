@@ -167,6 +167,117 @@ enum CoreSmoke {
         precondition(emptySettingsSnapshot.profiles.isEmpty)
         precondition(emptySettingsSnapshot.selectedProfileID == nil)
 
+        precondition(
+            SharedIdentifiers.proProductID
+                == "com.tuki0918.EagleInbox.pro"
+        )
+        let entitlementStore = ProEntitlementStore(
+            defaultsSuiteName: settingsSuiteName
+        )
+        precondition(entitlementStore.state == .unknown)
+        precondition(!entitlementStore.hasProAccess)
+        precondition(
+            ProAccessPolicy.canAddConnection(
+                profileCount: 0,
+                hasProAccess: false
+            )
+        )
+        precondition(
+            !ProAccessPolicy.canAddConnection(
+                profileCount: ProAccessPolicy.freeConnectionLimit,
+                hasProAccess: false
+            )
+        )
+        precondition(
+            ProAccessPolicy.canAddConnection(
+                profileCount: ProAccessPolicy.freeConnectionLimit,
+                hasProAccess: true
+            )
+        )
+
+        let freeProfile = EagleConnectionProfile(
+            name: "Free Eagle",
+            connection: .default
+        )
+        let lockedProfile = EagleConnectionProfile(
+            name: "Pro Eagle",
+            connection: EagleConnection(
+                host: "192.168.0.200",
+                port: 41595,
+                token: ""
+            )
+        )
+        let multipleProfiles = [freeProfile, lockedProfile]
+        precondition(
+            ProAccessPolicy.freeProfileID(
+                profiles: multipleProfiles,
+                selectedProfileID: lockedProfile.id
+            ) == lockedProfile.id
+        )
+        precondition(
+            ProAccessPolicy.canSelectConnection(
+                lockedProfile.id,
+                profiles: multipleProfiles,
+                selectedProfileID: lockedProfile.id,
+                hasProAccess: false
+            )
+        )
+        precondition(
+            !ProAccessPolicy.canSelectConnection(
+                freeProfile.id,
+                profiles: multipleProfiles,
+                selectedProfileID: lockedProfile.id,
+                hasProAccess: false
+            )
+        )
+        precondition(
+            ProAccessPolicy.canSelectConnection(
+                freeProfile.id,
+                profiles: multipleProfiles,
+                selectedProfileID: lockedProfile.id,
+                hasProAccess: true
+            )
+        )
+        precondition(
+            ProAccessPolicy.freeProfileID(
+                profiles: multipleProfiles,
+                selectedProfileID: UUID()
+            ) == freeProfile.id
+        )
+
+        let verifiedAt = Date(timeIntervalSince1970: 12_345)
+        entitlementStore.save(isPro: false, verifiedAt: verifiedAt)
+        precondition(entitlementStore.state == .free)
+        precondition(
+            entitlementStore.snapshot
+                == ProEntitlementSnapshot(
+                    isPro: false,
+                    verifiedAt: verifiedAt
+                )
+        )
+        do {
+            try ProAccessPolicy.requireProForShortcuts(
+                entitlementStore: entitlementStore
+            )
+            preconditionFailure("Free access must not run Shortcut actions.")
+        } catch let error as ProFeatureAccessError {
+            guard case .shortcutsRequirePro = error else {
+                preconditionFailure("Unexpected Pro feature access error.")
+            }
+            verifyLocalizedAppIntentError(error)
+            precondition(
+                error.localizedDescription
+                    == "This action requires Eagle Inbox Pro."
+            )
+        }
+
+        entitlementStore.save(isPro: true, verifiedAt: verifiedAt)
+        precondition(entitlementStore.state == .pro)
+        precondition(entitlementStore.hasProAccess)
+        try ProAccessPolicy.requireProForShortcuts(
+            entitlementStore: entitlementStore
+        )
+
         let legacyProfileID = UUID()
         settingsDefaults.set(
             try JSONSerialization.data(
@@ -231,6 +342,254 @@ enum CoreSmoke {
         )
         precondition(
             reloadedSecureSettings.selectedProfileID == secureProfileID
+        )
+
+        let mutationSuiteName = "com.tuki0918.EagleInbox.MutationSmoke.\(UUID().uuidString)"
+        guard let mutationDefaults = UserDefaults(suiteName: mutationSuiteName) else {
+            throw EagleClientError.invalidResponse
+        }
+        let mutationLockURL = FileManager.default.temporaryDirectory
+            .appendingPathComponent("eagle-settings-mutation-\(UUID().uuidString).lock")
+        mutationDefaults.removePersistentDomain(forName: mutationSuiteName)
+        defer {
+            mutationDefaults.removePersistentDomain(forName: mutationSuiteName)
+            try? FileManager.default.removeItem(at: mutationLockURL)
+        }
+        mutationDefaults.set(
+            try JSONEncoder().encode([Int]()),
+            forKey: "eagle.connection-profiles.v\(SharedIdentifiers.connectionStoreVersion)"
+        )
+        mutationDefaults.removeObject(forKey: "eagle.selected-profile-id")
+        mutationDefaults.synchronize()
+
+        let mutationTokenService = "\(mutationSuiteName).tokens"
+        let mutationStoreA = SharedSettingsStore(
+            defaultsSuiteName: mutationSuiteName,
+            tokenService: mutationTokenService,
+            lockURL: mutationLockURL
+        )
+        let mutationStoreB = SharedSettingsStore(
+            defaultsSuiteName: mutationSuiteName,
+            tokenService: mutationTokenService,
+            lockURL: mutationLockURL
+        )
+        let mutationProfileA = EagleConnectionProfile(
+            name: "Mutation A",
+            connection: EagleConnection(
+                host: "192.168.10.1",
+                port: 41595,
+                token: ""
+            )
+        )
+        var mutationSnapshot = try mutationStoreA.insertProfile(
+            mutationProfileA,
+            maximumProfileCount: nil
+        )
+        precondition(mutationSnapshot.profiles.count == 1)
+        precondition(mutationSnapshot.selectedProfileID == mutationProfileA.id)
+        let staleProfileA = try requiredProfile(
+            id: mutationProfileA.id,
+            in: mutationSnapshot
+        )
+
+        let mutationProfileB = EagleConnectionProfile(
+            name: "Mutation B",
+            connection: EagleConnection(
+                host: "192.168.10.2",
+                port: 41595,
+                token: ""
+            )
+        )
+        mutationSnapshot = try mutationStoreB.insertProfile(
+            mutationProfileB,
+            maximumProfileCount: nil
+        )
+        precondition(mutationSnapshot.profiles.count == 2)
+        precondition(mutationSnapshot.selectedProfileID == mutationProfileA.id)
+        let staleProfileB = try requiredProfile(
+            id: mutationProfileB.id,
+            in: mutationSnapshot
+        )
+
+        mutationSnapshot = try mutationStoreB.selectProfile(
+            mutationProfileB.id,
+            allowsChangingSelection: true
+        )
+        precondition(mutationSnapshot.selectedProfileID == mutationProfileB.id)
+        var editedProfileB = staleProfileB
+        editedProfileB.name = "Mutation B edited elsewhere"
+        mutationSnapshot = try mutationStoreB.replaceProfile(
+            editedProfileB,
+            baseline: staleProfileB
+        )
+
+        // Store A is stale: B was added, selected, and edited after A loaded.
+        // Updating A must preserve all of those unrelated changes.
+        var editedProfileA = staleProfileA
+        editedProfileA.name = "Mutation A edited from stale snapshot"
+        mutationSnapshot = try mutationStoreA.replaceProfile(
+            editedProfileA,
+            baseline: staleProfileA
+        )
+        precondition(mutationSnapshot.profiles.count == 2)
+        precondition(mutationSnapshot.selectedProfileID == mutationProfileB.id)
+        let storedEditedProfileA = try requiredProfile(
+            id: mutationProfileA.id,
+            in: mutationSnapshot
+        )
+        let storedEditedProfileB = try requiredProfile(
+            id: mutationProfileB.id,
+            in: mutationSnapshot
+        )
+        precondition(storedEditedProfileA.name == editedProfileA.name)
+        precondition(storedEditedProfileB.name == editedProfileB.name)
+
+        var conflictingProfileA = staleProfileA
+        conflictingProfileA.name = "Must not overwrite the newer A"
+        do {
+            _ = try mutationStoreB.replaceProfile(
+                conflictingProfileA,
+                baseline: staleProfileA
+            )
+            preconditionFailure("A stale edit of the same profile must conflict.")
+        } catch let error as SharedSettingsMutationError {
+            precondition(error == .changedOrRemoved)
+        }
+        do {
+            _ = try mutationStoreA.insertProfile(
+                mutationProfileB,
+                maximumProfileCount: nil
+            )
+            preconditionFailure("A duplicate profile ID must not be inserted.")
+        } catch let error as SharedSettingsMutationError {
+            precondition(error == .alreadyExists)
+        }
+
+        // Free callers may keep the already-selected connection, but may not
+        // switch to another one.
+        mutationSnapshot = try mutationStoreA.selectProfile(
+            mutationProfileB.id,
+            allowsChangingSelection: false
+        )
+        precondition(mutationSnapshot.selectedProfileID == mutationProfileB.id)
+        do {
+            _ = try mutationStoreA.selectProfile(
+                mutationProfileA.id,
+                allowsChangingSelection: false
+            )
+            preconditionFailure("Free selection changes must be rejected.")
+        } catch let error as SharedSettingsMutationError {
+            precondition(error == .selectionNotAllowed)
+        }
+        precondition(
+            mutationStoreA.load().selectedProfileID == mutationProfileB.id
+        )
+
+        let currentProfileB = try requiredProfile(
+            id: mutationProfileB.id,
+            in: mutationSnapshot
+        )
+        var profileBRenamedWhileTesting = currentProfileB
+        profileBRenamedWhileTesting.name = "Mutation B renamed while testing"
+        mutationSnapshot = try mutationStoreB.replaceProfile(
+            profileBRenamedWhileTesting,
+            baseline: currentProfileB
+        )
+        mutationSnapshot = try mutationStoreA.recordSuccessfulConnectionTest(
+            profileID: currentProfileB.id,
+            testedConnection: currentProfileB.connection,
+            testedExpectedLibraryName: nil,
+            detectedLibraryName: "Mutation Library"
+        )
+        let verifiedMutationProfileB = try requiredProfile(
+            id: mutationProfileB.id,
+            in: mutationSnapshot
+        )
+        precondition(
+            verifiedMutationProfileB.expectedLibraryName == "Mutation Library"
+        )
+        precondition(verifiedMutationProfileB.libraryName == "Mutation Library")
+        precondition(
+            verifiedMutationProfileB.name == profileBRenamedWhileTesting.name
+        )
+        precondition(mutationSnapshot.selectedProfileID == mutationProfileB.id)
+        do {
+            _ = try mutationStoreB.recordSuccessfulConnectionTest(
+                profileID: currentProfileB.id,
+                testedConnection: currentProfileB.connection,
+                testedExpectedLibraryName: nil,
+                detectedLibraryName: "Stale Result"
+            )
+            preconditionFailure("A stale connection-test result must conflict.")
+        } catch let error as SharedSettingsMutationError {
+            precondition(error == .changedOrRemoved)
+        }
+
+        let mutationProfileC = EagleConnectionProfile(
+            name: "Mutation C",
+            connection: EagleConnection(
+                host: "192.168.10.3",
+                port: 41595,
+                token: ""
+            )
+        )
+        mutationSnapshot = try mutationStoreB.insertProfile(
+            mutationProfileC,
+            maximumProfileCount: nil
+        )
+        mutationSnapshot = try mutationStoreA.deleteProfile(mutationProfileA.id)
+        precondition(
+            Set(mutationSnapshot.profiles.map(\.id))
+                == Set([mutationProfileB.id, mutationProfileC.id])
+        )
+        precondition(mutationSnapshot.selectedProfileID == mutationProfileB.id)
+        let retainedMutationProfileB = try requiredProfile(
+            id: mutationProfileB.id,
+            in: mutationSnapshot
+        )
+        precondition(retainedMutationProfileB.libraryName == "Mutation Library")
+
+        let freeMutationSuiteName = "com.tuki0918.EagleInbox.FreeMutationSmoke.\(UUID().uuidString)"
+        guard let freeMutationDefaults = UserDefaults(
+            suiteName: freeMutationSuiteName
+        ) else {
+            throw EagleClientError.invalidResponse
+        }
+        let freeMutationLockURL = FileManager.default.temporaryDirectory
+            .appendingPathComponent("eagle-settings-free-\(UUID().uuidString).lock")
+        freeMutationDefaults.removePersistentDomain(forName: freeMutationSuiteName)
+        defer {
+            freeMutationDefaults.removePersistentDomain(
+                forName: freeMutationSuiteName
+            )
+            try? FileManager.default.removeItem(at: freeMutationLockURL)
+        }
+        freeMutationDefaults.set(
+            try JSONEncoder().encode([Int]()),
+            forKey: "eagle.connection-profiles.v\(SharedIdentifiers.connectionStoreVersion)"
+        )
+        freeMutationDefaults.synchronize()
+        let freeMutationStore = SharedSettingsStore(
+            defaultsSuiteName: freeMutationSuiteName,
+            tokenService: "\(freeMutationSuiteName).tokens",
+            lockURL: freeMutationLockURL
+        )
+        _ = try freeMutationStore.insertProfile(
+            EagleConnectionProfile(name: "Free Mutation"),
+            maximumProfileCount: ProAccessPolicy.freeConnectionLimit
+        )
+        do {
+            _ = try freeMutationStore.insertProfile(
+                EagleConnectionProfile(name: "Requires Pro"),
+                maximumProfileCount: ProAccessPolicy.freeConnectionLimit
+            )
+            preconditionFailure("The free profile limit must be atomic.")
+        } catch let error as SharedSettingsMutationError {
+            precondition(error == .profileLimitReached)
+        }
+        precondition(
+            freeMutationStore.load().profiles.count
+                == ProAccessPolicy.freeConnectionLimit
         )
 
         let tokenlessConnection = EagleConnection(
@@ -719,6 +1078,15 @@ enum CoreSmoke {
         return dictionary
     }
 
+    private static func verifyLocalizedAppIntentError<IntentError>(
+        _ error: IntentError
+    ) where IntentError: Error & CustomLocalizedStringResourceConvertible {
+        precondition(
+            error.localizedStringResource
+                == "This action requires Eagle Inbox Pro."
+        )
+    }
+
     private static func requiredMismatch(
         _ mismatch: EagleLibraryMismatch?
     ) throws -> EagleLibraryMismatch {
@@ -735,6 +1103,16 @@ enum CoreSmoke {
             throw EagleClientError.invalidResponse
         }
         return result
+    }
+
+    private static func requiredProfile(
+        id: UUID,
+        in snapshot: ConnectionSettingsSnapshot
+    ) throws -> EagleConnectionProfile {
+        guard let profile = snapshot.profiles.first(where: { $0.id == id }) else {
+            throw EagleClientError.invalidResponse
+        }
+        return profile
     }
 
     private static func requiredUUID(_ value: String) throws -> UUID {
