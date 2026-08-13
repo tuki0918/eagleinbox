@@ -30,16 +30,16 @@
     },
     {
       "order": 4,
-      "file": "04-action-button.png",
-      "headline": "One press. / Straight to Eagle.",
-      "badge": "PRO",
-      "source": "../../Screenshots/action-button-shortcut.png"
+      "file": "04-pro-upgrade.png",
+      "headline": "Unlock more / with Pro.",
+      "source": "../../Screenshots/pro-upgrade.png"
     },
     {
       "order": 5,
-      "file": "05-pro-upgrade.png",
-      "headline": "Unlock more / with Pro.",
-      "source": "../../Screenshots/pro-upgrade.png"
+      "file": "05-action-button.png",
+      "headline": "One press. / Straight to Eagle.",
+      "badge": "PRO",
+      "source": "../../Screenshots/action-button-shortcut.png"
     }
   ]
 }

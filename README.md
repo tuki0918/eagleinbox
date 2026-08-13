@@ -12,8 +12,8 @@ You can also send items directly from the share sheet in Photos, Files, Safari, 
   <img src="./Docs/AppStore/Final/01-send-items.png" alt="Send photos, files, and URLs straight to Eagle" width="19%">
   <img src="./Docs/AppStore/Final/02-share-sheet.png" alt="Open Eagle Inbox from the iOS Share Sheet" width="19%">
   <img src="./Docs/AppStore/Final/03-organize-tags.png" alt="Apply Eagle tags and folders before sending" width="19%">
-  <img src="./Docs/AppStore/Final/04-action-button.png" alt="Run Eagle Inbox from the iPhone Action Button" width="19%">
-  <img src="./Docs/AppStore/Final/05-pro-upgrade.png" alt="See what Eagle Inbox Pro unlocks" width="19%">
+  <img src="./Docs/AppStore/Final/04-pro-upgrade.png" alt="See what Eagle Inbox Pro unlocks" width="19%">
+  <img src="./Docs/AppStore/Final/05-action-button.png" alt="Run Eagle Inbox from the iPhone Action Button" width="19%">
 </p>
 
 ## Get Started

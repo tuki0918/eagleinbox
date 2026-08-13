@@ -411,24 +411,24 @@ private let slides: [Slide] = [
         accent: NSColor(hex: 0xFDBA74)
     ),
     Slide(
-        headline: "One press.\nStraight to Eagle.",
-        subtitle: "Run a Shortcut from the Action Button.",
-        badge: "PRO",
-        source: "Docs/Screenshots/action-button-shortcut.png",
-        secondarySource: nil,
-        output: "Docs/AppStore/Final/04-action-button.png",
-        background: vividBackground,
-        accent: NSColor(hex: 0xC4B5FD)
-    ),
-    Slide(
         headline: "Unlock more\nwith Pro.",
         subtitle: "Unlimited connections and every Shortcut action.",
         badge: nil,
         source: "Docs/Screenshots/pro-upgrade.png",
         secondarySource: nil,
-        output: "Docs/AppStore/Final/05-pro-upgrade.png",
+        output: "Docs/AppStore/Final/04-pro-upgrade.png",
         background: vividBackground,
         accent: NSColor(hex: 0xFBBF24)
+    ),
+    Slide(
+        headline: "One press.\nStraight to Eagle.",
+        subtitle: "Run a Shortcut from the Action Button.",
+        badge: "PRO",
+        source: "Docs/Screenshots/action-button-shortcut.png",
+        secondarySource: nil,
+        output: "Docs/AppStore/Final/05-action-button.png",
+        background: vividBackground,
+        accent: NSColor(hex: 0xC4B5FD)
     )
 ]
 
