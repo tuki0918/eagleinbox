@@ -186,6 +186,7 @@ struct ShareUploadView: View {
             || model.isUploading
             || model.isAddingItems
             || model.isTestingConnection
+            || profileIDToTestAfterConnectionsDismiss != nil
     }
 
     private var isActivationRefreshBusy: Bool {
@@ -222,6 +223,10 @@ struct ShareUploadView: View {
         Section {
             if let profile = model.selectedProfile {
                 let testState = model.connectionTestState(for: profile)
+                let displayedTestState: ConnectionTestState =
+                    profileIDToTestAfterConnectionsDismiss == profile.id
+                    ? .testing
+                    : testState
 
                 HStack(spacing: 0) {
                     Button {
@@ -256,7 +261,7 @@ struct ShareUploadView: View {
                     Button {
                         startDestinationConnectionTest()
                     } label: {
-                        connectionStateIcon(testState)
+                        connectionStateIcon(displayedTestState)
                             .frame(width: 44, height: 44)
                             .contentShape(Rectangle())
                     }
@@ -264,7 +269,7 @@ struct ShareUploadView: View {
                     .disabled(isDestinationInteractionDisabled)
                     .accessibilityLabel("Test Connection")
                     .accessibilityValue(
-                        connectionStateAccessibilityValue(testState)
+                        connectionStateAccessibilityValue(displayedTestState)
                     )
 
                     Button {
@@ -869,16 +874,18 @@ struct ShareUploadView: View {
             performPendingActivationRefresh()
             return
         }
-        profileIDToTestAfterConnectionsDismiss = nil
 
         guard model.selectedProfileID == profileID else {
+            profileIDToTestAfterConnectionsDismiss = nil
             performPendingActivationRefresh()
             return
         }
         // A test for the explicitly selected profile supersedes a pending
         // generic activation refresh.
         needsActivationRefresh = false
-        startDestinationConnectionTest(profileID: profileID)
+        if !startDestinationConnectionTest(profileID: profileID) {
+            profileIDToTestAfterConnectionsDismiss = nil
+        }
     }
 
     @discardableResult
@@ -893,6 +900,9 @@ struct ShareUploadView: View {
         destinationConnectionTestTask = Task { @MainActor in
             await model.testConnection(profileID: profileID)
             guard destinationConnectionTestID == testID else { return }
+            if profileIDToTestAfterConnectionsDismiss == profileID {
+                profileIDToTestAfterConnectionsDismiss = nil
+            }
             destinationConnectionTestTask = nil
             destinationConnectionTestID = nil
             performPendingActivationRefresh()

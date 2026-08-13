@@ -561,6 +561,68 @@ final class ConnectionsNavigationUITests: XCTestCase {
         )
     }
 
+    func testConnectionListIsDisabledWhileTesting() {
+        launchApp(
+            seedConnection: true,
+            delayedConnectionTest: true
+        )
+
+        let connectionStatusButton = app.buttons["Test Connection"]
+        XCTAssertTrue(
+            connectionStatusButton.waitForExistence(timeout: Self.waitTimeout),
+            app.debugDescription
+        )
+        connectionStatusButton.tap()
+        waitForValue(
+            "Testing",
+            on: connectionStatusButton,
+            timeout: Self.waitTimeout
+        )
+
+        let connectionButton = app.buttons["upload.connection.open"]
+        XCTAssertTrue(
+            connectionButton.waitForExistence(timeout: Self.waitTimeout),
+            app.debugDescription
+        )
+        XCTAssertFalse(connectionButton.isEnabled)
+        XCTAssertFalse(connectionStatusButton.isEnabled)
+
+        connectionButton.coordinate(
+            withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)
+        ).tap()
+        XCTAssertFalse(
+            app.navigationBars["Connections"].waitForExistence(timeout: 1)
+        )
+    }
+
+    func testSelectingConnectionReturnsDirectlyToTestingState() {
+        launchApp(
+            seedConnection: true,
+            delayedConnectionTest: true
+        )
+
+        openConnections()
+        let selectButton = app.buttons["connections.select"]
+        XCTAssertTrue(
+            selectButton.waitForExistence(timeout: Self.waitTimeout),
+            app.debugDescription
+        )
+        XCTAssertTrue(selectButton.isEnabled)
+        selectButton.tap()
+
+        let connectionStatusButton = app.buttons["Test Connection"]
+        XCTAssertTrue(
+            connectionStatusButton.waitForExistence(timeout: Self.waitTimeout),
+            app.debugDescription
+        )
+        XCTAssertEqual(
+            connectionStatusButton.value as? String,
+            "Testing"
+        )
+        XCTAssertFalse(connectionStatusButton.isEnabled)
+        XCTAssertFalse(app.buttons["upload.connection.open"].isEnabled)
+    }
+
     func testSendRemainsEnabledForLibraryMismatchWarning() {
         launchApp(
             seedConnection: true,
@@ -912,6 +974,18 @@ final class ConnectionsNavigationUITests: XCTestCase {
         wait(for: [expectation], timeout: timeout)
     }
 
+    private func waitForValue(
+        _ value: String,
+        on element: XCUIElement,
+        timeout: TimeInterval
+    ) {
+        let expectation = expectation(
+            for: NSPredicate(format: "value == %@", value),
+            evaluatedWith: element
+        )
+        wait(for: [expectation], timeout: timeout)
+    }
+
     private func launchApp(
         seedConnection: Bool = false,
         seedUploadQueue: Bool = false,
@@ -922,6 +996,7 @@ final class ConnectionsNavigationUITests: XCTestCase {
         seedUnverifiedConnection: Bool = false,
         seedConnectionFailure: Bool = false,
         seedRecoveredSendConnection: Bool = false,
+        delayedConnectionTest: Bool = false,
         storeScreenshot: Bool = false,
         pro: Bool = false,
         language: String = "en",
@@ -967,6 +1042,11 @@ final class ConnectionsNavigationUITests: XCTestCase {
         if seedRecoveredSendConnection {
             app.launchArguments.append(
                 "--ui-testing-seeded-recovered-send-connection"
+            )
+        }
+        if delayedConnectionTest {
+            app.launchArguments.append(
+                "--ui-testing-delayed-connection-test"
             )
         }
         if storeScreenshot {

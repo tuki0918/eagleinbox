@@ -53,6 +53,9 @@ final class AppModel: ObservableObject {
     private let entitlementStore: ProEntitlementStore
     let allowsAutomaticConnectionRefresh: Bool
     private let uploadNotifier: any UploadNotifying
+    private let connectionTester: @Sendable (
+        EagleConnection
+    ) async throws -> EagleConnectionStatus
     private var folderLoadToken: UUID?
     private var loadedFolderProfile: EagleLibraryProfileFingerprint?
     private var connectionTestTokens: [UUID: UUID] = [:]
@@ -65,12 +68,18 @@ final class AppModel: ObservableObject {
         settingsStore: SharedSettingsStore = SharedSettingsStore(),
         entitlementStore: ProEntitlementStore = ProEntitlementStore(),
         allowsAutomaticConnectionRefresh: Bool = true,
-        uploadNotifier: any UploadNotifying = SystemUploadNotifier()
+        uploadNotifier: any UploadNotifying = SystemUploadNotifier(),
+        connectionTester: @escaping @Sendable (
+            EagleConnection
+        ) async throws -> EagleConnectionStatus = { connection in
+            try await EagleAPIClient(connection: connection).testConnection()
+        }
     ) {
         self.settingsStore = settingsStore
         self.entitlementStore = entitlementStore
         self.allowsAutomaticConnectionRefresh = allowsAutomaticConnectionRefresh
         self.uploadNotifier = uploadNotifier
+        self.connectionTester = connectionTester
         let snapshot = settingsStore.load()
         profiles = snapshot.profiles
         selectedProfileID = snapshot.selectedProfileID
@@ -700,9 +709,7 @@ final class AppModel: ObservableObject {
         }
         await Task.yield()
         do {
-            let status = try await EagleAPIClient(
-                connection: testedConnection
-            ).testConnection()
+            let status = try await connectionTester(testedConnection)
             try Task.checkCancellation()
 
             guard connectionTestTokens[id] == testToken,

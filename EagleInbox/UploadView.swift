@@ -200,6 +200,12 @@ struct UploadView: View {
         Section {
             if let profile = model.selectedProfile {
                 let testState = model.connectionTestState(for: profile)
+                let displayedTestState: ConnectionTestState =
+                    profileIDToTestAfterConnectionsDismiss == profile.id
+                    ? .testing
+                    : testState
+                let isConnectionInteractionDisabled = model.isWorking
+                    || profileIDToTestAfterConnectionsDismiss != nil
 
                 HStack(spacing: 0) {
                     Button {
@@ -227,6 +233,7 @@ struct UploadView: View {
                         .contentShape(Rectangle())
                     }
                     .buttonStyle(.plain)
+                    .disabled(isConnectionInteractionDisabled)
                     .accessibilityLabel("Choose Connection")
                     .accessibilityValue(profile.displayTitle)
                     .accessibilityIdentifier("upload.connection.open")
@@ -234,14 +241,18 @@ struct UploadView: View {
                     Button {
                         Task { await model.testConnection() }
                     } label: {
-                        connectionTestIcon(for: testState)
+                        connectionTestIcon(for: displayedTestState)
                             .frame(width: 44, height: 44)
                             .contentShape(Rectangle())
                     }
                     .buttonStyle(.plain)
-                    .disabled(model.isWorking)
+                    .disabled(isConnectionInteractionDisabled)
                     .accessibilityLabel("Test Connection")
-                    .accessibilityValue(connectionTestAccessibilityValue(for: testState))
+                    .accessibilityValue(
+                        connectionTestAccessibilityValue(
+                            for: displayedTestState
+                        )
+                    )
 
                     Button {
                         isConnectionsPresented = true
@@ -253,6 +264,7 @@ struct UploadView: View {
                             .contentShape(Rectangle())
                     }
                     .buttonStyle(.plain)
+                    .disabled(isConnectionInteractionDisabled)
                     .accessibilityHidden(true)
                 }
 
@@ -295,6 +307,7 @@ struct UploadView: View {
                     .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
+                .disabled(model.isWorking)
                 .accessibilityLabel("Choose or Add Connection")
                 .accessibilityIdentifier("upload.connection.open")
             }
@@ -841,11 +854,18 @@ struct UploadView: View {
         guard let profileID = profileIDToTestAfterConnectionsDismiss else {
             return
         }
-        profileIDToTestAfterConnectionsDismiss = nil
 
         Task { @MainActor in
-            guard model.selectedProfileID == profileID else { return }
+            guard model.selectedProfileID == profileID else {
+                if profileIDToTestAfterConnectionsDismiss == profileID {
+                    profileIDToTestAfterConnectionsDismiss = nil
+                }
+                return
+            }
             await model.testConnection(profileID: profileID)
+            if profileIDToTestAfterConnectionsDismiss == profileID {
+                profileIDToTestAfterConnectionsDismiss = nil
+            }
         }
     }
 

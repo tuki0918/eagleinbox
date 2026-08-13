@@ -108,10 +108,26 @@ struct EagleInboxApp: App {
                 )
             }
             _ = try? settingsStore.replaceAllForUITesting(snapshot)
+            let connectionTester: @Sendable (
+                EagleConnection
+            ) async throws -> EagleConnectionStatus
+            if arguments.contains("--ui-testing-delayed-connection-test") {
+                connectionTester = { _ in
+                    try await Task<Never, Never>.sleep(for: .seconds(30))
+                    return EagleConnectionStatus(libraryName: "Design")
+                }
+            } else {
+                connectionTester = { connection in
+                    try await EagleAPIClient(
+                        connection: connection
+                    ).testConnection()
+                }
+            }
             let model = AppModel(
                 settingsStore: settingsStore,
                 entitlementStore: entitlementStore,
-                allowsAutomaticConnectionRefresh: false
+                allowsAutomaticConnectionRefresh: false,
+                connectionTester: connectionTester
             )
             if arguments.contains("--ui-testing-seeded-unverified-connection") {
                 model.seedPinnedUnverifiedConnectionForUITesting(
