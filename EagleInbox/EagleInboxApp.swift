@@ -152,7 +152,10 @@ struct EagleInboxApp: App {
                 model,
                 ProPurchaseManager(
                     entitlementStore: entitlementStore,
-                    isStoreKitEnabled: false
+                    isStoreKitEnabled: false,
+                    purchaseButtonTitleOverride: arguments.contains(
+                        "--ui-testing-store-screenshot"
+                    ) ? String(localized: "Unlock Pro") : nil
                 )
             )
         }

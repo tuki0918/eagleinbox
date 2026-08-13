@@ -419,6 +419,16 @@ private let slides: [Slide] = [
         output: "Docs/AppStore/Final/04-action-button.png",
         background: vividBackground,
         accent: NSColor(hex: 0xC4B5FD)
+    ),
+    Slide(
+        headline: "Unlock more\nwith Pro.",
+        subtitle: "Unlimited connections and every Shortcut action.",
+        badge: nil,
+        source: "Docs/Screenshots/pro-upgrade.png",
+        secondarySource: nil,
+        output: "Docs/AppStore/Final/05-pro-upgrade.png",
+        background: vividBackground,
+        accent: NSColor(hex: 0xFBBF24)
     )
 ]
 

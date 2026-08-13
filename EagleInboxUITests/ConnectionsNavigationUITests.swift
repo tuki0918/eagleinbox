@@ -93,6 +93,20 @@ final class ConnectionsNavigationUITests: XCTestCase {
         )
     }
 
+    func testStoreScreenshotPaywallUsesPriceFreeTitle() {
+        launchApp(seedConnection: true, storeScreenshot: true)
+        openConnections()
+        app.buttons["connections.add"].tap()
+
+        XCTAssertTrue(
+            app.buttons["pro.purchase"].waitForExistence(
+                timeout: Self.waitTimeout
+            )
+        )
+        XCTAssertEqual(app.buttons["pro.purchase"].label, "Unlock Pro")
+        XCTAssertTrue(app.buttons["pro.purchase"].isEnabled)
+    }
+
     func testJapaneseProUpgradeLocalization() {
         launchApp(
             seedConnection: true,
@@ -908,6 +922,7 @@ final class ConnectionsNavigationUITests: XCTestCase {
         seedUnverifiedConnection: Bool = false,
         seedConnectionFailure: Bool = false,
         seedRecoveredSendConnection: Bool = false,
+        storeScreenshot: Bool = false,
         pro: Bool = false,
         language: String = "en",
         locale: String = "en_US"
@@ -953,6 +968,9 @@ final class ConnectionsNavigationUITests: XCTestCase {
             app.launchArguments.append(
                 "--ui-testing-seeded-recovered-send-connection"
             )
+        }
+        if storeScreenshot {
+            app.launchArguments.append("--ui-testing-store-screenshot")
         }
         if pro {
             app.launchArguments.append("--ui-testing-pro")

@@ -23,6 +23,7 @@ final class ProPurchaseManager: ObservableObject {
 
     private let entitlementStore: ProEntitlementStore
     private let isStoreKitEnabled: Bool
+    private let purchaseButtonTitleOverride: String?
     private var transactionUpdatesTask: Task<Void, Never>?
     private var isPrepared = false
     private var isPreparing = false
@@ -30,10 +31,12 @@ final class ProPurchaseManager: ObservableObject {
 
     init(
         entitlementStore: ProEntitlementStore = ProEntitlementStore(),
-        isStoreKitEnabled: Bool = true
+        isStoreKitEnabled: Bool = true,
+        purchaseButtonTitleOverride: String? = nil
     ) {
         self.entitlementStore = entitlementStore
         self.isStoreKitEnabled = isStoreKitEnabled
+        self.purchaseButtonTitleOverride = purchaseButtonTitleOverride
         if isStoreKitEnabled {
             entitlementState = entitlementStore.state
             observeTransactionUpdates()
@@ -53,6 +56,9 @@ final class ProPurchaseManager: ObservableObject {
     }
 
     var purchaseButtonTitle: String {
+        if let purchaseButtonTitleOverride {
+            return purchaseButtonTitleOverride
+        }
         if let product {
             return String(localized: "Unlock for \(product.displayPrice)")
         }
@@ -65,6 +71,9 @@ final class ProPurchaseManager: ObservableObject {
     var isPurchaseButtonDisabled: Bool {
         if isBusy {
             return true
+        }
+        if purchaseButtonTitleOverride != nil {
+            return false
         }
         return product == nil && !hasAttemptedProductLoad
     }
@@ -124,6 +133,7 @@ final class ProPurchaseManager: ObservableObject {
     }
 
     func performPurchaseButtonAction() async {
+        guard purchaseButtonTitleOverride == nil else { return }
         if product == nil {
             await loadProduct(showsError: true)
             return

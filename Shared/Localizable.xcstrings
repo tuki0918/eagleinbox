@@ -2660,6 +2660,16 @@
         }
       }
     },
+    "Unlock Pro" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proを購入"
+          }
+        }
+      }
+    },
     "Unlock unlimited connections and all Shortcut actions." : {
       "localizations" : {
         "ja" : {
