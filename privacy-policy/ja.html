@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#ffffff">
+    <meta
+      name="description"
+      content="Eagle Inboxの日本語版プライバシーポリシーです。"
+    >
+    <title>プライバシーポリシー — Eagle Inbox</title>
+    <link rel="icon" href="app-icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css?v=20260815-11">
+    <script src="navigation.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">本文へ移動</a>
+
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="./?lang=ja" aria-label="Eagle Inbox プライバシーポリシー ホーム">
+          <img src="app-icon.svg" width="40" height="40" alt="">
+          <span>Eagle Inbox</span>
+        </a>
+        <div class="header-actions">
+          <nav class="language-switcher" aria-label="言語">
+            <a href="./?lang=en" lang="en">EN</a>
+            <a href="./?lang=ja" lang="ja" aria-current="page">日本語</a>
+          </nav>
+          <button
+            class="menu-button"
+            type="button"
+            aria-controls="page-index"
+            aria-expanded="false"
+          >
+            <span class="visually-hidden">目次を開く</span>
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+              <path d="M4 7h16M4 12h16M4 17h16"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-shell">
+      <nav id="page-index" class="table-of-contents" aria-label="目次">
+        <div class="drawer-header">
+          <p class="toc-title">目次</p>
+          <button class="drawer-close" type="button">
+            <span class="visually-hidden">目次を閉じる</span>
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+              <path d="m6 6 12 12M18 6 6 18"/>
+            </svg>
+          </button>
+        </div>
+        <ol>
+          <li><a href="#summary">00. プライバシーの概要</a></li>
+          <li><a href="#scope">1. 適用範囲</a></li>
+          <li><a href="#information">2. 本アプリが取り扱う情報</a></li>
+          <li><a href="#use">3. 情報の利用目的</a></li>
+          <li><a href="#sharing">4. 情報の共有および開示</a></li>
+          <li><a href="#storage">5. 保存、保持および削除</a></li>
+          <li><a href="#security">6. ネットワークの安全性</a></li>
+          <li><a href="#apple-services">7. Appleのサービスと権限</a></li>
+          <li><a href="#website">8. このウェブサイト</a></li>
+          <li><a href="#children">9. お子様のプライバシー</a></li>
+          <li><a href="#changes">10. 本ポリシーの変更</a></li>
+          <li><a href="#contact">11. お問い合わせ</a></li>
+        </ol>
+      </nav>
+      <button class="drawer-backdrop" type="button" aria-label="目次を閉じる"></button>
+
+      <main id="main-content" class="policy">
+        <header class="policy-header">
+          <p class="product-name">Eagle Inbox</p>
+          <h1><span>プライバシー</span><wbr><span>ポリシー</span></h1>
+          <p class="effective-date">
+            <strong>施行日：</strong>
+            <time datetime="2026-08-13">2026年8月13日</time>
+          </p>
+          <p class="introduction">
+            本プライバシーポリシーは、Eagle Inbox（以下「本アプリ」）ならびに
+            その共有機能拡張およびAppleショートカットのアクションを利用する際に、
+            情報がどのように取り扱われるかを説明するものです。本アプリは、端末から
+            Eagleデスクトップアプリ、またはユーザーが指定したEagle Web API互換の
+            接続先へコンテンツを直接送信するためのアプリです。
+          </p>
+        </header>
+
+        <section id="summary" class="summary" aria-labelledby="summary-title">
+          <h2 id="summary-title">プライバシーの概要</h2>
+          <ul>
+            <li>
+              <strong>開発者が運営するアップロードサーバーはありません。</strong>
+              ファイル、URL、メタデータは、ユーザーが設定した接続先へ直接送信されます。
+              Eagle Inboxのサーバーを経由することはありません。
+            </li>
+            <li>
+              <strong>広告、アクセス解析、トラッキングSDKは使用しません。</strong>
+              本アプリは第三者の広告・アクセス解析サービスを使用せず、ほかのアプリや
+              ウェブサイトをまたいでユーザーを追跡しません。
+            </li>
+            <li>
+              <strong>設定は端末内に保存されます。</strong>
+              接続設定と環境設定は端末内に保存され、APIトークンはiOSのKeychainに保存されます。
+            </li>
+            <li>
+              <strong>送信する内容はユーザーが管理します。</strong>
+              写真、ファイル、URLには、ユーザーが選択または共有した場合にのみアクセスし、
+              アップロードを開始したとき、または設定済みのショートカットを実行したときにのみ送信します。
+            </li>
+          </ul>
+        </section>
+
+        <section id="scope" aria-labelledby="scope-title">
+          <h2 id="scope-title"><span>1.</span> 適用範囲</h2>
+          <p>
+            本ポリシーは、Eagle InboxのiOSアプリ、共有機能拡張、およびAppleショートカットの
+            アクションに適用されます。Eagleデスクトップアプリ、Appleのサービス、追加したURLの
+            ウェブサイト、第三者が運営するEagle Web API互換の接続先には適用されません。
+            これらには各サービスのプライバシーに関する取り扱いが適用されます。
+          </p>
+        </section>
+
+        <section id="information" aria-labelledby="information-title">
+          <h2 id="information-title"><span>2.</span> 本アプリが取り扱う情報</h2>
+          <p>
+            利用する機能に応じて、本アプリは以下の情報を端末内で処理し、または選択した接続先へ送信します。
+          </p>
+
+          <h3>送信するために選択したコンテンツ</h3>
+          <p>
+            本アプリで選択したもの、ほかのアプリから共有したもの、またはEagle Inboxの
+            ショートカットに渡した写真、動画、音声ファイル、PDF、その他の対応ファイルおよびウェブURL。
+          </p>
+
+          <h3>アップロードのメタデータ</h3>
+          <p>
+            Eagleライブラリにアイテムを作成するために必要なフォルダーの選択、タグ、注釈、
+            ファイル名、メディア形式およびその他の情報。
+          </p>
+
+          <h3>接続情報</h3>
+          <p>
+            接続名、ホスト名またはIPアドレス、ポート、HTTPまたはHTTPSの設定、ユーザーが入力した場合の
+            APIトークン、および接続先のEagleライブラリ名。本アプリは、アップロード時のメタデータ選択と
+            接続先の確認のため、選択した接続先からフォルダー名、タグ、タググループ、ライブラリ情報を取得する場合があります。
+          </p>
+
+          <h3>端末内のアプリ情報</h3>
+          <p>
+            アプリの環境設定、選択中の接続先、最近選択したメタデータ、Eagle Inbox Proが利用可能かを示す
+            端末内のキャッシュ。本アプリは、アップロードの準備または実行中に、選択したファイルの一時的な
+            ローカルコピーを作成する場合があります。
+          </p>
+
+          <h3>URLのプレビュー</h3>
+          <p>
+            ウェブURLを追加すると、AppleのLink Presentationフレームワークがアイコンまたはプレビュー画像を
+            取得するため、そのウェブサイトへ接続する場合があります。ウェブサイトは独自のプライバシーに関する
+            取り扱いに従い、IPアドレスなどのネットワーク情報を受け取る場合があります。
+          </p>
+
+          <p>
+            開発者が本アプリを通じてこれらの情報を受け取ることはなく、Eagle Inbox用のサーバー上の
+            アカウントまたはデータベースを運営していません。
+          </p>
+        </section>
+
+        <section id="use" aria-labelledby="use-title">
+          <h2 id="use-title"><span>3.</span> 情報の利用目的</h2>
+          <p>本アプリは、上記の情報を以下の目的にのみ利用します。</p>
+          <ul>
+            <li>ユーザーが設定した接続先への接続および接続テスト</li>
+            <li>接続先のライブラリ、フォルダーおよびタグの表示</li>
+            <li>ユーザーが開始したアップロードの準備、送信、進捗確認および再試行</li>
+            <li>端末上での設定および選択中の接続先の記憶</li>
+            <li>Appleを通じたEagle Inbox Proの購入確認および復元</li>
+            <li>アップロード結果に関する任意のローカル通知の表示</li>
+          </ul>
+          <p>
+            本アプリは、コンテンツまたは接続情報を、広告、プロファイリング、データ販売、
+            または人工知能モデルの学習に利用しません。
+          </p>
+        </section>
+
+        <section id="sharing" aria-labelledby="sharing-title">
+          <h2 id="sharing-title"><span>4.</span> 情報の共有および開示</h2>
+          <p>
+            開発者は、広告目的で個人情報を販売、貸与、共有しません。情報が端末外へ送られるのは、以下の場合に限られます。
+          </p>
+          <ul>
+            <li>
+              <strong>ユーザーが選択した接続先：</strong>
+              コンテンツ、メタデータ、接続リクエスト、および設定されている場合はAPIトークンが、
+              選択したEagleまたは互換接続先へ送信されます。
+            </li>
+            <li>
+              <strong>Appleのサービス：</strong>
+              AppleはEagle Inbox Proの購入および利用権に関する情報を処理し、ファイル選択、共有、
+              プレビュー、通知、ショートカットに使用するシステムフレームワークを提供します。
+              Appleは独自のプライバシーポリシーに従って情報を取り扱います。
+            </li>
+            <li>
+              <strong>ユーザーの操作による場合：</strong>
+              コンテンツを選択または共有したとき、接続先を設定したとき、またはショートカットを実行したとき。
+            </li>
+            <li>
+              <strong>法的要請：</strong>
+              サポートへの問い合わせなどにより開発者がユーザーから直接情報を受け取った場合、
+              法令遵守または権利、安全およびセキュリティの保護に合理的に必要な範囲で開示することがあります。
+            </li>
+          </ul>
+        </section>
+
+        <section id="storage" aria-labelledby="storage-title">
+          <h2 id="storage-title"><span>5.</span> 保存、保持および削除</h2>
+          <ul>
+            <li>
+              接続情報と環境設定は、ユーザーが変更または削除するまで端末内に保存されます。
+              APIトークンは通常のアプリ設定ではなくiOSのKeychainに保存されます。
+            </li>
+            <li>
+              一時アップロードファイルは、アップロードの準備または完了にのみ使用され、不要になった時点で
+              本アプリにより削除されます。iOSが一時ストレージを管理する場合もあります。
+            </li>
+            <li>
+              保存済みの接続先を本アプリから削除すると、端末に保存された接続情報とAPIトークンを削除できます。
+              Keychainの動作はiOSによって管理されるため、Keychain項目を確実に削除したい場合は、
+              本アプリをアンインストールする前に保存済みの接続先を削除してください。
+            </li>
+            <li>
+              Eagleへ送信済みのコンテンツは、選択した接続先に保存され、その接続先によって管理されます。
+              削除するには、Eagleライブラリから削除するか、互換接続先の運営者へお問い合わせください。
+            </li>
+            <li>
+              開発者がアクセス、エクスポートまたは削除できるEagle Inboxのサーバー上のコピーはありません。
+              ユーザーから送信されたサポートメッセージは、回答、サポート記録の維持、または法的義務の遵守に
+              合理的に必要な期間のみ保持されます。
+            </li>
+          </ul>
+        </section>
+
+        <section id="security" aria-labelledby="security-title">
+          <h2 id="security-title"><span>6.</span> ネットワークの安全性</h2>
+          <p>
+            Eagleデスクトップアプリへ直接接続する場合、Eagle Inboxは通常、ローカルネットワーク上でHTTPを使用します。
+            HTTPでは、APIトークン、アップロードするコンテンツ、およびメタデータは通信中に暗号化されません。
+            Eagle Web APIでは、APIトークンがURLのクエリパラメーターに含まれます。HTTPは信頼できる
+            プライベートネットワークでのみ使用し、暗号化されていないEagle APIをインターネットへ公開したり、
+            公衆Wi-Fiから使用したりしないでください。
+          </p>
+          <p>
+            本アプリは、互換性のあるカスタム接続先へのHTTPS接続にも対応しています。HTTPS接続では、端末が
+            信頼する証明書を使用する必要があります。保存または通信の方法に完全な安全性を保証することはできず、
+            設定した接続先の安全性を確保する責任はユーザーにあります。
+          </p>
+        </section>
+
+        <section id="apple-services" aria-labelledby="apple-services-title">
+          <h2 id="apple-services-title"><span>7.</span> Appleのサービスと権限</h2>
+          <p>
+            本アプリはEagleへ接続するためにローカルネットワークへのアクセスを求める場合があり、ユーザーが選択した
+            コンテンツを扱うためにシステムの選択画面または共有シートを使用します。通知は任意であり、アップロード結果の
+            お知らせにのみ使用されます。権限はiOSの「設定」で管理できます。
+          </p>
+          <p>
+            Eagle Inbox ProはAppleが処理する非消耗型のアプリ内課金です。開発者が支払いカードの完全な情報を
+            受け取ることはありません。本アプリはPro機能の解除および購入の復元のため、StoreKitから製品情報と
+            利用権の状態を受け取ります。Appleによるデータの取り扱いについては、
+            <a href="https://www.apple.com/jp/legal/privacy/" rel="external">Appleのプライバシーポリシー</a>をご覧ください。
+          </p>
+        </section>
+
+        <section id="website" aria-labelledby="website-title">
+          <h2 id="website-title"><span>8.</span> このウェブサイト</h2>
+          <p>
+            このプライバシーポリシーページはCookieを設定せず、広告またはアクセス解析のコードを含みません。
+          </p>
+        </section>
+
+        <section id="children" aria-labelledby="children-title">
+          <h2 id="children-title"><span>9.</span> お子様のプライバシー</h2>
+          <p>
+            Eagle Inboxは13歳未満のお子様を対象としておらず、開発者が本アプリを通じてお子様の個人情報を
+            意図的に収集することはありません。
+          </p>
+        </section>
+
+        <section id="changes" aria-labelledby="changes-title">
+          <h2 id="changes-title"><span>10.</span> 本ポリシーの変更</h2>
+          <p>
+            本プライバシーポリシーは、本アプリまたは適用される要件の変更を反映するため更新される場合があります。
+            更新後のポリシーはこのURLに掲載し、ページ上部の施行日を改定します。重要な変更については、必要に応じて
+            適切な方法でお知らせします。
+          </p>
+        </section>
+
+        <section id="contact" aria-labelledby="contact-title">
+          <h2 id="contact-title"><span>11.</span> お問い合わせ</h2>
+          <p>
+            Eagle Inboxに関するご質問またはご要望は、
+            <a href="https://github.com/tuki0918/eagleinbox/issues" rel="external">GitHub Issues</a>から
+            開発者へお問い合わせください。
+          </p>
+          <p class="contact-note">
+            APIトークン、非公開URL、個人ファイル、その他の機密情報を記載しないでください。
+          </p>
+        </section>
+      </main>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p>© 2026 bbbit. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>
