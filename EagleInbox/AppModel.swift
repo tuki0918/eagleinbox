@@ -676,6 +676,7 @@ final class AppModel: ObservableObject {
                 connectionMessage = nil
                 return nil
             }
+            AppDiagnostics.connectionTestFailed(in: .mainApp, error: error)
             connectionMessage = error.localizedDescription
             return nil
         }
@@ -743,6 +744,7 @@ final class AppModel: ObservableObject {
                         detectedLibraryName: status.libraryName
                     )
             } catch {
+                AppDiagnostics.settingsMutationFailed(in: .mainApp, error: error)
                 let message: String
                 if error is SharedSettingsMutationError {
                     message = String(
@@ -789,6 +791,7 @@ final class AppModel: ObservableObject {
             }
 
             connectionTestTokens.removeValue(forKey: id)
+            AppDiagnostics.connectionTestFailed(in: .mainApp, error: error)
             let message = error.localizedDescription
             connectionTestStates[id] = .failed(message)
             connectionMessage = message
@@ -1024,6 +1027,7 @@ final class AppModel: ObservableObject {
                 operationMessage = nil
                 return
             }
+            AppDiagnostics.uploadVerificationFailed(in: .mainApp, error: error)
             let message = error.localizedDescription
             applySendConnectionFailure(message, profileID: profile.id)
             return
@@ -1070,6 +1074,7 @@ final class AppModel: ObservableObject {
                     )
                     break
                 }
+                AppDiagnostics.uploadItemFailed(in: .mainApp, error: error)
                 queue[index].state = .failed(error.localizedDescription)
                 failed += 1
             }
@@ -1080,6 +1085,11 @@ final class AppModel: ObservableObject {
         loadedTagsAt = nil
         operationMessage = nil
         guard !Task.isCancelled else { return }
+        AppDiagnostics.uploadCompleted(
+            in: .mainApp,
+            sent: succeeded,
+            failed: failed
+        )
         isSending = false
         if let result = UploadNotificationResult.completed(
             sent: succeeded,
@@ -1129,6 +1139,7 @@ final class AppModel: ObservableObject {
     }
 
     private func handleSettingsMutationFailure(_ error: Error) {
+        AppDiagnostics.settingsMutationFailed(in: .mainApp, error: error)
         applySettingsSnapshot(settingsStore.load())
         switch error as? SharedSettingsMutationError {
         case .profileLimitReached, .selectionNotAllowed:

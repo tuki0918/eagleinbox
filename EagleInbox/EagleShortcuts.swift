@@ -271,6 +271,11 @@ private enum EagleShortcutSender {
             }
         }
 
+        AppDiagnostics.uploadCompleted(
+            in: .shortcut,
+            sent: batch.sent,
+            failed: batch.failed
+        )
         try batch.throwIfNeeded()
         if batch.sent == 1 {
             return IntentDialog(
@@ -342,6 +347,11 @@ private enum EagleShortcutSender {
             }
         }
 
+        AppDiagnostics.uploadCompleted(
+            in: .shortcut,
+            sent: batch.sent,
+            failed: batch.failed
+        )
         try batch.throwIfNeeded()
         if batch.sent == 1 {
             return IntentDialog(
@@ -439,7 +449,13 @@ private struct EagleShortcutUploader {
         }
 
         let client = EagleAPIClient(connection: profile.connection)
-        let status = try await client.testConnection()
+        let status: EagleConnectionStatus
+        do {
+            status = try await client.testConnection()
+        } catch {
+            AppDiagnostics.connectionTestFailed(in: .shortcut, error: error)
+            throw error
+        }
         if let mismatch = status.libraryMismatch(
             expectedLibraryName: expectedLibraryName
         ) {
@@ -557,6 +573,7 @@ private struct EagleShortcutBatchResult {
     }
 
     mutating func recordFailure(itemName: String, error: Error) {
+        AppDiagnostics.uploadItemFailed(in: .shortcut, error: error)
         failed += 1
         if firstFailure == nil {
             firstFailure = String(

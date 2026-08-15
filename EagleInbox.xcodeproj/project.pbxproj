@@ -15,6 +15,7 @@
 		A10000000000000000000006 /* EagleShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000000000000000000000C /* EagleShortcuts.swift */; };
 		A10000000000000000000007 /* ProPurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000000000000000000000F /* ProPurchaseManager.swift */; };
 		A10000000000000000000008 /* ProUpgradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000010 /* ProUpgradeView.swift */; };
+		A10000000000000000000009 /* AppDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000034 /* AppDiagnostics.swift */; };
 		A10000000000000000000011 /* SharedIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000021 /* SharedIdentifiers.swift */; };
 		A10000000000000000000012 /* EagleConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000022 /* EagleConnection.swift */; };
 		A10000000000000000000013 /* EagleClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000023 /* EagleClientError.swift */; };
@@ -43,6 +44,7 @@
 		B10000000000000000000002 /* ShareMediaLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000012 /* ShareMediaLoader.swift */; };
 		B10000000000000000000003 /* ShareUploadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000013 /* ShareUploadViewModel.swift */; };
 		B10000000000000000000004 /* ShareUploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000014 /* ShareUploadView.swift */; };
+		B10000000000000000000009 /* AppDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000034 /* AppDiagnostics.swift */; };
 		B10000000000000000000011 /* SharedIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000021 /* SharedIdentifiers.swift */; };
 		B10000000000000000000012 /* EagleConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000022 /* EagleConnection.swift */; };
 		B10000000000000000000013 /* EagleClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10000000000000000000023 /* EagleClientError.swift */; };
@@ -140,6 +142,7 @@
 		C10000000000000000000031 /* EagleInbox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EagleInbox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C10000000000000000000032 /* EagleInboxShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = EagleInboxShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C10000000000000000000033 /* ProEntitlementStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProEntitlementStore.swift; sourceTree = "<group>"; };
+		C10000000000000000000034 /* AppDiagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDiagnostics.swift; sourceTree = "<group>"; };
 		C10000000000000000000041 /* ConnectionsNavigationUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionsNavigationUITests.swift; sourceTree = "<group>"; };
 		C10000000000000000000042 /* EagleInboxUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EagleInboxUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6684D9F302D910F00D3CC05 /* EagleInboxProducts.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = EagleInboxProducts.storekit; sourceTree = "<group>"; };
@@ -222,6 +225,7 @@
 		D10000000000000000000004 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				C10000000000000000000034 /* AppDiagnostics.swift */,
 				C10000000000000000000021 /* SharedIdentifiers.swift */,
 				C10000000000000000000022 /* EagleConnection.swift */,
 				C10000000000000000000023 /* EagleClientError.swift */,
@@ -417,6 +421,7 @@
 				A10000000000000000000006 /* EagleShortcuts.swift in Sources */,
 				A10000000000000000000007 /* ProPurchaseManager.swift in Sources */,
 				A10000000000000000000008 /* ProUpgradeView.swift in Sources */,
+				A10000000000000000000009 /* AppDiagnostics.swift in Sources */,
 				A10000000000000000000011 /* SharedIdentifiers.swift in Sources */,
 				A10000000000000000000012 /* EagleConnection.swift in Sources */,
 				A10000000000000000000013 /* EagleClientError.swift in Sources */,
@@ -444,6 +449,7 @@
 				B10000000000000000000002 /* ShareMediaLoader.swift in Sources */,
 				B10000000000000000000003 /* ShareUploadViewModel.swift in Sources */,
 				B10000000000000000000004 /* ShareUploadView.swift in Sources */,
+				B10000000000000000000009 /* AppDiagnostics.swift in Sources */,
 				B10000000000000000000011 /* SharedIdentifiers.swift in Sources */,
 				B10000000000000000000012 /* EagleConnection.swift in Sources */,
 				B10000000000000000000013 /* EagleClientError.swift in Sources */,

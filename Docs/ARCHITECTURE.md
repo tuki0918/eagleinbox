@@ -123,6 +123,7 @@ Shortcut uploads intentionally do not reuse the main app's in-memory queue or me
 - Queue and metadata: memory only
 - Upload copies and Base64 request bodies: OS-managed temporary storage
 - URL previews: Link Presentation may access the destination URL
+- Diagnostics: Apple unified logging with operation stages, safe error codes, and item counts only
 - Third-party advertising, analytics, and tracking SDKs: none
 
-The main app and share extension include `PrivacyInfo.xcprivacy` manifests that declare the reasons for accessing `UserDefaults` in the app and App Group. API tokens are sent as URL query parameters. HTTP connections are therefore intended only for trusted local networks; custom HTTPS endpoints must use a certificate trusted by the device.
+Diagnostic logs must not contain API tokens, hosts, URLs, library names, file names, tags, annotations, or server response messages. The main app and share extension include `PrivacyInfo.xcprivacy` manifests that declare the reasons for accessing `UserDefaults` in the app and App Group. API tokens are sent as URL query parameters. HTTP connections are therefore intended only for trusted local networks; custom HTTPS endpoints must use a certificate trusted by the device.

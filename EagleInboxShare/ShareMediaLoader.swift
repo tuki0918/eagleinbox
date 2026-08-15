@@ -77,6 +77,7 @@ enum ShareMediaLoader {
         }
 
         var uploads: [QueuedUpload] = []
+        var failedCount = 0
         var seenBookmarkIdentities: Set<String> = []
         for inputItem in inputItems {
             for provider in inputItem.attachments ?? [] {
@@ -122,6 +123,7 @@ enum ShareMediaLoader {
                     cleanupFiles(for: uploads)
                     return []
                 } catch {
+                    failedCount += 1
                     uploads.append(
                         QueuedUpload(
                             name: provider.suggestedName
@@ -136,6 +138,9 @@ enum ShareMediaLoader {
         guard !Task.isCancelled else {
             cleanupFiles(for: uploads)
             return []
+        }
+        if failedCount > 0 {
+            AppDiagnostics.shareAttachmentLoadFailed(count: failedCount)
         }
         return uploads
     }

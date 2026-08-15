@@ -125,9 +125,11 @@ final class ProPurchaseManager: ObservableObject {
             case .userCancelled:
                 break
             @unknown default:
+                AppDiagnostics.storeKitFailed(.purchase)
                 showPurchaseError()
             }
         } catch {
+            AppDiagnostics.storeKitFailed(.purchase, error: error)
             showPurchaseError(error)
         }
     }
@@ -158,6 +160,7 @@ final class ProPurchaseManager: ObservableObject {
                 )
             }
         } catch {
+            AppDiagnostics.storeKitFailed(.restore, error: error)
             showPurchaseError(error)
         }
     }
@@ -174,15 +177,19 @@ final class ProPurchaseManager: ObservableObject {
             product = try await Product.products(
                 for: [SharedIdentifiers.proProductID]
             ).first
-            if product == nil, showsError {
-                notice = ProPurchaseNotice(
-                    title: String(localized: "Purchase Couldn’t Be Completed"),
-                    message: String(
-                        localized: "Eagle Inbox Pro is temporarily unavailable. Check your connection and try again."
+            if product == nil {
+                AppDiagnostics.storeKitFailed(.productLoad)
+                if showsError {
+                    notice = ProPurchaseNotice(
+                        title: String(localized: "Purchase Couldn’t Be Completed"),
+                        message: String(
+                            localized: "Eagle Inbox Pro is temporarily unavailable. Check your connection and try again."
+                        )
                     )
-                )
+                }
             }
         } catch {
+            AppDiagnostics.storeKitFailed(.productLoad, error: error)
             if showsError {
                 showPurchaseError(error)
             }
@@ -231,6 +238,7 @@ final class ProPurchaseManager: ObservableObject {
             for await result in Transaction.updates {
                 guard !Task.isCancelled, let self else { return }
                 guard case let .verified(transaction) = result else {
+                    AppDiagnostics.storeKitFailed(.transactionUpdate)
                     continue
                 }
                 guard transaction.productID == SharedIdentifiers.proProductID else {

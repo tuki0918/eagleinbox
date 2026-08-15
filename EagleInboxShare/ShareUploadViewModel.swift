@@ -551,6 +551,7 @@ final class ShareUploadViewModel: ObservableObject {
                 connectionMessage = nil
                 return nil
             }
+            AppDiagnostics.connectionTestFailed(in: .shareExtension, error: error)
             connectionMessage = error.localizedDescription
             return nil
         }
@@ -616,6 +617,10 @@ final class ShareUploadViewModel: ObservableObject {
                         detectedLibraryName: status.libraryName
                     )
             } catch {
+                AppDiagnostics.settingsMutationFailed(
+                    in: .shareExtension,
+                    error: error
+                )
                 let message: String
                 if error is SharedSettingsMutationError {
                     message = String(
@@ -660,6 +665,7 @@ final class ShareUploadViewModel: ObservableObject {
                 return
             }
 
+            AppDiagnostics.connectionTestFailed(in: .shareExtension, error: error)
             let errorMessage = error.localizedDescription
             connectionTestStates[id] = .failed(errorMessage)
             connectionMessage = errorMessage
@@ -949,6 +955,10 @@ final class ShareUploadViewModel: ObservableObject {
                 operationMessage = nil
                 return
             }
+            AppDiagnostics.uploadVerificationFailed(
+                in: .shareExtension,
+                error: error
+            )
             let errorMessage = error.localizedDescription
             applySendConnectionFailure(errorMessage, profileID: profile.id)
             return
@@ -995,6 +1005,10 @@ final class ShareUploadViewModel: ObservableObject {
                     )
                     break
                 }
+                AppDiagnostics.uploadItemFailed(
+                    in: .shareExtension,
+                    error: error
+                )
                 queue[index].state = .failed(error.localizedDescription)
                 failed += 1
             }
@@ -1010,6 +1024,11 @@ final class ShareUploadViewModel: ObservableObject {
         loadedTagsAt = nil
         operationMessage = nil
         guard !uploadWasCancelled else { return }
+        AppDiagnostics.uploadCompleted(
+            in: .shareExtension,
+            sent: succeeded,
+            failed: failed
+        )
         if let result = UploadNotificationResult.completed(
             sent: succeeded,
             failed: failed
@@ -1083,6 +1102,7 @@ final class ShareUploadViewModel: ObservableObject {
     }
 
     private func handleSettingsMutationFailure(_ error: Error) {
+        AppDiagnostics.settingsMutationFailed(in: .shareExtension, error: error)
         applySettingsSnapshot(settingsStore.load())
         switch error as? SharedSettingsMutationError {
         case .profileLimitReached, .selectionNotAllowed:

@@ -85,6 +85,7 @@ swiftc \
   -module-cache-path /tmp/eagle-inbox-core-smoke-module-cache \
   -o /tmp/eagle-inbox-core-smoke \
   Tests/CoreSmoke.swift \
+  Shared/AppDiagnostics.swift \
   Shared/SharedIdentifiers.swift \
   Shared/ProEntitlementStore.swift \
   Shared/SharedSettingsStore.swift \
@@ -143,6 +144,21 @@ At minimum, verify the following on a physical device or through TestFlight:
 
 ## Release
 
+### Diagnostics
+
+Release builds use `dwarf-with-dsym` for Apple crash symbolication. Keep the
+Xcode archive for every distributed build and confirm that it contains dSYMs
+for both `EagleInbox.app` and `EagleInboxShare.appex`. Review TestFlight and App
+Store crash reports in Xcode Organizer.
+
+The app uses Apple unified logging with subsystem `com.tuki0918.EagleInbox` and
+the categories `connection`, `upload`, `settings`, `share-extension`, and
+`storekit`. Reproduce an issue while viewing the device in macOS Console or the
+Xcode console, then filter by that subsystem. Logs contain only component names,
+fixed operation names, safe error codes, and item counts. Never add API tokens,
+hosts, URLs, library names, file names, tags, annotations, or server response
+messages to diagnostic logs.
+
 Before submitting a release:
 
 - [ ] Keep `MARKETING_VERSION` and `CURRENT_PROJECT_VERSION` in sync for the main app and share extension
@@ -157,6 +173,8 @@ Before submitting a release:
 - [ ] Add a Privacy Policy link in an easy-to-find location within the app
 - [ ] Enable [`Make this app available`](https://developer.apple.com/help/app-store-connect/manage-your-apps-availability/manage-availability-of-iphone-and-ipad-apps-on-macs-with-apple-silicon) for Apple Silicon Macs under `Pricing and Availability` in App Store Connect
 - [ ] Run Archive, Validate App, and Upload in Xcode Organizer
+- [ ] Confirm the archive contains dSYMs for the main app and share extension, then retain the archive
+- [ ] Review TestFlight crash reports in Xcode Organizer before release
 - [ ] Choose a license before making the repository public
 
 The Review Notes should explain that Eagle 4.0 Build 21 or later must be running on another device, that both devices must be on the same local network, that some connections require an API token, and why the app validates the destination library. Also explain that Pro unlocks only Eagle Inbox's own upload automation and does not sell or alter the operating system's Shortcuts or Action Button functionality.
