@@ -498,6 +498,18 @@ li + li {
     overflow: hidden;
   }
 
+  .site-header {
+    transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .site-header.header-hidden {
+    transform: translateY(-100%);
+  }
+
+  body.drawer-open .site-header {
+    transform: translateY(0);
+  }
+
   .page-shell {
     display: block;
     width: min(calc(var(--reading-width) + 2 * var(--page-gutter)), 100%);

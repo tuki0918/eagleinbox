@@ -26,6 +26,13 @@ final class ConnectionsNavigationUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["送信リスト"].exists)
 
         openConnections(expectedTitle: "接続先")
+        XCTAssertTrue(app.staticTexts["情報"].exists)
+        XCTAssertTrue(
+            app.descendants(matching: .any)[
+                "connections.privacyPolicy"
+            ].exists
+        )
+        XCTAssertTrue(app.staticTexts["プライバシーポリシー"].exists)
         app.buttons["connections.add"].tap()
 
         let editor = app.navigationBars["新しい接続先"]
@@ -36,6 +43,14 @@ final class ConnectionsNavigationUITests: XCTestCase {
     func testAddConnectionPushAndFirstTapTextEntry() {
         launchApp()
         openConnections()
+
+        XCTAssertTrue(app.staticTexts["Information"].exists)
+        XCTAssertTrue(
+            app.descendants(matching: .any)[
+                "connections.privacyPolicy"
+            ].exists
+        )
+        XCTAssertTrue(app.staticTexts["Privacy Policy"].exists)
 
         app.buttons["connections.add"].tap()
 

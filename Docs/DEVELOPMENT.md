@@ -170,7 +170,7 @@ Before submitting a release:
 - [ ] Verify purchase, restoration, pending approval, and revoked-entitlement behavior with the production product identifier
 - [ ] Make the App Privacy answers in App Store Connect match the implementation
 - [ ] Prepare the Privacy Policy URL, Support URL, description, screenshots, and Review Notes
-- [ ] Add a Privacy Policy link in an easy-to-find location within the app
+- [x] Add a Privacy Policy link in an easy-to-find location within the app
 - [ ] Enable [`Make this app available`](https://developer.apple.com/help/app-store-connect/manage-your-apps-availability/manage-availability-of-iphone-and-ipad-apps-on-macs-with-apple-silicon) for Apple Silicon Macs under `Pricing and Availability` in App Store Connect
 - [ ] Run Archive, Validate App, and Upload in Xcode Organizer
 - [ ] Confirm the archive contains dSYMs for the main app and share extension, then retain the archive

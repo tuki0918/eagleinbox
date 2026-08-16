@@ -1129,6 +1129,16 @@
         }
       }
     },
+    "Information" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "情報"
+          }
+        }
+      }
+    },
     "Items are being added to the upload queue" : {
       "localizations" : {
         "ja" : {
@@ -1617,6 +1627,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "アップロードを準備中…"
+          }
+        }
+      }
+    },
+    "Privacy Policy" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プライバシーポリシー"
           }
         }
       }

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.locale) private var locale
     @EnvironmentObject private var model: AppModel
     @EnvironmentObject private var purchases: ProPurchaseManager
     @State private var editorRoute: ConnectionEditorRoute?
@@ -79,6 +80,18 @@ struct SettingsView: View {
                                 Text("The Pro plan unlocks unlimited connections.")
                             }
                         }
+                    }
+
+                    Section {
+                        Link(destination: privacyPolicyURL) {
+                            Label(
+                                "Privacy Policy",
+                                systemImage: "hand.raised.fill"
+                            )
+                        }
+                        .accessibilityIdentifier("connections.privacyPolicy")
+                    } header: {
+                        Text("Information")
                     }
                 }
                 .formStyle(.grouped)
@@ -286,6 +299,14 @@ struct SettingsView: View {
 
     private func horizontalContentInset(for width: CGFloat) -> CGFloat {
         max(16, (width - 760) / 2)
+    }
+
+    private var privacyPolicyURL: URL {
+        let path = "https://tuki0918.github.io/eagleinbox/"
+        if locale.language.languageCode?.identifier == "ja" {
+            return URL(string: "\(path)?lang=ja")!
+        }
+        return URL(string: path)!
     }
 
     private var proCrown: some View {
