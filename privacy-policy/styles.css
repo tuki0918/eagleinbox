@@ -131,9 +131,8 @@ a:focus-visible {
 }
 
 .site-header {
-  position: sticky;
+  position: static;
   z-index: 20;
-  top: 0;
   min-height: var(--header-height);
   border-bottom: 2px solid var(--border);
   background: rgb(255 255 255 / 96%);
@@ -251,9 +250,9 @@ a:focus-visible {
 
 .table-of-contents {
   position: sticky;
-  top: calc(var(--header-height) + 32px);
+  top: 32px;
   align-self: start;
-  max-height: calc(100vh - var(--header-height) - 64px);
+  max-height: calc(100vh - 64px);
   padding: 20px 18px 22px;
   overflow-y: auto;
   border: 2px solid var(--border);
@@ -499,6 +498,8 @@ li + li {
   }
 
   .site-header {
+    position: sticky;
+    top: 0;
     transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
