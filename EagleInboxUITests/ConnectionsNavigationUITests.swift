@@ -88,12 +88,12 @@ final class ConnectionsNavigationUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["All Shortcut Actions"].exists)
         XCTAssertTrue(
             app.staticTexts[
-                "Send files and URLs with tags and an annotation."
+                "Automate sending with tags and annotations."
             ].exists
         )
         XCTAssertTrue(
             app.staticTexts[
-                "Send files and URLs without opening the app."
+                "Send to Eagle with the Action Button."
             ].exists
         )
         XCTAssertTrue(app.buttons["pro.purchase"].exists)
@@ -120,6 +120,7 @@ final class ConnectionsNavigationUITests: XCTestCase {
         )
         XCTAssertEqual(app.buttons["pro.purchase"].label, "Unlock Pro")
         XCTAssertTrue(app.buttons["pro.purchase"].isEnabled)
+        attachScreenshot(named: "pro-upgrade")
     }
 
     func testJapaneseProUpgradeLocalization() {
@@ -140,8 +141,9 @@ final class ConnectionsNavigationUITests: XCTestCase {
             "接続先を無制限に追加し、すべてのショートカット機能を利用できます。",
             "Eagleの接続先をいくつでも登録・切り替えできます。",
             "ショートカット機能",
-            "タグや注釈を付け、ファイルやURLを送信できます。",
-            "アプリを開かず、ファイルやURLを送信できます。",
+            "タグや注釈を指定して、送信を自動化できます。",
+            "クイック送信",
+            "アクションボタンからEagleへ送信できます。",
             "買い切りで、継続料金はかかりません。"
         ] {
             XCTAssertTrue(

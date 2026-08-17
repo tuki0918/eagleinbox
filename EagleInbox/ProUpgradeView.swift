@@ -42,12 +42,12 @@ struct ProUpgradeView: View {
                         benefit(
                             systemImage: "square.stack.3d.up.fill",
                             title: "All Shortcut Actions",
-                            description: "Send files and URLs with tags and an annotation."
+                            description: "Automate sending with tags and annotations."
                         )
                         benefit(
                             systemImage: "button.programmable",
-                            title: "Action Button Ready",
-                            description: "Send files and URLs without opening the app."
+                            title: "Quick Send",
+                            description: "Send to Eagle with the Action Button."
                         )
                     }
                     .frame(maxWidth: 520)

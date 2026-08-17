@@ -195,12 +195,12 @@
         }
       }
     },
-    "Action Button Ready" : {
+    "Quick Send" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "アクションボタンに対応"
+            "value" : "クイック送信"
           }
         }
       }
@@ -1994,22 +1994,22 @@
         }
       }
     },
-    "Send files and URLs with tags and an annotation." : {
+    "Automate sending with tags and annotations." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "タグや注釈を付け、ファイルやURLを送信できます。"
+            "value" : "タグや注釈を指定して、送信を自動化できます。"
           }
         }
       }
     },
-    "Send files and URLs without opening the app." : {
+    "Send to Eagle with the Action Button." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "アプリを開かず、ファイルやURLを送信できます。"
+            "value" : "アクションボタンからEagleへ送信できます。"
           }
         }
       }

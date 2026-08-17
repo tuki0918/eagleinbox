@@ -482,6 +482,7 @@ li + li {
 }
 
 .footer-inner {
+  align-items: center;
   justify-content: space-between;
   gap: 32px;
   padding-top: 24px;
@@ -490,6 +491,30 @@ li + li {
 
 .footer-inner p {
   margin: 0;
+}
+
+.github-link {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  color: var(--paper);
+  cursor: pointer;
+}
+
+.github-link svg {
+  fill: currentColor;
+}
+
+.github-link:hover {
+  color: var(--paper);
+}
+
+.github-link:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
 }
 
 @media (max-width: 900px) {
@@ -674,11 +699,7 @@ li + li {
   }
 
   .footer-inner {
-    display: block;
-  }
-
-  .footer-inner p + p {
-    margin-top: 4px;
+    gap: 20px;
   }
 }
 
