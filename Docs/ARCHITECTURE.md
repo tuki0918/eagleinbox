@@ -24,7 +24,7 @@ The main app and share extension are implemented as iOS apps.
 | `Design/` | App icon design source |
 | `Docs/Screenshots/` | Screenshots for the README and release assets |
 
-The main app and share extension reuse Connection Editor input and validation logic, as well as UI components, from `Shared/`. Each target manages its own navigation, asynchronous flow, confirmation dialogs, and screen-specific message state.
+The main app and share extension reuse Connection Editor input and validation logic, as well as UI components, from `Shared/`. Shared upload presentation includes the bottom action bar, URL bookmark editor, metadata disclosure and inputs, and folder selection screen. Each target injects its own model values and actions, and continues to manage its own navigation shell, asynchronous flow, confirmation dialogs, and screen-specific message state.
 
 ## Connections
 

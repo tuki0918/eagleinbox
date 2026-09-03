@@ -1,0 +1,30 @@
+# Copy this file to ~/.cloudflared/config.yml and replace every <...> value.
+#
+# This publishes only the Eagle Web API v2 endpoints required by Eagle Inbox.
+# All other requests receive 404 and never reach Eagle.
+
+tunnel: <TUNNEL_UUID>
+credentials-file: /Users/<MACOS_USERNAME>/.cloudflared/<TUNNEL_UUID>.json
+
+ingress:
+  # Connection test and library validation
+  - hostname: <EAGLE_HOSTNAME>
+    path: ^/api/v2/(app/info|library/info)$
+    service: http://localhost:41595
+
+  # Folder and tag selection
+  - hostname: <EAGLE_HOSTNAME>
+    path: ^/api/v2/(folder/get|tag/get|tag/getRecentTags|tagGroup/get)$
+    service: http://localhost:41595
+
+  # File and bookmark uploads
+  - hostname: <EAGLE_HOSTNAME>
+    path: ^/api/v2/item/add$
+    service: http://localhost:41595
+
+  # Reject other paths for this public hostname.
+  - hostname: <EAGLE_HOSTNAME>
+    service: http_status:404
+
+  # Required catch-all rule.
+  - service: http_status:404

@@ -61,13 +61,15 @@ Allow local network access when prompted. Notifications are optional and do not 
 
 ### 4. Unlock Shortcuts or the Action Button with Pro
 
-Eagle Inbox Pro provides five actions in Apple Shortcuts:
+Eagle Inbox Pro provides seven actions in Apple Shortcuts:
 
 - `Send URLs to Eagle` saves HTTP and HTTPS URLs as Eagle bookmarks
 - `Send URLs to Eagle with Tags, Annotation` saves URLs with optional tags and an optional annotation
 - `Send Files to Eagle` accepts photos, videos, audio, and PDFs
 - `Send Files to Eagle with Tags, Annotation` sends supported files with optional tags and an optional annotation
 - `Split Text into Tags` turns comma- or newline-separated text into a tag list
+- `Get Tags from Eagle` returns the tags in the currently open, verified Eagle library as newline-separated text
+- `Get Folders from Eagle` returns folders in the currently open, verified Eagle library as `folder-id<TAB>parent > child` lines
 
 All send actions use the connection currently selected in Eagle Inbox and run without opening the app. The selected connection must have been tested and the expected Eagle library must be open.
 
@@ -104,6 +106,8 @@ For a direct connection to the Eagle desktop app, connect the Mac or Windows PC 
 ## Network and Eagle Web API
 
 Eagle Inbox communicates with the [Eagle Web API v2](https://developer.eagle.cool/web-api) or an API-compatible custom endpoint. Each saved connection can use `http://<host>:<port>/api/v2/...` (the default) or `https://<host>:<port>/api/v2/...`. Eagle normally uses HTTP on port `41595`; custom endpoints can use HTTPS and any configured port. An API token, when configured, is included in the URL query parameters.
+
+For a secure external HTTPS connection through a custom domain, see the [Cloudflare Tunnel template](Docs/CLOUDFLARE_TUNNEL_TEMPLATE.md). It includes a copy-ready `cloudflared` allowlist that exposes only the API endpoints used by Eagle Inbox.
 
 Files and metadata are sent directly from Eagle Inbox to the computer running Eagle. They are not relayed through an Eagle Inbox server.
 

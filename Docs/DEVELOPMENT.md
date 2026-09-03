@@ -131,14 +131,14 @@ At minimum, verify the following on a physical device or through TestFlight:
 - Canceling an upload in progress, retaining unsent items, and retrying failed items
 - Per-item progress for a large video, including preparing, uploading, and finishing states
 - Photos, files, URLs, and the share extension
-- All five Eagle Inbox actions in Apple Shortcuts: simple file/URL sends without metadata fields; both `with Tags, Annotation` actions with neither optional value, tags only, an annotation only, and both values; and `Split Text into Tags` with comma-separated, newline-separated, blank, and duplicate values
+- All seven Eagle Inbox actions in Apple Shortcuts: simple file/URL sends without metadata fields; both `with Tags, Annotation` actions with neither optional value, tags only, an annotation only, and both values; `Split Text into Tags` with comma-separated, newline-separated, blank, and duplicate values; `Get Tags from Eagle` returning one tag per line; and `Get Folders from Eagle` returning `folder-id<TAB>parent > child` lines
 - An OCR workflow that connects extracted text to `Split Text into Tags`, its output to a `with Tags, Annotation` action, and the original image to the file input; also verify existing saved simple shortcuts and saved `with Tags` shortcuts from the previous version, Japanese labels, and an Action Button workflow on a physical iPhone
 - Connection sharing between the main app and share extension
 - Free access to one connection and all direct-upload, share-extension, batch, folder, annotation, and tag features
 - The second connection opening the Pro upgrade in the main app and a functional Pro-required message in the share extension
 - A successful Pro purchase and restore unlocking unlimited connections without deleting or rewriting existing connection records
 - Cancellation, pending approval, relaunch, offline launch, refund, and revocation returning to a consistent entitlement state
-- All five Shortcuts failing before any file or network work in the free state, showing the localized Pro-required error instead of an internal error type, and running after Pro is unlocked
+- All seven Shortcuts failing before any file or network work in the free state, showing the localized Pro-required error instead of an internal error type, and running after Pro is unlocked
 - iPad in iPhone compatibility mode
 - Running as a Designed for iPhone app on an Apple Silicon Mac
 
