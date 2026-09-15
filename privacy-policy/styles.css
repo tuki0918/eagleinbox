@@ -606,18 +606,21 @@ html[lang="ja"] .hero h1 {
   gap: 22px;
 }
 
-.app-store-status {
+.app-store-link {
   display: inline-flex;
-  min-height: 50px;
-  padding: 11px 18px 12px;
-  align-items: center;
-  border: 2px solid var(--border);
-  border-radius: 5px;
-  background: var(--text-strong);
-  box-shadow: 5px 5px 0 var(--accent);
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 900;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.app-store-link img {
+  display: block;
+  width: auto;
+  height: 48px;
+}
+
+.app-store-link:focus-visible {
+  outline: 3px solid var(--text-strong);
+  outline-offset: 2px;
 }
 
 .text-link {

@@ -9,7 +9,7 @@ The main app and share extension are implemented as iOS apps.
 - Use the iPhone interface as the baseline
 - Run on iPad in iPhone compatibility mode
 - Run the same iOS binary on Apple Silicon Macs as a Designed for iPhone app
-- Use `192.168.0.100` as the default host for new connections on iPhone and iPad, and `localhost` on Apple Silicon Macs
+- Show `192.168.0.100` as the host placeholder on iPhone and iPad, and `localhost` on Apple Silicon Macs
 - Do not provide a dedicated Mac Catalyst binary
 
 ## Targets and Directories

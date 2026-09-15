@@ -7,6 +7,22 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+### Added
+
+- Added repository instructions to keep this changelog up to date with notable changes and releases.
+
+## [1.2.0] - 2026-09-15
+
+### Changed
+
+- Increased the photo and video picker selection limit from 50 to 100 items in the app and share extension.
+- Increased the share extension's incoming file and image limits from 50 to 100 items; the incoming video limit remains 20.
+- Start with no saved connections when no connection profiles exist, and leave the host field empty when creating a connection so users enter their own server address.
+
+### Removed
+
+- Removed automatic migration of legacy single-connection settings into a saved connection profile.
+
 ## [1.1.0] - 2026-09-01
 
 ### Added
@@ -40,6 +56,7 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 - Stored API tokens in Keychain.
 - Added destination library mismatch warnings and confirmation before uploading to a different open library.
 
-[Unreleased]: https://github.com/tuki0918/eagleinbox/compare/v1.1...HEAD
+[Unreleased]: https://github.com/tuki0918/eagleinbox/compare/v1.2...HEAD
+[1.2.0]: https://github.com/tuki0918/eagleinbox/compare/v1.1...v1.2
 [1.1.0]: https://github.com/tuki0918/eagleinbox/compare/v1.0...v1.1
 [1.0.0]: https://github.com/tuki0918/eagleinbox/releases/tag/v1.0

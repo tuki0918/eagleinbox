@@ -9,6 +9,12 @@ Eagle Inbox is an iOS app for sending photos, files, URLs, and other supported m
 You can also send items directly from the share sheet in Photos, Files, Safari, and other apps. Eagle Inbox Pro unlocks Apple Shortcuts, the iPhone Action Button, and additional saved connections with one non-subscription purchase.
 
 <p align="center">
+  <a href="https://apps.apple.com/us/app/eagle-inbox/id6802527818">
+    <img src="./privacy-policy/assets/app-store-badge-en.svg" alt="Download on the App Store" height="48">
+  </a>
+</p>
+
+<p align="center">
   <img src="./Docs/AppStore/Final/01-send-items.png" alt="Send photos, files, and URLs straight to Eagle" width="19%">
   <img src="./Docs/AppStore/Final/02-share-sheet.png" alt="Open Eagle Inbox from the iOS Share Sheet" width="19%">
   <img src="./Docs/AppStore/Final/03-organize-tags.png" alt="Apply Eagle tags and folders before sending" width="19%">
