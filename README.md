@@ -8,6 +8,8 @@ Eagle Inbox is an iOS app for sending photos, files, URLs, and other supported m
 
 You can also send items directly from the share sheet in Photos, Files, Safari, and other apps. Eagle Inbox Pro unlocks Apple Shortcuts, the iPhone Action Button, and additional saved connections with one non-subscription purchase.
 
+Shortcuts actions are also available on Apple Silicon Macs. See [Use Shortcuts on Mac](#use-shortcuts-on-mac) for setup.
+
 <p align="center">
   <a href="https://apps.apple.com/us/app/eagle-inbox/id6802527818">
     <img src="./privacy-policy/assets/app-store-badge-en.svg" alt="Download on the App Store" height="48">
@@ -69,6 +71,10 @@ Allow local network access when prompted. Notifications are optional and do not 
 
 Eagle Inbox Pro provides seven actions in Apple Shortcuts:
 
+<p align="center">
+  <img src="./Docs/Screenshots/shortcuts-actions-iphone.png" alt="Eagle Inbox’s seven actions in Apple Shortcuts on iPhone" width="300">
+</p>
+
 - `Send URLs to Eagle` saves HTTP and HTTPS URLs as Eagle bookmarks
 - `Send URLs to Eagle with Tags, Annotation` saves URLs with optional tags and an optional annotation
 - `Send Files to Eagle` accepts photos, videos, audio, and PDFs
@@ -82,6 +88,14 @@ All send actions use the connection currently selected in Eagle Inbox and run wi
 | Shortcut example | Assign it to the Action Button |
 | --- | --- |
 | ![Send Screenshot to Eagle with OCR text connected to Annotation in Apple Shortcuts](./Docs/Screenshots/shortcuts-send-screenshot-with-tags.png) | ![Send Files to Eagle assigned to the iPhone Action Button](./Docs/Screenshots/action-button-shortcut.png) |
+
+#### Use Shortcuts on Mac
+
+Eagle Inbox’s Shortcuts actions are also available in macOS Shortcuts on Apple Silicon Macs. Install Eagle Inbox from the Mac App Store as a “Designed for iPhone” app, configure and test your connection, and unlock Eagle Inbox Pro. Then open Shortcuts on your Mac and select Eagle Inbox in the action list to build your workflow.
+
+<p align="center">
+  <img src="./Docs/Screenshots/shortcuts-actions-mac.png" alt="Eagle Inbox selected in macOS Shortcuts, showing all seven available actions" width="800">
+</p>
 
 ## Features
 
@@ -102,7 +116,7 @@ Eagle Inbox Pro is a one-time purchase, not a subscription. The free app include
 
 - Optimized for iPhone with iOS 17 or later
 - Available on iPad in iPhone compatibility mode
-- Available on Apple Silicon Macs as a Designed for iPhone app
+- Available on Apple Silicon Macs as a Designed for iPhone app, including macOS Shortcuts actions with Eagle Inbox Pro
 - Eagle 4.0 Build 21 or later
 
 Mac Catalyst and Intel Macs are not supported.
