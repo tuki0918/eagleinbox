@@ -24,6 +24,16 @@ Shortcuts actions are also available on Apple Silicon Macs. See [Use Shortcuts o
   <img src="./Docs/AppStore/Final/05-action-button.png" alt="Run Eagle Inbox from the iPhone Action Button" width="19%">
 </p>
 
+## Video Demos
+
+Watch Eagle Inbox in action:
+
+| Send files from Eagle Inbox | Send files from the iOS share sheet |
+| --- | --- |
+| https://github.com/user-attachments/assets/4e884808-857a-4959-a38e-8702d42baaa2 | https://github.com/user-attachments/assets/bdcb8ecd-af09-4925-bfe8-41f10df8a3fe |
+| **Send files with Apple Shortcuts (Eagle Inbox Pro)** | |
+| https://github.com/user-attachments/assets/18b4c6d1-e1ff-4d39-8ec5-18e2e610e231 | |
+
 ## Get Started
 
 ### 1. Connect to Eagle
