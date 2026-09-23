@@ -107,6 +107,20 @@ Eagle Inbox’s Shortcuts actions are also available in macOS Shortcuts on Apple
   <img src="./Docs/Screenshots/shortcuts-actions-mac.png" alt="Eagle Inbox selected in macOS Shortcuts, showing all seven available actions" width="800">
 </p>
 
+##### Example: A Shortcut for Finder Quick Actions
+
+To run a shortcut from Finder’s Quick Actions, open the shortcut’s **Details** panel (the ⓘ button), turn on `Use as Quick Action`, and enable `Finder`. You can also enable `Services Menu`, as shown below, to make the shortcut available there.
+
+<p align="center">
+  <img src="./Docs/Screenshots/shortcuts-finder-quick-action-setup-mac.png" alt="Send Files to Eagle shortcut with Get Selected Files in Finder connected to the send action and Use as Quick Action, Finder, and Services Menu enabled" width="800">
+</p>
+
+Select one or more supported files in Finder, right-click the selection, and choose **Quick Actions → Send Files to Eagle**. The shortcut sends the selected files using the connection currently selected in Eagle Inbox. Keep the destination Eagle library open when you run it.
+
+<p align="center">
+  <img src="./Docs/Screenshots/shortcuts-finder-quick-action-mac.png" alt="Selected files in Finder with Quick Actions → Send Files to Eagle highlighted in the context menu" width="800">
+</p>
+
 ## Features
 
 - Send photos, videos, audio, PDFs, and URLs to Eagle
